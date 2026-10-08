@@ -210,7 +210,7 @@ export const Home = () => {
               >
                 <VehicleCard
                   vehicle={vehicle}
-                  onBookClick={(v) => navigate(`/vehicles/${v.id}`)}
+                  onBookClick={(v) => navigate(`/vehicle/${v.id}`)}
                 />
               </ScrollReveal>
             ))}

@@ -74,6 +74,7 @@ function App() {
                       <Route path="/about" element={<AboutUs />} />
                       <Route path="/contact" element={<ContactUs />} />
                       <Route path="/vehicle/:id" element={<VehicleDetail />} />
+                      <Route path="/vehicles/:id" element={<VehicleDetail />} />
 
                       <Route
                         path="/my-bookings"

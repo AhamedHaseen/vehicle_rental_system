@@ -111,13 +111,11 @@ html.dark .glass-card {
 }
 
 html.light .glass-card:hover {
-  transform: translateY(-3px);
   border-color: rgba(0, 119, 182, 0.45);
   box-shadow: 0 16px 32px -10px rgba(0, 119, 182, 0.16);
 }
 
 html.dark .glass-card:hover {
-  transform: translateY(-3px);
   border-color: rgba(2, 62, 138, 0.45);
   box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.6);
 }

@@ -36,7 +36,7 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
   };
 
   return (
-    <div className="group relative flex flex-col rounded-3xl glass-card overflow-hidden border border-slate-200/90 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/90 hover:border-[#0077b6]/50 dark:hover:border-[#38bdf8]/50 hover:shadow-2xl hover:shadow-[#0077b6]/15 hover:-translate-y-2 transition-all duration-300">
+    <div className="group relative flex flex-col rounded-3xl glass-card overflow-hidden border border-slate-200/90 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/90 hover:border-[#0077b6]/60 dark:hover:border-[#38bdf8]/60 hover:shadow-2xl hover:shadow-[#0077b6]/15 transition-all duration-300">
       {/* Top Media Showcase Container */}
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
         <img
@@ -118,24 +118,25 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
         </div>
       </div>
 
-      {/* Full-Width Transparent Booking Button Ending at Card Edge */}
+      {/* Full-Width Seamless Booking Button Ending at Card Edge */}
       <button
+        type="button"
         disabled={!isAvailable}
         onClick={() => {
           if (onBookClick) {
             onBookClick(vehicle);
           } else {
-            navigate(`/vehicles/${vehicle.id}`);
+            navigate(`/vehicle/${vehicle.id}`);
           }
         }}
-        className={`w-full py-3.5 px-4 border-t font-bold text-xs flex items-center justify-center gap-2 transition-all duration-300 group/btn btn-tactile ${isAvailable
-            ? 'border-slate-200 dark:border-slate-800 bg-transparent hover:bg-[#0077b6] dark:hover:bg-[#0077b6] text-[#0077b6] dark:text-[#38bdf8] hover:text-white dark:hover:text-white cursor-pointer'
+        className={`w-full py-3.5 px-4 border-t font-bold text-xs flex items-center justify-center gap-2 transition-colors duration-200 group/btn outline-none focus:outline-none focus-visible:outline-none select-none ${isAvailable
+            ? 'border-slate-200 dark:border-slate-800 bg-transparent hover:bg-[#0077b6] dark:hover:bg-[#0077b6] active:bg-[#005f92] dark:active:bg-[#005f92] text-[#0077b6] dark:text-[#38bdf8] hover:text-white dark:hover:text-white active:text-white cursor-pointer'
             : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 text-slate-400 dark:text-slate-500 cursor-not-allowed'
           }`}
       >
         <span>
           {vehicle.status === 'available'
-            ? 'Book Vehicle Now'
+            ? 'View Details & Reserve'
             : vehicle.status === 'maintenance'
               ? 'Under Maintenance'
               : 'Currently Reserved'}
