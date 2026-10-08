@@ -121,18 +121,17 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
       <button
         disabled={!isAvailable}
         onClick={() => onBookClick && onBookClick(vehicle)}
-        className={`w-full py-3.5 px-4 border-t font-bold text-xs flex items-center justify-center gap-2 transition-all duration-300 group/btn btn-tactile ${
-          isAvailable
+        className={`w-full py-3.5 px-4 border-t font-bold text-xs flex items-center justify-center gap-2 transition-all duration-300 group/btn btn-tactile ${isAvailable
             ? 'border-slate-200 dark:border-slate-800 bg-transparent hover:bg-[#0077b6] dark:hover:bg-[#0077b6] text-[#0077b6] dark:text-[#38bdf8] hover:text-white dark:hover:text-white cursor-pointer'
             : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 text-slate-400 dark:text-slate-500 cursor-not-allowed'
-        }`}
+          }`}
       >
         <span>
           {vehicle.status === 'available'
             ? 'Book Vehicle Now'
             : vehicle.status === 'maintenance'
-            ? 'Under Maintenance'
-            : 'Currently Reserved'}
+              ? 'Under Maintenance'
+              : 'Currently Reserved'}
         </span>
         {isAvailable && (
           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1.5 transition-transform duration-200" />
