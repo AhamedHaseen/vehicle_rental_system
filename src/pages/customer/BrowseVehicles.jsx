@@ -241,23 +241,66 @@ export const BrowseVehicles = () => {
         {/* Vehicles Catalog Grid */}
         <main className="md:col-span-3 space-y-4">
           {/* Sorting and Results count bar */}
-          <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
-            <span>Showing <strong className="text-slate-900 dark:text-slate-100">{filteredVehicles.length}</strong> matching vehicles</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-white dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
+            <span>Showing <strong className="text-slate-900 dark:text-slate-100 font-bold">{filteredVehicles.length}</strong> available fleet options</span>
             
             <div className="flex items-center gap-2">
-              <span>Sort by:</span>
+              <span className="text-[11px] font-semibold text-slate-500">Sort by:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-slate-200 rounded-lg px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-slate-200 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0077b6] cursor-pointer font-semibold"
               >
-                <option value="featured">Featured / Default</option>
+                <option value="featured">Featured (Curated)</option>
                 <option value="price_asc">Price: Low to High</option>
                 <option value="price_desc">Price: High to Low</option>
                 <option value="year_desc">Latest Year (Newest)</option>
               </select>
             </div>
           </div>
+
+          {/* Active Filter Chips */}
+          {(category !== 'All' || fuelType !== 'All' || transmission !== 'All' || searchKeyword.trim() || availableOnly || maxPrice < 80000) && (
+            <div className="flex flex-wrap items-center gap-2 p-2 bg-slate-50/80 dark:bg-slate-900/40 rounded-xl border border-slate-200/60 dark:border-slate-800/60">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Filters:</span>
+              {category !== 'All' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] border border-[#0077b6]/20">
+                  {category}
+                  <button onClick={() => setCategory('All')} className="hover:text-slate-900 dark:hover:text-white ml-0.5">✕</button>
+                </span>
+              )}
+              {fuelType !== 'All' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] border border-[#0077b6]/20">
+                  {fuelType}
+                  <button onClick={() => setFuelType('All')} className="hover:text-slate-900 dark:hover:text-white ml-0.5">✕</button>
+                </span>
+              )}
+              {transmission !== 'All' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] border border-[#0077b6]/20">
+                  {transmission}
+                  <button onClick={() => setTransmission('All')} className="hover:text-slate-900 dark:hover:text-white ml-0.5">✕</button>
+                </span>
+              )}
+              {searchKeyword.trim() && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] border border-[#0077b6]/20">
+                  "{searchKeyword}"
+                  <button onClick={() => setSearchKeyword('')} className="hover:text-slate-900 dark:hover:text-white ml-0.5">✕</button>
+                </span>
+              )}
+              {availableOnly && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                  Available Only
+                  <button onClick={() => setAvailableOnly(false)} className="hover:text-slate-900 dark:hover:text-white ml-0.5">✕</button>
+                </span>
+              )}
+              <button
+                onClick={handleResetFilters}
+                className="text-xs text-rose-500 hover:text-rose-600 hover:underline font-semibold ml-auto"
+              >
+                Reset All
+              </button>
+            </div>
+          )}
 
           {/* Grid Cards */}
           {loading ? (

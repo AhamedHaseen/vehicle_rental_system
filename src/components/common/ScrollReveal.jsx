@@ -7,11 +7,11 @@ import { useEffect, useRef, useState } from 'react';
  */
 export const ScrollReveal = ({
   children,
-  direction = 'auto', // 'auto' (detects up/down scroll), 'up', 'down', 'left', 'right', 'zoom'
+  direction = 'up',   // 'up' (default smooth glide), 'down', 'left', 'right', 'zoom', 'fade'
   delay = 0,          // delay in ms
-  duration = 600,     // duration in ms
-  threshold = 0.12,   // intersection threshold
-  repeat = true,      // re-trigger animation when scrolling back into view (above/below)
+  duration = 500,     // duration in ms
+  threshold = 0.08,   // intersection threshold
+  repeat = false,     // once revealed, lock visible to prevent scroll jitter/shaking
   className = '',
   as: Component = 'div',
   ...rest
@@ -21,50 +21,36 @@ export const ScrollReveal = ({
     if (typeof window === 'undefined') return true;
     return !('IntersectionObserver' in window);
   });
-  const [scrollDirection, setScrollDirection] = useState('down');
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    // Keep track of scroll direction (scrolling down vs scrolling up)
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY || window.pageYOffset;
-          if (currentScrollY > lastScrollY.current + 4) {
-            setScrollDirection('down');
-          } else if (currentScrollY < lastScrollY.current - 4) {
-            setScrollDirection('up');
-          }
-          lastScrollY.current = Math.max(0, currentScrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const node = domRef.current;
     if (!node || !('IntersectionObserver' in window)) return;
+
+    // Check if element is already within viewport on mount
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 50 && rect.bottom > -50) {
+      setIsVisible(true);
+      if (!repeat) return; // If already visible and not repeat, no need to observe
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            if (!repeat) {
+              // Lock in place once revealed: eliminates layout thrashing & card shaking
+              observer.unobserve(entry.target);
+            }
           } else if (repeat) {
-            // Element left the viewport, allow it to animate again when re-entering
             setIsVisible(false);
           }
         });
       },
       {
         threshold,
-        rootMargin: '0px 0px -40px 0px' // Slightly inside viewport for clean entrance
+        // Generous bottom buffer so cards appear smoothly ahead of scroll
+        rootMargin: '0px 0px 60px 0px'
       }
     );
 
@@ -74,16 +60,24 @@ export const ScrollReveal = ({
     };
   }, [threshold, repeat]);
 
-  // Determine initial hidden transform based on scroll direction or explicit prop
+  // Stable hidden transform that never flips mid-scroll
   const getHiddenTransform = () => {
-    if (direction === 'zoom') return 'scale(0.94)';
-    if (direction === 'left') return 'translateX(-28px)';
-    if (direction === 'right') return 'translateX(28px)';
-    if (direction === 'down') return 'translateY(-26px)';
-    if (direction === 'up') return 'translateY(26px)';
-
-    // 'auto' mode: adapt to whether user is scrolling down or up
-    return scrollDirection === 'down' ? 'translateY(26px)' : 'translateY(-26px)';
+    switch (direction) {
+      case 'zoom':
+        return 'scale(0.96)';
+      case 'left':
+        return 'translateX(-20px)';
+      case 'right':
+        return 'translateX(20px)';
+      case 'down':
+        return 'translateY(-16px)';
+      case 'fade':
+        return 'translate(0, 0)';
+      case 'up':
+      case 'auto':
+      default:
+        return 'translateY(18px)';
+    }
   };
 
   const hiddenTransform = getHiddenTransform();
@@ -91,12 +85,12 @@ export const ScrollReveal = ({
   const animStyle = {
     opacity: isVisible ? 1 : 0,
     transform: isVisible ? 'translate(0, 0) scale(1)' : hiddenTransform,
-    filter: isVisible ? 'blur(0px)' : 'blur(3px)',
+    filter: isVisible ? 'blur(0px)' : 'blur(2px)',
     transitionProperty: 'opacity, transform, filter',
     transitionDuration: `${duration}ms`,
-    transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    transitionTimingFunction: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
     transitionDelay: `${delay}ms`,
-    willChange: 'opacity, transform, filter'
+    willChange: isVisible ? 'auto' : 'opacity, transform'
   };
 
   return (
@@ -121,7 +115,7 @@ export const TextReveal = ({
   as: Component = 'h2',
   delay = 0,
   stagger = 40,
-  repeat = true,
+  repeat = false,
   ...rest
 }) => {
   const domRef = useRef(null);
@@ -139,6 +133,9 @@ export const TextReveal = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            if (!repeat) {
+              observer.unobserve(entry.target);
+            }
           } else if (repeat) {
             setIsVisible(false);
           }
