@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal } from './Modal';
 import { Button } from './Button';
 import { Database, CheckCircle2, AlertCircle, Copy, Terminal, ExternalLink } from 'lucide-react';

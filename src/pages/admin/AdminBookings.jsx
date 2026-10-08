@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { 
   getBookings, updateBookingStatus 
 } from '../../services/dataService';
@@ -9,17 +9,13 @@ import { PickupModal } from '../../components/admin/PickupModal';
 import { ReturnModal } from '../../components/admin/ReturnModal';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
-import { 
-  CalendarClock, Search, CheckCircle2, XCircle, 
-  Car, Eye, RefreshCw, Filter, QrCode, User 
-} from 'lucide-react';
+import { Search, Eye, RefreshCw } from 'lucide-react';
 
 export const AdminBookings = () => {
   const { formatPrice } = useCurrency();
   const { success, error } = useToast();
 
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('all');
   const [search, setSearch] = useState('');
 
@@ -29,14 +25,18 @@ export const AdminBookings = () => {
   const [returnBooking, setReturnBooking] = useState(null);
 
   const loadData = async () => {
-    setLoading(true);
     const list = await getBookings();
     setBookings(list);
-    setLoading(false);
   };
 
   useEffect(() => {
-    loadData();
+    let isMounted = true;
+    getBookings().then((list) => {
+      if (isMounted) setBookings(list);
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleApprove = async (id) => {

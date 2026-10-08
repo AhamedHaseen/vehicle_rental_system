@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { getSystemSettings, updateSystemSettings } from '../../services/dataService';
 import { Button } from '../../components/common/Button';
 import { useToast } from '../../context/ToastContext';
-import { Settings, Building, ShieldCheck, DollarSign, Clock, CheckCircle2 } from 'lucide-react';
+import { Building, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const AdminSettings = () => {
   const { success, error } = useToast();
-  const [settings, setSettings] = useState(null);
+  const [settings, setSettings] = useState(() => getSystemSettings());
   const [isSaving, setIsSaving] = useState(false);
-
-  useEffect(() => {
-    const s = getSystemSettings();
-    setSettings(s);
-  }, []);
 
   const handleSave = (e) => {
     e.preventDefault();

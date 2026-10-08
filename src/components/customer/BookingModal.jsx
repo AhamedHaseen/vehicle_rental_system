@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { useAuth } from '../../context/AuthContext';
@@ -6,10 +6,7 @@ import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
 import { createBooking } from '../../services/dataService';
 import confetti from 'canvas-confetti';
-import { 
-  Calendar, MapPin, Shield, CreditCard, CheckCircle2, 
-  Clock, DollarSign, Info, Car 
-} from 'lucide-react';
+import { Calendar, Shield, Clock } from 'lucide-react';
 
 const HUBS = [
   "Colombo Flagship Hub (45 Galle Face Terrace)",

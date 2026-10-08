@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal } from './Modal';
 import { Button } from './Button';
 import { ShieldCheck, UserCheck, CheckCircle2, ArrowRight } from 'lucide-react';
@@ -6,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export const RoleSwitcherModal = ({ isOpen, onClose }) => {
-  const { user, role, loginAsDemo } = useAuth();
+  const { role, loginAsDemo } = useAuth();
   const navigate = useNavigate();
 
   const handleSwitch = (newRole) => {
