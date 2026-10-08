@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Calendar, MapPin, DollarSign, Clock, Shield, 
-  FileText, Star, XCircle, CheckCircle2, QrCode, ArrowRight, Car
+  Calendar, Clock, FileText, Star, QrCode, Car
 } from 'lucide-react';
 import { getBookings, updateBookingStatus } from '../../services/dataService';
 import { useAuth } from '../../context/AuthContext';
@@ -28,16 +27,24 @@ export const MyBookings = () => {
   const [activeReviewBooking, setActiveReviewBooking] = useState(null);
   const [cancelModalBooking, setCancelModalBooking] = useState(null);
 
-  const loadData = async () => {
-    setLoading(true);
+  const loadData = useCallback(async () => {
     const list = await getBookings(user?.id);
     setBookings(list);
     setLoading(false);
-  };
+  }, [user?.id]);
 
   useEffect(() => {
-    loadData();
-  }, [user]);
+    let isMounted = true;
+    getBookings(user?.id).then((list) => {
+      if (isMounted) {
+        setBookings(list);
+        setLoading(false);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [user?.id]);
 
   const handleCancelBooking = async () => {
     if (!cancelModalBooking) return;
@@ -118,9 +125,7 @@ export const MyBookings = () => {
           {filtered.map((b) => {
             const isPending = b.booking_status === 'pending';
             const isConfirmed = b.booking_status === 'confirmed';
-            const isActive = b.booking_status === 'active';
             const isCompleted = b.booking_status === 'completed';
-            const isCancelled = b.booking_status === 'cancelled';
             const canCancel = isPending || isConfirmed;
 
             const startDateFormatted = new Date(b.start_date).toLocaleDateString('en-LK', {

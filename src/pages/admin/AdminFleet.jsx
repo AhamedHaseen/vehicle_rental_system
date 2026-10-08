@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { 
-  getVehicles, saveVehicle, deleteVehicle, updateVehicleStatus 
+  getVehicles, deleteVehicle, updateVehicleStatus 
 } from '../../services/dataService';
-import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
 import { VehicleFormModal } from '../../components/admin/VehicleFormModal';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
 import { 
-  Car, Plus, Search, Edit3, Trash2, Fuel, Gauge, 
-  MapPin, CheckCircle2, AlertTriangle, RefreshCw 
+  Plus, Search, Edit3, Trash2, RefreshCw 
 } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Car', 'SUV', 'Luxury Vehicle', 'Van', 'Motorbike', 'Three-Wheeler'];
@@ -21,7 +19,6 @@ export const AdminFleet = () => {
   const { success, error } = useToast();
 
   const [vehicles, setVehicles] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // Filters
   const [search, setSearch] = useState('');
@@ -34,14 +31,20 @@ export const AdminFleet = () => {
   const [deleteConfirmVehicle, setDeleteConfirmVehicle] = useState(null);
 
   const loadFleet = async () => {
-    setLoading(true);
     const list = await getVehicles();
     setVehicles(list);
-    setLoading(false);
   };
 
   useEffect(() => {
-    loadFleet();
+    let isMounted = true;
+    getVehicles().then((list) => {
+      if (isMounted) {
+        setVehicles(list);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleStatusChange = async (vehicleId, newStatus) => {

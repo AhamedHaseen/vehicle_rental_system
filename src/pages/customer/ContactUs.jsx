@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
-  Phone, Mail, MapPin, Clock, Send, CheckCircle2, 
-  MessageSquare, ShieldCheck, Sparkles 
+  Phone, Mail, MapPin, Send, Sparkles 
 } from 'lucide-react';
 import { Button } from '../../components/common/Button';
 import { useToast } from '../../context/ToastContext';

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Car, Users, CalendarClock, DollarSign, Clock, ShieldCheck, 
-  ArrowUpRight, AlertCircle, CheckCircle2, ChevronRight, Plus, RefreshCw, Eye
+  Car, CalendarClock, DollarSign, 
+  ArrowUpRight, AlertCircle, ChevronRight, Plus, RefreshCw, Eye
 } from 'lucide-react';
 import { 
-  getVehicles, getBookings, getCustomers, updateBookingStatus 
+  getVehicles, getBookings, updateBookingStatus 
 } from '../../services/dataService';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
@@ -21,8 +21,6 @@ export const AdminDashboard = () => {
 
   const [vehicles, setVehicles] = useState([]);
   const [bookings, setBookings] = useState([]);
-  const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // Modals
   const [pickupBooking, setPickupBooking] = useState(null);
@@ -30,20 +28,25 @@ export const AdminDashboard = () => {
   const [isAddVehicleOpen, setIsAddVehicleOpen] = useState(false);
 
   const loadData = async () => {
-    setLoading(true);
-    const [vList, bList, cList] = await Promise.all([
+    const [vList, bList] = await Promise.all([
       getVehicles(),
-      getBookings(),
-      getCustomers()
+      getBookings()
     ]);
     setVehicles(vList);
     setBookings(bList);
-    setCustomers(cList);
-    setLoading(false);
   };
 
   useEffect(() => {
-    loadData();
+    let isMounted = true;
+    Promise.all([getVehicles(), getBookings()]).then(([vList, bList]) => {
+      if (isMounted) {
+        setVehicles(vList);
+        setBookings(bList);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // KPI Calculations

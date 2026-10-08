@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getCustomers, updateCustomerStatus, getBookings } from '../../services/dataService';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
-import { Users, Search, ShieldCheck, ShieldAlert, Phone, Mail, FileText, RefreshCw } from 'lucide-react';
+import { Search, Phone, Mail, RefreshCw } from 'lucide-react';
 
 export const AdminCustomers = () => {
   const { formatPrice } = useCurrency();
@@ -13,20 +13,26 @@ export const AdminCustomers = () => {
 
   const [customers, setCustomers] = useState([]);
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   const loadData = async () => {
-    setLoading(true);
     const [cList, bList] = await Promise.all([getCustomers(), getBookings()]);
     setCustomers(cList);
     setBookings(bList);
-    setLoading(false);
   };
 
   useEffect(() => {
-    loadData();
+    let isMounted = true;
+    Promise.all([getCustomers(), getBookings()]).then(([cList, bList]) => {
+      if (isMounted) {
+        setCustomers(cList);
+        setBookings(bList);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleToggleStatus = async (customer) => {

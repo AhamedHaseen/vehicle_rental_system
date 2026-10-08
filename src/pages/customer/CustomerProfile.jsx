@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { Button } from '../../components/common/Button';
-import { User, ShieldCheck, Mail, Phone, FileText, CheckCircle2, Lock } from 'lucide-react';
+import { User, ShieldCheck, Lock } from 'lucide-react';
 
 export const CustomerProfile = () => {
   const { user, updateProfile } = useAuth();

@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getBookings } from '../../services/dataService';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
 import { useCurrency } from '../../context/CurrencyContext';
-import { CreditCard, DollarSign, Search, FileText, CheckCircle2, RefreshCw } from 'lucide-react';
+import { FileText, RefreshCw } from 'lucide-react';
 
 export const AdminPayments = () => {
   const { formatPrice } = useCurrency();
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('all');
   const [activeReceipt, setActiveReceipt] = useState(null);
 
   const loadData = async () => {
-    setLoading(true);
     const list = await getBookings();
     setBookings(list);
-    setLoading(false);
   };
 
   useEffect(() => {
-    loadData();
+    let isMounted = true;
+    getBookings().then((list) => {
+      if (isMounted) {
+        setBookings(list);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const totalCollected = bookings.reduce(

@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getVehicles, getBookings } from '../../services/dataService';
 import { Button } from '../../components/common/Button';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
-import { 
-  BarChart3, Download, TrendingUp, Car, Award, 
-  Calendar, DollarSign, CheckCircle2 
-} from 'lucide-react';
+import { Download, Award } from 'lucide-react';
 
 export const AdminReports = () => {
   const { formatPrice } = useCurrency();
@@ -14,17 +11,18 @@ export const AdminReports = () => {
 
   const [vehicles, setVehicles] = useState([]);
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      const [vList, bList] = await Promise.all([getVehicles(), getBookings()]);
-      setVehicles(vList);
-      setBookings(bList);
-      setLoading(false);
+    let isMounted = true;
+    Promise.all([getVehicles(), getBookings()]).then(([vList, bList]) => {
+      if (isMounted) {
+        setVehicles(vList);
+        setBookings(bList);
+      }
+    });
+    return () => {
+      isMounted = false;
     };
-    load();
   }, []);
 
   // Category breakdown calculation

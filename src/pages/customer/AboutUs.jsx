@@ -1,8 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Car, Shield, Award, Users, MapPin, CheckCircle2, 
-  Clock, Sparkles, ArrowRight, HeartHandshake, Gauge 
+  Shield, Award, Clock, Sparkles, ArrowRight 
 } from 'lucide-react';
 import { Button } from '../../components/common/Button';
 

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
-import { Fuel, Gauge, AlertTriangle, CheckCircle2, DollarSign } from 'lucide-react';
+import { Fuel, Gauge, CheckCircle2, DollarSign } from 'lucide-react';
 import { performReturnCheckin } from '../../services/dataService';
 import { useToast } from '../../context/ToastContext';
 import { useCurrency } from '../../context/CurrencyContext';

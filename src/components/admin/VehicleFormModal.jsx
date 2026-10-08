@@ -1,84 +1,73 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { saveVehicle } from '../../services/dataService';
 import { useToast } from '../../context/ToastContext';
-import { Car, Image as ImageIcon, Plus, X } from 'lucide-react';
+import { Image as ImageIcon, X } from 'lucide-react';
 
 const CATEGORIES = ['Car', 'Van', 'SUV', 'Motorbike', 'Three-Wheeler', 'Luxury Vehicle'];
 const FUEL_TYPES = ['Petrol', 'Diesel', 'Hybrid', 'Electric'];
 const TRANSMISSIONS = ['Automatic', 'Manual'];
 const STATUSES = ['available', 'rented', 'maintenance', 'deactivated'];
 
-export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) => {
-  const { success, error } = useToast();
-  const isEditing = Boolean(vehicle);
-
-  const [formData, setFormData] = useState({
+const getInitialFormData = (vehicle) => {
+  if (vehicle) {
+    return {
+      brand: vehicle.brand || '',
+      model: vehicle.model || '',
+      year: vehicle.year || 2024,
+      category: vehicle.category || 'Car',
+      registration_no: vehicle.registration_no || '',
+      fuel_type: vehicle.fuel_type || 'Petrol',
+      transmission: vehicle.transmission || 'Automatic',
+      seats: vehicle.seats || 5,
+      price_per_day: vehicle.price_per_day || 8000,
+      price_per_hour: vehicle.price_per_hour || 1000,
+      security_deposit: vehicle.security_deposit || 20000,
+      status: vehicle.status || 'available',
+      image_url: vehicle.image_url || '',
+      location: vehicle.location || 'Colombo Flagship Hub',
+      description: vehicle.description || '',
+      features: vehicle.features || ['Bluetooth', 'A/C'],
+      newFeature: ''
+    };
+  }
+  return {
     brand: '',
     model: '',
     year: new Date().getFullYear(),
     category: 'Car',
     registration_no: '',
-    fuel_type: 'Hybrid',
+    fuel_type: 'Petrol',
     transmission: 'Automatic',
     seats: 5,
     price_per_day: 8500,
     price_per_hour: 1100,
     security_deposit: 20000,
     status: 'available',
-    image_url: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
+    image_url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80',
     location: 'Colombo Flagship Hub',
     description: '',
-    features: ['Apple CarPlay', 'Reverse Camera', 'Adaptive Cruise', 'Climate Control'],
+    features: ['Apple CarPlay', 'Cruise Control', 'Climate Control'],
     newFeature: ''
-  });
+  };
+};
+
+export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) => {
+  const { success, error } = useToast();
+  const isEditing = Boolean(vehicle);
+
+  const [formData, setFormData] = useState(() => getInitialFormData(vehicle));
+  const [prevTrigger, setPrevTrigger] = useState({ isOpen, vehicleId: vehicle?.id });
+
+  if (isOpen !== prevTrigger.isOpen || vehicle?.id !== prevTrigger.vehicleId) {
+    setPrevTrigger({ isOpen, vehicleId: vehicle?.id });
+    if (isOpen) {
+      setFormData(getInitialFormData(vehicle));
+    }
+  }
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (vehicle) {
-      setFormData({
-        brand: vehicle.brand || '',
-        model: vehicle.model || '',
-        year: vehicle.year || 2024,
-        category: vehicle.category || 'Car',
-        registration_no: vehicle.registration_no || '',
-        fuel_type: vehicle.fuel_type || 'Petrol',
-        transmission: vehicle.transmission || 'Automatic',
-        seats: vehicle.seats || 5,
-        price_per_day: vehicle.price_per_day || 8000,
-        price_per_hour: vehicle.price_per_hour || 1000,
-        security_deposit: vehicle.security_deposit || 20000,
-        status: vehicle.status || 'available',
-        image_url: vehicle.image_url || '',
-        location: vehicle.location || 'Colombo Flagship Hub',
-        description: vehicle.description || '',
-        features: vehicle.features || ['Bluetooth', 'A/C'],
-        newFeature: ''
-      });
-    } else {
-      setFormData({
-        brand: '',
-        model: '',
-        year: new Date().getFullYear(),
-        category: 'Car',
-        registration_no: '',
-        fuel_type: 'Petrol',
-        transmission: 'Automatic',
-        seats: 5,
-        price_per_day: 8500,
-        price_per_hour: 1100,
-        security_deposit: 20000,
-        status: 'available',
-        image_url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80',
-        location: 'Colombo Flagship Hub',
-        description: '',
-        features: ['Apple CarPlay', 'Cruise Control', 'Climate Control'],
-        newFeature: ''
-      });
-    }
-  }, [vehicle, isOpen]);
 
   const handleAddFeature = () => {
     if (!formData.newFeature.trim()) return;

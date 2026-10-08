@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { 
-  Search, SlidersHorizontal, RotateCcw, Filter, 
-  Car, Fuel, Gauge, DollarSign, CheckCircle2 
+  Search, SlidersHorizontal, RotateCcw, Filter, Car
 } from 'lucide-react';
 import { getVehicles } from '../../services/dataService';
 import { VehicleCard } from '../../components/customer/VehicleCard';
@@ -23,8 +22,16 @@ export const BrowseVehicles = () => {
   const [selectedVehicleForBooking, setSelectedVehicleForBooking] = useState(null);
 
   // Filters State
+  const categoryParam = searchParams.get('category') || 'All';
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [category, setCategory] = useState(searchParams.get('category') || 'All');
+  const [category, setCategory] = useState(categoryParam);
+  const [prevCategoryParam, setPrevCategoryParam] = useState(categoryParam);
+
+  if (categoryParam !== prevCategoryParam) {
+    setPrevCategoryParam(categoryParam);
+    setCategory(categoryParam);
+  }
+
   const [fuelType, setFuelType] = useState('All');
   const [transmission, setTransmission] = useState('All');
   const [maxPrice, setMaxPrice] = useState(80000);
@@ -33,20 +40,17 @@ export const BrowseVehicles = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
-    const fetchFleet = async () => {
-      setLoading(true);
-      const list = await getVehicles();
-      setVehicles(list);
-      setLoading(false);
+    let isMounted = true;
+    getVehicles().then((list) => {
+      if (isMounted) {
+        setVehicles(list);
+        setLoading(false);
+      }
+    });
+    return () => {
+      isMounted = false;
     };
-    fetchFleet();
   }, []);
-
-  // Sync category param if URL changes
-  useEffect(() => {
-    const urlCat = searchParams.get('category');
-    if (urlCat) setCategory(urlCat);
-  }, [searchParams]);
 
   // Filtered & Sorted fleet
   const filteredVehicles = useMemo(() => {

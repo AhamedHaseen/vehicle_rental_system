@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
-import { Fuel, Gauge, FileText, CheckCircle2, UserCheck, Shield } from 'lucide-react';
+import { Fuel, Gauge, CheckCircle2, UserCheck } from 'lucide-react';
 import { performPickupHandover } from '../../services/dataService';
 import { useToast } from '../../context/ToastContext';
 

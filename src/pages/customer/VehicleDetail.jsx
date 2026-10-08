@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   getVehicleById, getReviews 
@@ -8,7 +8,7 @@ import { Button } from '../../components/common/Button';
 import { BookingModal } from '../../components/customer/BookingModal';
 import { useCurrency } from '../../context/CurrencyContext';
 import { 
-  Users, Fuel, Gauge, Shield, ArrowLeft, Star, 
+  Shield, ArrowLeft, Star, 
   MapPin, CheckCircle2, ChevronRight, Clock, Award 
 } from 'lucide-react';
 
@@ -24,18 +24,21 @@ export const VehicleDetail = () => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   useEffect(() => {
-    const load = async () => {
-      setLoading(true);
+    let isMounted = true;
+    (async () => {
       const v = await getVehicleById(id);
+      if (!isMounted) return;
       setVehicle(v);
       if (v) {
         setActiveImage(v.image_url);
         const rList = await getReviews(v.id);
-        setReviews(rList);
+        if (isMounted) setReviews(rList);
       }
-      setLoading(false);
+      if (isMounted) setLoading(false);
+    })();
+    return () => {
+      isMounted = false;
     };
-    load();
   }, [id]);
 
   if (loading) {
