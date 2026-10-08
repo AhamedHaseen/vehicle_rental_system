@@ -129,7 +129,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
             className="w-20 h-14 object-cover rounded-lg border border-slate-200 dark:border-slate-700/60"
           />
           <div className="flex-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#023e8a] dark:text-[#38bdf8]">
               {vehicle.category}
             </span>
             <h4 className="font-bold text-slate-900 dark:text-slate-100 text-base">
@@ -139,7 +139,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
           </div>
           <div className="text-right">
             <span className="text-xs text-slate-500 dark:text-slate-400 block">Rate</span>
-            <span className="text-base font-bold text-amber-600 dark:text-amber-400">
+            <span className="text-base font-bold text-[#023e8a] dark:text-[#38bdf8]">
               {formatPrice(vehicle.price_per_day)}
             </span>
             <span className="text-[11px] text-slate-400 dark:text-slate-500 block">/day</span>
@@ -150,7 +150,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
             <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-semibold text-xs uppercase tracking-wider">
-              <Calendar className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+              <Calendar className="w-4 h-4 text-[#023e8a] dark:text-[#38bdf8]" />
               Pickup Schedule
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -161,7 +161,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
                   value={startDate}
                   min={tomorrow}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                   required
                 />
               </div>
@@ -171,7 +171,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
                   type="time"
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                   required
                 />
               </div>
@@ -181,7 +181,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
               <select
                 value={pickupLocation}
                 onChange={(e) => setPickupLocation(e.target.value)}
-                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
               >
                 {HUBS.map((h) => (
                   <option key={h} value={h}>{h}</option>
@@ -192,7 +192,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
 
           <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
             <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-semibold text-xs uppercase tracking-wider">
-              <Clock className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+              <Clock className="w-4 h-4 text-[#023e8a] dark:text-[#38bdf8]" />
               Return Schedule
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -203,7 +203,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
                   value={endDate}
                   min={startDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                   required
                 />
               </div>
@@ -213,7 +213,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
                   type="time"
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                   required
                 />
               </div>
@@ -223,7 +223,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
               <select
                 value={returnLocation}
                 onChange={(e) => setReturnLocation(e.target.value)}
-                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
               >
                 {HUBS.map((h) => (
                   <option key={h} value={h}>{h}</option>
@@ -236,7 +236,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
         {/* Protection & Insurance Toggle */}
         <div className="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
           <div className="flex items-start gap-3">
-            <Shield className="w-5 h-5 text-amber-500 dark:text-amber-400 shrink-0 mt-0.5" />
+            <Shield className="w-5 h-5 text-[#023e8a] dark:text-[#38bdf8] shrink-0 mt-0.5" />
             <div>
               <h5 className="font-semibold text-slate-900 dark:text-slate-200 text-xs">
                 Comprehensive Damage Waiver (CDW Plus)
@@ -244,7 +244,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
               <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-relaxed">
                 Protects against accidental scrapes, glass chips, and roadside breakdown. Zero deductible.
               </p>
-              <span className="text-[11px] text-amber-600 dark:text-amber-400 font-semibold block mt-1">
+              <span className="text-[11px] text-[#023e8a] dark:text-[#38bdf8] font-semibold block mt-1">
                 +{formatPrice(insurancePerDay)}/day
               </span>
             </div>
@@ -256,7 +256,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
               onChange={(e) => setIncludeInsurance(e.target.checked)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-slate-200 dark:bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+            <div className="w-11 h-6 bg-slate-200 dark:bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#023e8a]"></div>
           </label>
         </div>
 
@@ -273,8 +273,8 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
                 onClick={() => setPaymentMethod(method)}
                 className={`py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all text-center ${
                   paymentMethod === method
-                    ? 'bg-amber-500/10 border-amber-500 text-amber-600 dark:text-amber-400 shadow-sm'
-                    : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-amber-400'
+                    ? 'bg-[#023e8a]/10 border-[#023e8a] text-[#023e8a] dark:text-[#38bdf8] shadow-sm'
+                    : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-[#023e8a]/50'
                 }`}
               >
                 {method}
@@ -293,7 +293,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="e.g. Flight UL-504 arriving 8am, child seat requested"
-            className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
           />
         </div>
 
@@ -315,11 +315,11 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
           </div>
           <div className="flex justify-between text-slate-600 dark:text-slate-400 pb-2 border-b border-slate-200 dark:border-slate-800">
             <span>Refundable Security Deposit (Held on card)</span>
-            <span className="font-semibold text-amber-600 dark:text-amber-400">{formatPrice(securityDeposit)}</span>
+            <span className="font-semibold text-[#023e8a] dark:text-[#38bdf8]">{formatPrice(securityDeposit)}</span>
           </div>
           <div className="flex justify-between items-center pt-1 text-sm font-bold text-slate-900 dark:text-slate-100">
             <span>Total Payable Amount</span>
-            <span className="text-xl text-amber-600 dark:text-amber-400 font-extrabold">{formatPrice(totalAmount)}</span>
+            <span className="text-xl text-[#023e8a] dark:text-[#38bdf8] font-extrabold">{formatPrice(totalAmount)}</span>
           </div>
         </div>
 

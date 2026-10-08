@@ -94,7 +94,7 @@ export const ReviewModal = ({ isOpen, onClose, booking, onSuccess }) => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Tell us about the vehicle condition, pickup handover, cleanliness, and road handling..."
-            className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500 leading-relaxed"
+            className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a] leading-relaxed"
             required
           />
         </div>

@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Fuel, Gauge, Zap, Shield, ArrowRight } from 'lucide-react';
+import { Users, Fuel, Gauge } from 'lucide-react';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { useCurrency } from '../../context/CurrencyContext';
@@ -23,7 +22,7 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
         
         {/* Top Badges */}
         <div className="absolute top-3 left-3 flex gap-2">
-          <span className="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-500/30">
+          <span className="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-slate-950/80 backdrop-blur-md text-[#38bdf8] border border-[#023e8a]/40">
             {vehicle.category}
           </span>
         </div>
@@ -43,8 +42,8 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
         <div>
           <div className="flex items-start justify-between gap-2 mb-2">
             <div>
-              <p className="text-xs font-semibold text-amber-600 dark:text-amber-500 uppercase tracking-wider">{vehicle.brand}</p>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+              <p className="text-xs font-semibold text-[#023e8a] dark:text-[#38bdf8] uppercase tracking-wider">{vehicle.brand}</p>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#023e8a] dark:group-hover:text-[#38bdf8] transition-colors">
                 {vehicle.model}
               </h3>
             </div>
@@ -75,7 +74,7 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
           <div>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Daily Rate</span>
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-extrabold text-amber-600 dark:text-amber-400">
+              <span className="text-lg font-extrabold text-[#023e8a] dark:text-[#38bdf8]">
                 {formatPrice(vehicle.price_per_day)}
               </span>
               <span className="text-xs text-slate-500 dark:text-slate-400">/day</span>

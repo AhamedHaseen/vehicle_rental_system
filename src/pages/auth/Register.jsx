@@ -53,8 +53,8 @@ export const Register = () => {
       <div className="w-full max-w-md glass-panel p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 shadow-2xl space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/20">
-            <Car className="w-6 h-6 text-slate-950" />
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#023e8a] to-[#0077b6] flex items-center justify-center mx-auto shadow-lg shadow-[#023e8a]/25">
+            <Car className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Create Account</h1>
           <p className="text-xs text-slate-600 dark:text-slate-400">Join RentFlow for instant booking and verified fleet rentals</p>
@@ -70,7 +70,7 @@ export const Register = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Kamal Perera"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                 required
               />
             </div>
@@ -85,7 +85,7 @@ export const Register = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="kamal@example.com"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                 required
               />
             </div>
@@ -100,7 +100,7 @@ export const Register = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+94 77 123 4567"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                 required
               />
             </div>
@@ -114,7 +114,7 @@ export const Register = () => {
                 onClick={() => setRole('customer')}
                 className={`py-2 px-3 rounded-xl border font-semibold text-center transition-all ${
                   role === 'customer'
-                    ? 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400'
+                    ? 'bg-[#023e8a]/15 border-[#023e8a] text-[#023e8a] dark:text-[#38bdf8]'
                     : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -143,7 +143,7 @@ export const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
                 required
               />
             </div>
@@ -163,7 +163,7 @@ export const Register = () => {
 
         <p className="text-center text-xs text-slate-600 dark:text-slate-400">
           Already registered?{' '}
-          <Link to="/login" className="text-amber-600 dark:text-amber-400 hover:underline font-semibold">
+          <Link to="/login" className="text-[#023e8a] dark:text-[#38bdf8] hover:underline font-semibold">
             Sign In here
           </Link>
         </p>

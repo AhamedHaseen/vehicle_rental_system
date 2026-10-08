@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
-  Car, Shield, Award, Clock, ArrowRight, Star, 
-  Calendar, MapPin, Sparkles, CheckCircle2, ChevronRight, Fuel, Gauge
+  Car, Shield, Clock, Star, 
+  MapPin, Sparkles, ChevronRight, Gauge 
 } from 'lucide-react';
 import { getVehicles, getReviews } from '../../services/dataService';
 import { VehicleCard } from '../../components/customer/VehicleCard';
@@ -33,13 +33,16 @@ export const Home = () => {
   const [searchLocation, setSearchLocation] = useState('Colombo Flagship Hub');
 
   useEffect(() => {
-    const load = async () => {
-      const vList = await getVehicles();
-      setVehicles(vList);
-      const rList = await getReviews();
-      setReviews(rList);
+    let isMounted = true;
+    Promise.all([getVehicles(), getReviews()]).then(([vList, rList]) => {
+      if (isMounted) {
+        setVehicles(vList);
+        setReviews(rList);
+      }
+    });
+    return () => {
+      isMounted = false;
     };
-    load();
   }, []);
 
   const handleHeroSearch = (e) => {
@@ -58,17 +61,17 @@ export const Home = () => {
       {/* Hero Section */}
       <section className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
         {/* Ambient background glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 blur-[130px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#023e8a]/15 blur-[130px] rounded-full pointer-events-none -z-10" />
 
         <div className="text-center max-w-3xl mx-auto space-y-5">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-600 dark:text-amber-400 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#023e8a]/10 border border-[#023e8a]/25 text-[#023e8a] dark:text-[#38bdf8] text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Sri Lanka's Premier Fleet & Chauffeur Network</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
             Seamless Fleet Rentals, <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#023e8a] via-[#0077b6] to-[#0096c7] dark:from-[#38bdf8] dark:via-[#60a5fa] dark:to-[#93c5fd]">
               Command The Journey.
             </span>
           </h1>
@@ -88,7 +91,7 @@ export const Home = () => {
               <select
                 value={searchCategory}
                 onChange={(e) => setSearchCategory(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
               >
                 <option value="">All Categories (Fleet)</option>
                 <option value="Car">Sedan & Hybrid</option>
@@ -107,7 +110,7 @@ export const Home = () => {
               <select
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
               >
                 <option value="Colombo Flagship Hub">Colombo Flagship Hub (Galle Face)</option>
                 <option value="Bandaranaike International Airport">Bandaranaike Int. Airport (CMB)</option>
@@ -138,7 +141,7 @@ export const Home = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">Explore Fleet By Category</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Select a vehicle category to filter current live availability.</p>
           </div>
-          <Link to="/catalog" className="text-xs text-amber-600 dark:text-amber-400 hover:text-amber-500 font-semibold flex items-center gap-1">
+          <Link to="/catalog" className="text-xs text-[#023e8a] dark:text-[#38bdf8] hover:text-[#0077b6] font-semibold flex items-center gap-1">
             View All ({vehicles.length}) <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -153,11 +156,11 @@ export const Home = () => {
                 onClick={() => setSelectedCategory(cat.name)}
                 className={`p-3.5 rounded-xl border text-left transition-all btn-tactile ${
                   isSelected
-                    ? 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 shadow-md'
+                    ? 'bg-[#023e8a]/15 border-[#023e8a] text-[#023e8a] dark:text-[#38bdf8] shadow-md'
                     : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-850'
                 }`}
               >
-                <Icon className={`w-5 h-5 mb-2 ${isSelected ? 'text-amber-500 dark:text-amber-400' : 'text-slate-400'}`} />
+                <Icon className={`w-5 h-5 mb-2 ${isSelected ? 'text-[#023e8a] dark:text-[#38bdf8]' : 'text-slate-400'}`} />
                 <h4 className="font-bold text-xs truncate text-slate-900 dark:text-slate-100">{cat.name}</h4>
                 <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5">{cat.desc}</p>
               </button>
@@ -190,15 +193,15 @@ export const Home = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="glass-panel rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-slate-800">
           <div className="text-center max-w-xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Effortless Experience</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#023e8a] dark:text-[#38bdf8]">Effortless Experience</span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 mt-1">How RentFlow Works</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Book in 60 seconds with transparent terms and rapid roadside dispatch.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3 relative">
-              <span className="text-4xl font-black text-amber-500/20 absolute top-4 right-4">01</span>
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center font-bold">
+              <span className="text-4xl font-black text-[#023e8a]/20 absolute top-4 right-4">01</span>
+              <div className="w-10 h-10 rounded-xl bg-[#023e8a]/10 text-[#023e8a] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                 <Car className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">Select Your Vehicle</h3>
@@ -208,8 +211,8 @@ export const Home = () => {
             </div>
 
             <div className="p-6 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3 relative">
-              <span className="text-4xl font-black text-amber-500/20 absolute top-4 right-4">02</span>
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center font-bold">
+              <span className="text-4xl font-black text-[#023e8a]/20 absolute top-4 right-4">02</span>
+              <div className="w-10 h-10 rounded-xl bg-[#023e8a]/10 text-[#023e8a] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                 <Shield className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">Instant Pass & Handover</h3>
@@ -219,8 +222,8 @@ export const Home = () => {
             </div>
 
             <div className="p-6 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3 relative">
-              <span className="text-4xl font-black text-amber-500/20 absolute top-4 right-4">03</span>
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center font-bold">
+              <span className="text-4xl font-black text-[#023e8a]/20 absolute top-4 right-4">03</span>
+              <div className="w-10 h-10 rounded-xl bg-[#023e8a]/10 text-[#023e8a] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                 <Clock className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">Drive & Swift Check-in</h3>
