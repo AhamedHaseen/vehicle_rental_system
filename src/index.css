@@ -78,6 +78,48 @@
   }
 }
 
+/* Prevent black borders/outlines on button clicks (mouse/pointer) while preserving accessible keyboard focus */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+[type="button"]:focus,
+[type="reset"]:focus,
+[type="submit"]:focus,
+a:focus {
+  outline: none;
+}
+
+button:focus:not(:focus-visible),
+[type="button"]:focus:not(:focus-visible),
+[type="reset"]:focus:not(:focus-visible),
+[type="submit"]:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none;
+}
+
+button:focus-visible,
+[type="button"]:focus-visible,
+[type="reset"]:focus-visible,
+[type="submit"]:focus-visible {
+  outline: 2px solid #0077b6 !important;
+  outline-offset: 2px !important;
+}
+
+html.dark button:focus-visible,
+html.dark [type="button"]:focus-visible,
+html.dark [type="reset"]:focus-visible,
+html.dark [type="submit"]:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 2px !important;
+}
+
 /* Smooth Universal Transition for interactive elements */
 a, button, input, select, textarea, .glass-card, .glass-panel {
   transition-property: color, background-color, border-color, box-shadow, transform, opacity;

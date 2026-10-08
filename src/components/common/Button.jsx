@@ -12,7 +12,7 @@ export const Button = ({
   onClick,
   ...props
 }) => {
-  const baseClasses = "inline-flex items-center justify-center font-medium transition-all duration-150 btn-tactile select-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none rounded-xl";
+  const baseClasses = "inline-flex items-center justify-center font-medium transition-all duration-150 btn-tactile select-none focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0077b6] dark:focus-visible:ring-[#38bdf8] focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none rounded-xl";
 
   const sizeClasses = {
     sm: "px-3 py-1.5 text-xs gap-1.5",
@@ -22,13 +22,13 @@ export const Button = ({
   };
 
   const variantClasses = {
-    primary: "bg-[#0077b6] hover:bg-[#023e8a] dark:bg-[#023e8a] dark:hover:bg-[#0077b6] text-white font-semibold shadow-lg shadow-[#0077b6]/25 dark:shadow-[#023e8a]/25 focus:ring-[#0077b6] dark:focus:ring-[#023e8a] border border-[#0077b6]/30 dark:border-[#023e8a]/30 transition-all duration-300",
-    secondary: "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700/80 focus:ring-slate-400 dark:focus:ring-slate-600 shadow-sm transition-all duration-300",
-    dark: "bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 focus:ring-slate-700 transition-all duration-300",
-    outline: "border border-[#0077b6] dark:border-[#023e8a] hover:bg-[#0077b6]/10 dark:hover:bg-[#023e8a]/10 text-[#0077b6] dark:text-[#60a5fa] focus:ring-[#0077b6] dark:focus:ring-[#023e8a] font-semibold transition-all duration-300",
-    danger: "bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-lg shadow-rose-600/20 focus:ring-rose-500 border border-rose-500/30",
-    ghost: "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:ring-slate-400 dark:focus:ring-slate-700 font-medium",
-    emerald: "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-lg shadow-emerald-600/20 focus:ring-emerald-500 border border-emerald-500/30"
+    primary: "bg-[#0077b6] hover:bg-[#023e8a] dark:bg-[#023e8a] dark:hover:bg-[#0077b6] text-white font-semibold shadow-lg shadow-[#0077b6]/25 dark:shadow-[#023e8a]/25 border border-[#0077b6]/30 dark:border-[#023e8a]/30 transition-all duration-300",
+    secondary: "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700/80 shadow-sm transition-all duration-300",
+    dark: "bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 transition-all duration-300",
+    outline: "border border-[#0077b6] dark:border-[#023e8a] hover:bg-[#0077b6]/10 dark:hover:bg-[#023e8a]/10 text-[#0077b6] dark:text-[#60a5fa] font-semibold transition-all duration-300",
+    danger: "bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-lg shadow-rose-600/20 border border-rose-500/30",
+    ghost: "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium",
+    emerald: "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-lg shadow-emerald-600/20 border border-emerald-500/30"
   };
 
   return (

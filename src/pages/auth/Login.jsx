@@ -56,7 +56,7 @@ export const Login = () => {
           <button
             type="button"
             onClick={handleDemoLogin}
-            className="w-full py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition-colors btn-tactile cursor-pointer"
+            className="w-full py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition-colors btn-tactile cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0077b6]"
           >
             <UserCheck className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
             <span>Instant Customer Demo Access</span>
