@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../components/common/Button';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
+import { SpotlightCard } from '../../components/common/SpotlightCard';
 
 export const AboutUs = () => {
   return (
@@ -22,42 +23,57 @@ export const AboutUs = () => {
         </p>
       </ScrollReveal>
 
-      {/* Core Highlights */}
+      {/* Core Highlights with SpotlightCard */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <ScrollReveal direction="auto" delay={0} duration={550}>
-          <div className="h-full glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-3 hover:border-[#0077b6]/50 hover:-translate-y-1 transition-all duration-300">
-            <div className="w-10 h-10 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
-              <Shield className="w-5 h-5" />
+          <SpotlightCard
+            className="h-full p-6 sm:p-8 space-y-4"
+            spotlightSize={260}
+            proximity={80}
+            intensity={0.25}
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
+              <Shield className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Guaranteed Vehicle Condition</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               Every vehicle undergoes a 50-point mechanical and safety inspection before handover. No surprise dents or unserviced engines.
             </p>
-          </div>
+          </SpotlightCard>
         </ScrollReveal>
 
         <ScrollReveal direction="auto" delay={120} duration={550}>
-          <div className="h-full glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-3 hover:border-[#0077b6]/50 hover:-translate-y-1 transition-all duration-300">
-            <div className="w-10 h-10 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
-              <Award className="w-5 h-5" />
+          <SpotlightCard
+            className="h-full p-6 sm:p-8 space-y-4"
+            spotlightSize={260}
+            proximity={80}
+            intensity={0.25}
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
+              <Award className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Transparent Fixed Pricing</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               Clear daily rates, zero hidden deposit deductions, and genuine CDW coverage waivers ensure total peace of mind throughout your journey.
             </p>
-          </div>
+          </SpotlightCard>
         </ScrollReveal>
 
         <ScrollReveal direction="auto" delay={240} duration={550}>
-          <div className="h-full glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-3 hover:border-[#0077b6]/50 hover:-translate-y-1 transition-all duration-300">
-            <div className="w-10 h-10 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
-              <Clock className="w-5 h-5" />
+          <SpotlightCard
+            className="h-full p-6 sm:p-8 space-y-4"
+            spotlightSize={260}
+            proximity={80}
+            intensity={0.25}
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
+              <Clock className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">24/7 Roadside Assistance</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               Dedicated mobile recovery vans stationed along the Southern Expressway, Central Highlands, and Western Province.
             </p>
-          </div>
+          </SpotlightCard>
         </ScrollReveal>
       </section>
 

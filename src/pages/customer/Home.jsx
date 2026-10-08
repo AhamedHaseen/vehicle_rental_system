@@ -9,6 +9,7 @@ import { getVehicles, getReviews } from '../../services/dataService';
 import { VehicleCard } from '../../components/customer/VehicleCard';
 import { Button } from '../../components/common/Button';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
+import { SpotlightCard } from '../../components/common/SpotlightCard';
 
 const CATEGORIES = [
   { name: 'All', icon: Car, desc: 'Complete Fleet' },
@@ -303,42 +304,63 @@ export const Home = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <ScrollReveal direction="auto" delay={0} duration={550}>
-                <div className="h-full p-6 bg-white dark:bg-slate-900/80 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-3 relative hover:border-[#0077b6]/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                  <span className="text-4xl font-black text-[#0077b6]/15 dark:text-[#023e8a]/30 absolute top-4 right-4">01</span>
-                  <div className="w-10 h-10 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:bg-[#023e8a]/20 dark:text-[#38bdf8] flex items-center justify-center font-bold">
+                <SpotlightCard
+                  className="h-full p-6 sm:p-7 space-y-3 relative"
+                  spotlightSize={260}
+                  proximity={80}
+                  intensity={0.25}
+                >
+                  <span className="text-4xl font-black text-[#0077b6]/20 dark:text-[#38bdf8]/20 absolute top-5 right-6 select-none pointer-events-none">
+                    01
+                  </span>
+                  <div className="w-11 h-11 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                     <Car className="w-5 h-5" />
                   </div>
                   <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">Select Your Vehicle</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                     Browse our real-time available catalog. Compare specifications, seat capacities, daily rates, and fuel economy.
                   </p>
-                </div>
+                </SpotlightCard>
               </ScrollReveal>
 
               <ScrollReveal direction="auto" delay={120} duration={550}>
-                <div className="h-full p-6 bg-white dark:bg-slate-900/80 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-3 relative hover:border-[#0077b6]/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                  <span className="text-4xl font-black text-[#0077b6]/15 dark:text-[#023e8a]/30 absolute top-4 right-4">02</span>
-                  <div className="w-10 h-10 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:bg-[#023e8a]/20 dark:text-[#38bdf8] flex items-center justify-center font-bold">
+                <SpotlightCard
+                  className="h-full p-6 sm:p-7 space-y-3 relative"
+                  spotlightSize={260}
+                  proximity={80}
+                  intensity={0.25}
+                >
+                  <span className="text-4xl font-black text-[#0077b6]/20 dark:text-[#38bdf8]/20 absolute top-5 right-6 select-none pointer-events-none">
+                    02
+                  </span>
+                  <div className="w-11 h-11 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                     <Shield className="w-5 h-5" />
                   </div>
                   <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">Instant Pass & Handover</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                     Complete digital booking with full CDW protection. Receive a verified reservation pass and meet our agent for 3-minute key handover.
                   </p>
-                </div>
+                </SpotlightCard>
               </ScrollReveal>
 
               <ScrollReveal direction="auto" delay={240} duration={550}>
-                <div className="h-full p-6 bg-white dark:bg-slate-900/80 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-3 relative hover:border-[#0077b6]/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                  <span className="text-4xl font-black text-[#0077b6]/15 dark:text-[#023e8a]/30 absolute top-4 right-4">03</span>
-                  <div className="w-10 h-10 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:bg-[#023e8a]/20 dark:text-[#38bdf8] flex items-center justify-center font-bold">
+                <SpotlightCard
+                  className="h-full p-6 sm:p-7 space-y-3 relative"
+                  spotlightSize={260}
+                  proximity={80}
+                  intensity={0.25}
+                >
+                  <span className="text-4xl font-black text-[#0077b6]/20 dark:text-[#38bdf8]/20 absolute top-5 right-6 select-none pointer-events-none">
+                    03
+                  </span>
+                  <div className="w-11 h-11 rounded-xl bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                     <Clock className="w-5 h-5" />
                   </div>
                   <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">Drive & Swift Check-in</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                     Enjoy unlimited island adventures. Return to any of our 4 hubs with streamlined fuel & odometer inspection and instant deposit release.
                   </p>
-                </div>
+                </SpotlightCard>
               </ScrollReveal>
             </div>
           </div>
