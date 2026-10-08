@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Car, Bell, User, LogOut, ChevronDown, ChevronRight,
-  LayoutDashboard, CalendarCheck,
+  CalendarCheck,
   Menu, X, Sun, Moon, Home, Info, PhoneCall
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -12,7 +12,7 @@ import { getNotifications, markNotificationRead } from '../../services/dataServi
 import { Button } from '../../components/common/Button';
 
 export const Navbar = () => {
-  const { user, role, isAdmin, logout } = useAuth();
+  const { user, role, logout } = useAuth();
   const { currency, setCurrency } = useCurrency();
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -312,15 +312,6 @@ export const Navbar = () => {
                         >
                           <User className="w-4 h-4 text-slate-400" /> Profile & Documents
                         </Link>
-                        {isAdmin && (
-                          <Link
-                            to="/admin"
-                            onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-2 px-3 py-2 text-xs text-purple-600 dark:text-purple-300 hover:bg-purple-500/10 dark:hover:bg-purple-950/40 rounded-lg font-semibold"
-                          >
-                            <LayoutDashboard className="w-4 h-4 text-purple-500 dark:text-purple-400" /> Admin Dashboard
-                          </Link>
-                        )}
                       </div>
 
                       <div className="pt-1 border-t border-slate-100 dark:border-slate-800">
@@ -419,20 +410,6 @@ export const Navbar = () => {
                       <span>Profile</span>
                     </Link>
                   </div>
-
-                  {isAdmin && (
-                    <Link
-                      to="/admin"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center justify-between p-2.5 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/20 text-xs font-bold"
-                    >
-                      <div className="flex items-center gap-2">
-                        <LayoutDashboard className="w-4 h-4 text-purple-500" />
-                        <span>Admin Operations</span>
-                      </div>
-                      <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  )}
 
                   <button
                     onClick={() => {

@@ -23,27 +23,6 @@ import { ContactUs } from './pages/customer/ContactUs';
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
 
-// Admin Layout & Pages
-import { AdminLayout } from './pages/admin/AdminLayout';
-import { AdminDashboard } from './pages/admin/AdminDashboard';
-import { AdminFleet } from './pages/admin/AdminFleet';
-import { AdminBookings } from './pages/admin/AdminBookings';
-import { AdminCustomers } from './pages/admin/AdminCustomers';
-import { AdminPayments } from './pages/admin/AdminPayments';
-import { AdminReports } from './pages/admin/AdminReports';
-import { AdminSettings } from './pages/admin/AdminSettings';
-
-// Seamless Admin Access (allows visiting /admin directly)
-const AdminRoute = ({ children }) => {
-  const { user, isAdmin, loginAsDemo } = useAuth();
-  React.useEffect(() => {
-    if (!user || !isAdmin) {
-      loginAsDemo('admin');
-    }
-  }, [user, isAdmin, loginAsDemo]);
-  return children;
-};
-
 const CustomerRoute = ({ children }) => {
   const { user, loginAsDemo } = useAuth();
   React.useEffect(() => {
@@ -97,25 +76,6 @@ function App() {
                       <Route path="/login" element={<Login />} />
                       <Route path="/register" element={<Register />} />
 
-                      {/* Admin Command Center via /admin */}
-                      <Route
-                        path="/admin"
-                        element={
-                          <AdminRoute>
-                            <AdminLayout />
-                          </AdminRoute>
-                        }
-                      >
-                        {/* Direct /admin lands on AdminDashboard */}
-                        <Route index element={<AdminDashboard />} />
-                        <Route path="dashboard" element={<AdminDashboard />} />
-                        <Route path="fleet" element={<AdminFleet />} />
-                        <Route path="bookings" element={<AdminBookings />} />
-                        <Route path="customers" element={<AdminCustomers />} />
-                        <Route path="payments" element={<AdminPayments />} />
-                        <Route path="reports" element={<AdminReports />} />
-                        <Route path="settings" element={<AdminSettings />} />
-                      </Route>
 
                       {/* Fallback */}
                       <Route path="*" element={<Navigate to="/" replace />} />

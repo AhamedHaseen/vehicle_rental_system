@@ -74,7 +74,7 @@ export const Footer = () => {
             <li><Link to="/my-bookings" className="hover:text-[#0077b6] dark:hover:text-[#38bdf8] transition-colors">Reservation Passes & Receipts</Link></li>
             <li><Link to="/about" className="hover:text-[#0077b6] dark:hover:text-[#38bdf8] transition-colors">About RentFlow Network</Link></li>
             <li><Link to="/contact" className="hover:text-[#0077b6] dark:hover:text-[#38bdf8] transition-colors">Contact & Station Hubs</Link></li>
-            <li><Link to="/login" className="hover:text-[#0077b6] dark:hover:text-[#38bdf8] transition-colors">Customer & Admin Sign In</Link></li>
+            <li><Link to="/login" className="hover:text-[#0077b6] dark:hover:text-[#38bdf8] transition-colors">Account Sign In</Link></li>
           </ul>
         </div>
 

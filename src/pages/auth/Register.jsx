@@ -14,7 +14,6 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('customer');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -31,15 +30,11 @@ export const Register = () => {
         email: email.trim(),
         phone: phone.trim(),
         password,
-        role
+        role: 'customer'
       });
       if (res.success) {
         success('Account Created', `Welcome to RentFlow, ${fullName}!`);
-        if (role === 'admin') {
-          navigate('/admin/dashboard');
-        } else {
-          navigate('/catalog');
-        }
+        navigate('/catalog');
       }
     } catch (err) {
       error('Registration Failed', err.message);
@@ -106,33 +101,6 @@ export const Register = () => {
             </div>
           </div>
 
-          <div>
-            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Account Role</label>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setRole('customer')}
-                className={`py-2 px-3 rounded-xl border font-semibold text-center transition-all ${
-                  role === 'customer'
-                    ? 'bg-[#0077b6]/15 border-[#0077b6] text-[#0077b6] dark:text-[#38bdf8]'
-                    : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
-              >
-                Customer
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('admin')}
-                className={`py-2 px-3 rounded-xl border font-semibold text-center transition-all ${
-                  role === 'admin'
-                    ? 'bg-purple-500/15 border-purple-500 text-purple-700 dark:text-purple-300'
-                    : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
-              >
-                Admin
-              </button>
-            </div>
-          </div>
 
           <div>
             <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Password</label>
