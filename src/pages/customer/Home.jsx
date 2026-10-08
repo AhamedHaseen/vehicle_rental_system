@@ -134,24 +134,24 @@ export const Home = () => {
       </section>
 
       {/* SECTION 2: CATEGORY EXPLORER (Soft Powder Blue Tint) */}
-      <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-[#f0f7fc] dark:bg-[#080d1a] border-b border-sky-100/80 dark:border-slate-800/60 transition-colors duration-300">
+      <section className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-[#f0f7fc] dark:bg-[#080d1a] border-b border-sky-100/80 dark:border-slate-800/60 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
-          <ScrollReveal direction="auto" className="flex items-center justify-between mb-8">
+          <ScrollReveal direction="auto" className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] block mb-1">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] block mb-1">
                 Curated Categories
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 transition-colors duration-300">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 dark:text-slate-100 transition-colors duration-300">
                 Explore Fleet By Category
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Select a vehicle category to filter current live availability.</p>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Select a vehicle category to filter current live availability.</p>
             </div>
-            <Link to="/catalog" className="text-xs text-[#0077b6] dark:text-[#38bdf8] hover:text-[#023e8a] font-semibold flex items-center gap-1 transition-colors">
+            <Link to="/catalog" className="text-xs text-[#0077b6] dark:text-[#38bdf8] hover:text-[#023e8a] font-bold flex items-center gap-1 transition-colors self-start sm:self-auto py-1">
               View All ({vehicles.length}) <ChevronRight className="w-4 h-4" />
             </Link>
           </ScrollReveal>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-3.5">
             {CATEGORIES.map((cat, idx) => {
               const Icon = cat.icon;
               const isSelected = selectedCategory === cat.name;
@@ -164,7 +164,7 @@ export const Home = () => {
                 >
                   <button
                     onClick={() => setSelectedCategory(cat.name)}
-                    className={`w-full p-3.5 rounded-xl border text-left transition-all duration-200 btn-tactile ${
+                    className={`w-full p-3 sm:p-3.5 rounded-xl border text-left transition-all duration-200 btn-tactile cursor-pointer ${
                       isSelected
                         ? 'bg-[#0077b6] text-white border-[#0077b6] shadow-lg shadow-[#0077b6]/20 scale-102 dark:bg-[#023e8a] dark:border-[#38bdf8]'
                         : 'bg-white dark:bg-slate-900/80 border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-[#0077b6]/60 hover:bg-[#e0f2fe]/40 hover:scale-102 shadow-xs'
@@ -182,20 +182,22 @@ export const Home = () => {
       </section>
 
       {/* SECTION 3: FEATURED FLEET VEHICLES GRID (Crisp Pure Surface) */}
-      <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-[#ffffff] dark:bg-[#030712] border-b border-slate-200/60 dark:border-slate-800/80 transition-colors duration-300">
+      <section className="w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-[#ffffff] dark:bg-[#030712] border-b border-slate-200/60 dark:border-slate-800/80 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
-          <ScrollReveal direction="auto" className="flex items-center justify-between mb-10">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] block mb-1">
+          <ScrollReveal direction="auto" className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
+            <div className="space-y-1">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] block">
                 Instant Availability
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 transition-colors duration-300">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 dark:text-slate-100 transition-colors duration-300">
                 Featured Vehicles Ready For Dispatch
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Pre-inspected, fully insured, and sanitized prior to handover.</p>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                Pre-inspected, fully insured, and sanitized prior to handover.
+              </p>
             </div>
-            <Link to="/catalog">
-              <Button variant="outline" size="sm" icon={ChevronRight}>
+            <Link to="/catalog" className="w-full sm:w-auto shrink-0">
+              <Button variant="outline" size="sm" icon={ChevronRight} className="w-full sm:w-auto justify-center font-bold">
                 View Full Fleet
               </Button>
             </Link>
@@ -215,6 +217,15 @@ export const Home = () => {
                 />
               </ScrollReveal>
             ))}
+          </div>
+
+          {/* Mobile Bottom CTA to explore all vehicles */}
+          <div className="mt-8 text-center sm:hidden">
+            <Link to="/catalog" className="block w-full">
+              <Button variant="primary" size="md" icon={ChevronRight} className="w-full justify-center h-12 text-xs font-bold shadow-lg shadow-[#0077b6]/20">
+                Explore Full Fleet ({vehicles.length} Vehicles)
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -370,15 +381,15 @@ export const Home = () => {
       {/* SECTION 6: VERIFIED CUSTOMER EXPERIENCES (Soft Pearl Slate Tint) */}
       <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-[#edf4f9] dark:bg-[#091122] border-b border-sky-200/60 dark:border-slate-800/80 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
-          <ScrollReveal direction="auto" className="flex items-center justify-between mb-8">
+          <ScrollReveal direction="auto" className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] block mb-1">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] block mb-1">
                 Guest Reviews
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 transition-colors duration-300">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 dark:text-slate-100 transition-colors duration-300">
                 Verified Renter Experiences
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
                 Real ratings submitted by tourists, families, and corporate executives.
               </p>
             </div>

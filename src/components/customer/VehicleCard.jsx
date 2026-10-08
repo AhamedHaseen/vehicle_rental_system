@@ -86,7 +86,7 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
           </Link>
 
           {/* Clean Specs Strip: NO wrapping, full text ("4 Seats • Petrol • Automatic") */}
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">
             <div className="flex items-center gap-1.5 shrink-0">
               <Users className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8] shrink-0" />
               <span>{vehicle.seats} Seats</span>

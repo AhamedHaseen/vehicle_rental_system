@@ -531,7 +531,7 @@ export const VehicleDetail = () => {
 
         {/* Right 1 Column: Instant Inline Reservation Form & Pricing */}
         <div className="space-y-6">
-          <div className="glass-panel p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-900/95 sticky top-24 space-y-5 shadow-2xl">
+          <div className="glass-panel p-4 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-900/95 lg:sticky lg:top-24 space-y-5 shadow-xl">
             {/* Header / Pricing */}
             <div className="flex items-baseline justify-between gap-2 pb-4 border-b border-slate-200 dark:border-slate-800">
               <div>

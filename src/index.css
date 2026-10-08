@@ -42,6 +42,11 @@
     --color-header-bg: rgba(3, 7, 18, 0.88);
   }
 
+  html, body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
   body {
     font-family: var(--font-sans);
     background-color: var(--color-bg-app);
