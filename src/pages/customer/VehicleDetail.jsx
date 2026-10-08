@@ -12,7 +12,7 @@ import { useToast } from '../../context/ToastContext';
 import { 
   Shield, ArrowLeft, Star, 
   MapPin, CheckCircle2, ChevronRight, Clock, Award,
-  Send, MessageSquarePlus, Calendar
+  Send, MessageSquarePlus, Calendar, User, Phone, UserCheck, Car
 } from 'lucide-react';
 
 const HUBS = [
@@ -48,6 +48,9 @@ export const VehicleDetail = () => {
   }, []);
 
   // Inline Reservation Form State
+  const [customerName, setCustomerName] = useState(user?.full_name || 'Kamal Perera');
+  const [customerPhone, setCustomerPhone] = useState(user?.phone || '+94 77 123 4567');
+  const [driverOption, setDriverOption] = useState('without_driver'); // 'without_driver' | 'with_driver'
   const [startDate, setStartDate] = useState(tomorrow);
   const [startTime, setStartTime] = useState('09:00');
   const [endDate, setEndDate] = useState(threeDaysLater);
@@ -114,12 +117,14 @@ export const VehicleDetail = () => {
   const diffHours = Math.max(24, (endObj - startObj) / (1000 * 60 * 60));
   const durationDays = Math.max(1, Math.ceil(diffHours / 24));
 
+  const driverDailyRate = 2500;
+  const driverFee = driverOption === 'with_driver' ? durationDays * driverDailyRate : 0;
   const basePrice = durationDays * Number(vehicle.price_per_day || 0);
   const insurancePerDay = 2000;
   const insuranceFee = includeInsurance ? durationDays * insurancePerDay : 0;
   const securityDeposit = Number(vehicle.security_deposit || 20000);
-  const tax = Math.round(basePrice * 0.025);
-  const totalAmount = basePrice + insuranceFee + tax;
+  const tax = Math.round((basePrice + driverFee) * 0.025);
+  const totalAmount = basePrice + driverFee + insuranceFee + tax;
 
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
@@ -128,11 +133,21 @@ export const VehicleDetail = () => {
       return;
     }
 
+    if (!customerName.trim()) {
+      error('Contact Details Required', 'Please enter your full name for the booking.');
+      return;
+    }
+
+    if (!customerPhone.trim()) {
+      error('Contact Details Required', 'Please enter your contact phone number.');
+      return;
+    }
+
     const bookingUser = user || {
       id: 'user-cust-001',
-      full_name: 'Kamal Perera (Guest Customer)',
+      full_name: customerName.trim(),
       email: 'kamal@example.com',
-      phone: '+94 77 123 4567',
+      phone: customerPhone.trim(),
       role: 'customer'
     };
 
@@ -140,9 +155,11 @@ export const VehicleDetail = () => {
     try {
       const newBooking = await createBooking({
         customer_id: bookingUser.id,
-        customer_name: bookingUser.full_name || 'Valued Customer',
-        customer_email: bookingUser.email || 'customer@rentflow.lk',
-        customer_phone: bookingUser.phone || '+94 77 123 4567',
+        customer_name: customerName.trim(),
+        customer_email: user?.email || 'customer@rentflow.lk',
+        customer_phone: customerPhone.trim(),
+        driver_option: driverOption,
+        driver_fee: driverFee,
         vehicle_id: vehicle.id,
         vehicle_name: `${vehicle.brand} ${vehicle.model} (${vehicle.registration_no})`,
         start_date: startObj.toISOString(),
@@ -558,6 +575,97 @@ export const VehicleDetail = () => {
                   </span>
                 </div>
 
+                {/* Contact Information */}
+                <div className="bg-slate-50 dark:bg-slate-950/50 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2.5">
+                  <div className="flex items-center gap-1.5 font-bold text-[11px] text-slate-800 dark:text-slate-200 uppercase tracking-wider">
+                    <User className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8]" />
+                    <span>Primary Contact Details</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div>
+                      <label className="text-[10px] text-slate-500 font-medium block mb-1">Full Name</label>
+                      <div className="relative">
+                        <User className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <input
+                          type="text"
+                          value={customerName}
+                          onChange={(e) => setCustomerName(e.target.value)}
+                          placeholder="e.g. Kamal Perera"
+                          required
+                          className="w-full h-9 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-2.5 text-xs text-slate-900 dark:text-slate-100 font-medium focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-slate-500 font-medium block mb-1">Phone Number</label>
+                      <div className="relative">
+                        <Phone className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <input
+                          type="tel"
+                          value={customerPhone}
+                          onChange={(e) => setCustomerPhone(e.target.value)}
+                          placeholder="e.g. +94 77 123 4567"
+                          required
+                          className="w-full h-9 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-2.5 text-xs text-slate-900 dark:text-slate-100 font-medium focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Driver Preference (With Driver vs Without Driver) */}
+                <div className="bg-slate-50 dark:bg-slate-950/50 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 font-bold text-[11px] text-slate-800 dark:text-slate-200 uppercase tracking-wider">
+                      <UserCheck className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8]" />
+                      <span>Driver Option</span>
+                    </div>
+                    {driverOption === 'with_driver' && (
+                      <span className="text-[10px] font-bold text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 px-2 py-0.5 rounded-full">
+                        +{formatPrice(driverDailyRate)}/day
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setDriverOption('without_driver')}
+                      className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                        driverOption === 'without_driver'
+                          ? 'border-[#0077b6] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 text-[#0077b6] dark:text-[#38bdf8] ring-1 ring-[#0077b6]'
+                          : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center gap-1.5 mb-1 font-bold text-xs text-slate-900 dark:text-white">
+                        <Car className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8]" />
+                        <span>Without Driver</span>
+                      </div>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
+                        Self-drive rental. Valid license required.
+                      </p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setDriverOption('with_driver')}
+                      className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                        driverOption === 'with_driver'
+                          ? 'border-[#0077b6] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 text-[#0077b6] dark:text-[#38bdf8] ring-1 ring-[#0077b6]'
+                          : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center gap-1.5 mb-1 font-bold text-xs text-slate-900 dark:text-white">
+                        <UserCheck className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8]" />
+                        <span>With Driver</span>
+                      </div>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
+                        Professional chauffeur service included.
+                      </p>
+                    </button>
+                  </div>
+                </div>
+
                 {/* Pickup Schedule */}
                 <div className="bg-slate-50 dark:bg-slate-950/50 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2.5">
                   <div className="flex items-center gap-1.5 font-bold text-[11px] text-slate-800 dark:text-slate-200 uppercase tracking-wider">
@@ -711,6 +819,12 @@ export const VehicleDetail = () => {
                     <span>Base Rental ({durationDays}d × {formatPrice(vehicle.price_per_day)})</span>
                     <span className="font-semibold text-slate-800 dark:text-slate-200">{formatPrice(basePrice)}</span>
                   </div>
+                  {driverOption === 'with_driver' && (
+                    <div className="flex justify-between text-[#0077b6] dark:text-[#38bdf8] font-medium">
+                      <span>Chauffeur Service ({durationDays}d × {formatPrice(driverDailyRate)})</span>
+                      <span className="font-bold">{formatPrice(driverFee)}</span>
+                    </div>
+                  )}
                   {includeInsurance && (
                     <div className="flex justify-between text-slate-600 dark:text-slate-400">
                       <span>CDW Insurance Coverage</span>

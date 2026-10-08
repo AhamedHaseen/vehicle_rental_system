@@ -155,8 +155,15 @@ export const AdminBookings = () => {
                   </td>
 
                   {/* Vehicle */}
-                  <td className="py-3.5 px-4 font-medium text-slate-800 dark:text-slate-300">
-                    {b.vehicle_name}
+                  <td className="py-3.5 px-4">
+                    <span className="font-medium text-slate-800 dark:text-slate-300 block">{b.vehicle_name}</span>
+                    <span className={`inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded ${
+                      b.driver_option === 'with_driver'
+                        ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'
+                        : 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border border-slate-500/20'
+                    }`}>
+                      {b.driver_option === 'with_driver' ? 'With Driver' : 'Self-Drive (No Driver)'}
+                    </span>
                   </td>
 
                   {/* Schedule */}

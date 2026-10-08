@@ -6,7 +6,7 @@ import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
 import { createBooking } from '../../services/dataService';
 import confetti from 'canvas-confetti';
-import { Calendar, Shield, Clock } from 'lucide-react';
+import { Calendar, Shield, Clock, User, Phone, UserCheck, Car } from 'lucide-react';
 
 const HUBS = [
   "Colombo Flagship Hub (45 Galle Face Terrace)",
@@ -33,6 +33,9 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
     return d.toISOString().split('T')[0];
   }, []);
 
+  const [customerName, setCustomerName] = useState(user?.full_name || 'Kamal Perera');
+  const [customerPhone, setCustomerPhone] = useState(user?.phone || '+94 77 123 4567');
+  const [driverOption, setDriverOption] = useState('without_driver'); // 'without_driver' | 'with_driver'
   const [startDate, setStartDate] = useState(tomorrow);
   const [startTime, setStartTime] = useState('09:00');
   const [endDate, setEndDate] = useState(threeDaysLater);
@@ -52,36 +55,50 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
   const diffHours = Math.max(24, (endObj - startObj) / (1000 * 60 * 60));
   const durationDays = Math.max(1, Math.ceil(diffHours / 24));
 
+  const driverDailyRate = 2500;
+  const driverFee = driverOption === 'with_driver' ? durationDays * driverDailyRate : 0;
   const basePrice = durationDays * Number(vehicle.price_per_day || 0);
   const insurancePerDay = 2000;
   const insuranceFee = includeInsurance ? durationDays * insurancePerDay : 0;
   const securityDeposit = Number(vehicle.security_deposit || 20000);
-  const tax = Math.round(basePrice * 0.025);
-  const totalAmount = basePrice + insuranceFee + tax; // Security deposit is held/refundable
+  const tax = Math.round((basePrice + driverFee) * 0.025);
+  const totalAmount = basePrice + driverFee + insuranceFee + tax; // Security deposit is held/refundable
 
   const handleConfirm = async (e) => {
     e.preventDefault();
-    // Fallback to active demo customer if user is browsing as guest
-    const bookingUser = user || {
-      id: 'user-cust-001',
-      full_name: 'Kamal Perera (Guest Customer)',
-      email: 'kamal@example.com',
-      phone: '+94 77 123 4567',
-      role: 'customer'
-    };
-
     if (endObj <= startObj) {
       error('Invalid Dates', 'Return date must be after pickup date.');
       return;
     }
 
+    if (!customerName.trim()) {
+      error('Contact Required', 'Please enter your full name for the booking.');
+      return;
+    }
+
+    if (!customerPhone.trim()) {
+      error('Contact Required', 'Please enter your contact phone number.');
+      return;
+    }
+
+    // Fallback to active demo customer if user is browsing as guest
+    const bookingUser = user || {
+      id: 'user-cust-001',
+      full_name: customerName.trim(),
+      email: 'kamal@example.com',
+      phone: customerPhone.trim(),
+      role: 'customer'
+    };
+
     setIsSubmitting(true);
     try {
       const newBooking = await createBooking({
         customer_id: bookingUser.id,
-        customer_name: bookingUser.full_name || 'Valued Customer',
-        customer_email: bookingUser.email || 'customer@rentflow.lk',
-        customer_phone: bookingUser.phone || '+94 77 123 4567',
+        customer_name: customerName.trim(),
+        customer_email: user?.email || 'customer@rentflow.lk',
+        customer_phone: customerPhone.trim(),
+        driver_option: driverOption,
+        driver_fee: driverFee,
         vehicle_id: vehicle.id,
         vehicle_name: `${vehicle.brand} ${vehicle.model} (${vehicle.registration_no})`,
         start_date: startObj.toISOString(),
@@ -108,7 +125,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
             origin: { y: 0.6 }
           });
         }
-      } catch (e) {
+      } catch {
         // safe fallback if canvas is unavailable
       }
 
@@ -169,6 +186,97 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
           <span className="text-[11px] text-slate-500 dark:text-slate-400">
             {startDate} ({startTime}) &rarr; {endDate} ({endTime})
           </span>
+        </div>
+
+        {/* Primary Contact Details */}
+        <div className="bg-slate-50 dark:bg-slate-900/60 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3.5">
+          <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-bold text-xs uppercase tracking-wider pb-2 border-b border-slate-200/60 dark:border-slate-800">
+            <User className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
+            <span>Primary Contact Details</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Full Name</label>
+              <div className="relative">
+                <User className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  placeholder="e.g. Kamal Perera"
+                  required
+                  className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 font-medium"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Phone Number</label>
+              <div className="relative">
+                <Phone className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="tel"
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
+                  placeholder="e.g. +94 77 123 4567"
+                  required
+                  className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 font-medium"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Driver Preference (With Driver vs Without Driver) */}
+        <div className="bg-slate-50 dark:bg-slate-900/60 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3.5">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-200/60 dark:border-slate-800">
+            <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-bold text-xs uppercase tracking-wider">
+              <UserCheck className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
+              <span>Chauffeur & Driver Service</span>
+            </div>
+            {driverOption === 'with_driver' && (
+              <span className="text-xs font-bold text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 px-2.5 py-1 rounded-full">
+                +{formatPrice(driverDailyRate)}/day
+              </span>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setDriverOption('without_driver')}
+              className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
+                driverOption === 'without_driver'
+                  ? 'border-[#0077b6] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 text-[#0077b6] dark:text-[#38bdf8] ring-1 ring-[#0077b6]'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-1.5 font-bold text-xs text-slate-900 dark:text-white">
+                <Car className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
+                <span>Without Driver (Self-Drive)</span>
+              </div>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                Enjoy full autonomy. Valid driver's license required at key handover.
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setDriverOption('with_driver')}
+              className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
+                driverOption === 'with_driver'
+                  ? 'border-[#0077b6] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 text-[#0077b6] dark:text-[#38bdf8] ring-1 ring-[#0077b6]'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-1.5 font-bold text-xs text-slate-900 dark:text-white">
+                <UserCheck className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
+                <span>With Professional Driver</span>
+              </div>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                Experienced, certified chauffeur provided. Sit back and enjoy the ride.
+              </p>
+            </button>
+          </div>
         </div>
 
         {/* Date & Time Selection */}
@@ -330,6 +438,12 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
             <span>Base Rental ({durationDays} days × {formatPrice(vehicle.price_per_day)})</span>
             <span className="font-semibold text-slate-800 dark:text-slate-200">{formatPrice(basePrice)}</span>
           </div>
+          {driverOption === 'with_driver' && (
+            <div className="flex justify-between items-center text-[#0077b6] dark:text-[#38bdf8] font-medium">
+              <span>Chauffeur Service ({durationDays} days × {formatPrice(driverDailyRate)})</span>
+              <span className="font-bold">{formatPrice(driverFee)}</span>
+            </div>
+          )}
           {includeInsurance && (
             <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
               <span>CDW Insurance Coverage ({durationDays} days)</span>

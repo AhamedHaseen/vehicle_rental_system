@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Calendar, Clock, FileText, Star, QrCode, Car
+  Calendar, Clock, FileText, Star, QrCode, Car, User, Phone, UserCheck
 } from 'lucide-react';
 import { getBookings, updateBookingStatus } from '../../services/dataService';
 import { useAuth } from '../../context/AuthContext';
@@ -143,7 +143,7 @@ export const MyBookings = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                   {/* Left: Vehicle & Code Header */}
                   <div className="space-y-2 flex-1">
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className="font-mono text-xs font-bold px-2.5 py-1 bg-slate-100 dark:bg-slate-900 text-[#0077b6] dark:text-[#38bdf8] rounded-md border border-[#0077b6]/20">
                         {b.booking_code}
                       </span>
@@ -153,11 +153,39 @@ export const MyBookings = () => {
                       }`}>
                         Payment: {b.payment_status?.toUpperCase()}
                       </span>
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded flex items-center gap-1 ${
+                        b.driver_option === 'with_driver'
+                          ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'
+                          : 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20'
+                      }`}>
+                        {b.driver_option === 'with_driver' ? (
+                          <>
+                            <UserCheck className="w-3 h-3" />
+                            <span>With Driver</span>
+                          </>
+                        ) : (
+                          <>
+                            <Car className="w-3 h-3" />
+                            <span>Without Driver</span>
+                          </>
+                        )}
+                      </span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                      {b.vehicle_name}
-                    </h3>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                        {b.vehicle_name}
+                      </h3>
+                      {b.customer_phone && (
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mt-0.5">
+                          <User className="w-3 h-3 text-slate-400" />
+                          <span>{b.customer_name}</span>
+                          <span className="text-slate-300 dark:text-slate-600">•</span>
+                          <Phone className="w-3 h-3 text-slate-400" />
+                          <span>{b.customer_phone}</span>
+                        </p>
+                      )}
+                    </div>
 
                     {/* Timeline Info */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700 dark:text-slate-300 pt-2">
@@ -273,7 +301,12 @@ export const MyBookings = () => {
 
               <div className="text-left bg-white dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
                 <p className="text-slate-900 dark:text-slate-300 font-semibold">{activePassBooking.vehicle_name}</p>
-                <p className="text-slate-600 dark:text-slate-400 text-[11px]">Renter: {activePassBooking.customer_name}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-[11px]">
+                  Renter: <span className="font-medium text-slate-800 dark:text-slate-200">{activePassBooking.customer_name}</span> ({activePassBooking.customer_phone})
+                </p>
+                <p className="text-slate-600 dark:text-slate-400 text-[11px]">
+                  Driver: <span className="font-medium text-[#0077b6] dark:text-[#38bdf8]">{activePassBooking.driver_option === 'with_driver' ? 'Chauffeur Driven' : 'Self-Drive (Without Driver)'}</span>
+                </p>
                 <p className="text-slate-600 dark:text-slate-400 text-[11px]">Station: {activePassBooking.pickup_location}</p>
               </div>
             </div>
@@ -309,8 +342,20 @@ export const MyBookings = () => {
 
             <div className="space-y-2 py-2">
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>Customer:</span>
+                <span className="font-semibold text-slate-900 dark:text-slate-200">
+                  {activeReceiptBooking.customer_name} ({activeReceiptBooking.customer_phone})
+                </span>
+              </div>
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Vehicle:</span>
                 <span className="font-semibold text-slate-900 dark:text-slate-200">{activeReceiptBooking.vehicle_name}</span>
+              </div>
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>Driver Service:</span>
+                <span className="font-semibold text-slate-900 dark:text-slate-200">
+                  {activeReceiptBooking.driver_option === 'with_driver' ? 'Chauffeur Driven' : 'Self-Drive (Without Driver)'}
+                </span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Duration:</span>
@@ -320,6 +365,12 @@ export const MyBookings = () => {
                 <span>Base Rental:</span>
                 <span className="font-semibold text-slate-900 dark:text-slate-200">{formatPrice(activeReceiptBooking.base_price)}</span>
               </div>
+              {activeReceiptBooking.driver_fee > 0 && (
+                <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                  <span>Chauffeur Service Fee:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">{formatPrice(activeReceiptBooking.driver_fee)}</span>
+                </div>
+              )}
               {activeReceiptBooking.insurance_fee > 0 && (
                 <div className="flex justify-between text-slate-600 dark:text-slate-400">
                   <span>CDW Insurance Waiver:</span>
