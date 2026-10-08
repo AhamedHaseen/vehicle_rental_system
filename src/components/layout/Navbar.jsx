@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Car, Bell, User, LogOut, ChevronDown, 
+import {
+  Car, Bell, User, LogOut, ChevronDown,
   LayoutDashboard, CalendarCheck,
   Menu, X, Sun, Moon
 } from 'lucide-react';
@@ -65,11 +65,10 @@ export const Navbar = () => {
   return (
     <header className="sticky top-0 z-40 w-full px-3 sm:px-6 lg:px-8 pt-2.5 pb-1 pointer-events-none transition-all duration-300">
       {/* Complete Floating Box Navbar */}
-      <div className={`max-w-7xl mx-auto pointer-events-auto rounded-2xl glass-panel border bg-white/92 dark:bg-slate-950/92 backdrop-blur-xl transition-all duration-300 relative overflow-hidden ${
-        isScrolled
+      <div className={`max-w-7xl mx-auto pointer-events-auto rounded-2xl glass-panel border bg-white/92 dark:bg-slate-950/92 backdrop-blur-xl transition-all duration-300 relative overflow-hidden ${isScrolled
           ? 'border-[#0077b6]/35 dark:border-[#38bdf8]/35 shadow-xl shadow-[#0077b6]/10 dark:shadow-slate-950/70'
           : 'border-slate-200/90 dark:border-slate-800/90 shadow-md'
-      }`}>
+        }`}>
         <div className="px-4 sm:px-6 h-16 sm:h-17 flex items-center justify-between">
           {/* Brand Logo */}
           <div className="flex items-center gap-6 lg:gap-8">
@@ -91,44 +90,40 @@ export const Navbar = () => {
             <nav className="hidden md:flex items-center gap-1.5 text-xs font-semibold">
               <Link
                 to="/"
-                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${
-                  isActivePath('/')
+                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${isActivePath('/')
                     ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 border-[#0077b6]/30 dark:border-[#38bdf8]/30 shadow-xs'
                     : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-900 hover:border-slate-200 dark:hover:border-slate-800'
-                }`}
+                  }`}
               >
                 Home
               </Link>
 
               <Link
                 to="/catalog"
-                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${
-                  isActivePath('/catalog')
+                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${isActivePath('/catalog')
                     ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 border-[#0077b6]/30 dark:border-[#38bdf8]/30 shadow-xs'
                     : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-900 hover:border-slate-200 dark:hover:border-slate-800'
-                }`}
+                  }`}
               >
                 All Vehicles
               </Link>
 
               <Link
                 to="/about"
-                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${
-                  isActivePath('/about')
+                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${isActivePath('/about')
                     ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 border-[#0077b6]/30 dark:border-[#38bdf8]/30 shadow-xs'
                     : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-900 hover:border-slate-200 dark:hover:border-slate-800'
-                }`}
+                  }`}
               >
                 About Us
               </Link>
 
               <Link
                 to="/contact"
-                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${
-                  isActivePath('/contact')
+                className={`px-3.5 py-1.5 rounded-xl border transition-all duration-200 ${isActivePath('/contact')
                     ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/25 border-[#0077b6]/30 dark:border-[#38bdf8]/30 shadow-xs'
                     : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/80 dark:hover:bg-slate-900 hover:border-slate-200 dark:hover:border-slate-800'
-                }`}
+                  }`}
               >
                 Contact Us
               </Link>
@@ -196,9 +191,8 @@ export const Navbar = () => {
                         <div
                           key={n.id}
                           onClick={() => handleMarkAsRead(n.id)}
-                          className={`py-3 px-1 cursor-pointer transition-colors ${
-                            !n.is_read ? 'bg-[#0077b6]/5 dark:bg-[#023e8a]/10' : 'opacity-70'
-                          }`}
+                          className={`py-3 px-1 cursor-pointer transition-colors ${!n.is_read ? 'bg-[#0077b6]/5 dark:bg-[#023e8a]/10' : 'opacity-70'
+                            }`}
                         >
                           <div className="flex items-start justify-between">
                             <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">{n.title}</p>
@@ -306,7 +300,7 @@ export const Navbar = () => {
 
         {/* Dynamic Scroll Progress Line Directly Attached to the Navbar Box */}
         <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-slate-200/50 dark:bg-slate-800/50 overflow-hidden">
-          <div 
+          <div
             className="h-full bg-gradient-to-r from-[#0077b6] via-[#0096c7] to-[#023e8a] dark:from-[#38bdf8] dark:via-[#60a5fa] dark:to-[#0077b6] transition-all duration-150 ease-out"
             style={{ width: `${scrollProgress}%` }}
           />
@@ -318,44 +312,40 @@ export const Navbar = () => {
             <Link
               to="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${
-                isActivePath('/')
+              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${isActivePath('/')
                   ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 border-[#0077b6]/30'
                   : 'text-slate-700 dark:text-slate-200 border-transparent hover:bg-slate-100 dark:hover:bg-slate-900'
-              }`}
+                }`}
             >
               Home
             </Link>
             <Link
               to="/catalog"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${
-                isActivePath('/catalog')
+              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${isActivePath('/catalog')
                   ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 border-[#0077b6]/30'
                   : 'text-slate-700 dark:text-slate-200 border-transparent hover:bg-slate-100 dark:hover:bg-slate-900'
-              }`}
+                }`}
             >
               All Vehicles
             </Link>
             <Link
               to="/about"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${
-                isActivePath('/about')
+              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${isActivePath('/about')
                   ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 border-[#0077b6]/30'
                   : 'text-slate-700 dark:text-slate-200 border-transparent hover:bg-slate-100 dark:hover:bg-slate-900'
-              }`}
+                }`}
             >
               About Us
             </Link>
             <Link
               to="/contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${
-                isActivePath('/contact')
+              className={`block px-3.5 py-2 rounded-xl text-xs font-semibold border ${isActivePath('/contact')
                   ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 border-[#0077b6]/30'
                   : 'text-slate-700 dark:text-slate-200 border-transparent hover:bg-slate-100 dark:hover:bg-slate-900'
-              }`}
+                }`}
             >
               Contact Us
             </Link>
