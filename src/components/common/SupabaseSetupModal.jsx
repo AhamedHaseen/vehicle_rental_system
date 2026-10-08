@@ -89,7 +89,7 @@ export const SupabaseSetupModal = ({ isOpen, onClose }) => {
         {/* Form inputs */}
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Supabase Project URL
             </label>
             <input
@@ -97,12 +97,12 @@ export const SupabaseSetupModal = ({ isOpen, onClose }) => {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://your-project.supabase.co"
-              className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-mono"
+              className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Supabase Anon Public API Key
             </label>
             <input
@@ -110,15 +110,15 @@ export const SupabaseSetupModal = ({ isOpen, onClose }) => {
               value={key}
               onChange={(e) => setKey(e.target.value)}
               placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-              className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-mono"
+              className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-mono"
             />
           </div>
 
           {testResult && (
             <div className={`p-3 rounded-lg border text-xs flex items-center gap-2 ${
               testResult.success
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
+                : 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-300'
             }`}>
               {testResult.success ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
               <span>{testResult.message}</span>
@@ -127,27 +127,27 @@ export const SupabaseSetupModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Database setup tip */}
-        <div className="bg-slate-900/60 p-4 rounded-xl border border-slate-800 text-xs space-y-2">
-          <div className="flex items-center justify-between text-slate-300 font-medium">
+        <div className="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-xs space-y-2">
+          <div className="flex items-center justify-between text-slate-800 dark:text-slate-300 font-medium">
             <span className="flex items-center gap-2">
-              <Terminal className="w-4 h-4 text-amber-400" />
+              <Terminal className="w-4 h-4 text-amber-500 dark:text-amber-400" />
               SQL Schema & Seed Script Ready
             </span>
             <button
               onClick={copySqlNotice}
-              className="text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold"
+              className="text-amber-600 dark:text-amber-400 hover:text-amber-500 flex items-center gap-1 font-semibold"
             >
               <Copy className="w-3.5 h-3.5" />
               {copiedSql ? 'Copied!' : 'Copy Path'}
             </button>
           </div>
-          <p className="text-slate-400 leading-relaxed">
-            The project root contains <code className="text-amber-300 bg-slate-800 px-1 py-0.5 rounded">supabase_schema.sql</code>. Open your Supabase Dashboard &gt; <strong>SQL Editor</strong>, paste it and click <strong>Run</strong> to create all tables, RLS policies, and seed vehicles.
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+            The project root contains <code className="text-amber-700 dark:text-amber-300 bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded">supabase_schema.sql</code>. Open your Supabase Dashboard &gt; <strong>SQL Editor</strong>, paste it and click <strong>Run</strong> to create all tables, RLS policies, and seed vehicles.
           </p>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-between pt-3 border-t border-slate-800/80">
+        <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800/80">
           {isConnected ? (
             <Button variant="danger" size="sm" onClick={handleDisconnect}>
               Disconnect & Return to Sandbox
@@ -157,7 +157,7 @@ export const SupabaseSetupModal = ({ isOpen, onClose }) => {
               href="https://supabase.com/dashboard"
               target="_blank"
               rel="noreferrer"
-              className="text-xs text-slate-400 hover:text-amber-400 flex items-center gap-1"
+              className="text-xs text-slate-500 dark:text-slate-400 hover:text-amber-500 flex items-center gap-1"
             >
               Get Supabase API Keys <ExternalLink className="w-3 h-3" />
             </a>

@@ -35,17 +35,21 @@ import { AdminSettings } from './pages/admin/AdminSettings';
 // Seamless Admin Access (allows visiting /admin directly)
 const AdminRoute = ({ children }) => {
   const { user, isAdmin, loginAsDemo } = useAuth();
-  if (!user || !isAdmin) {
-    loginAsDemo('admin');
-  }
+  React.useEffect(() => {
+    if (!user || !isAdmin) {
+      loginAsDemo('admin');
+    }
+  }, [user, isAdmin, loginAsDemo]);
   return children;
 };
 
 const CustomerRoute = ({ children }) => {
   const { user, loginAsDemo } = useAuth();
-  if (!user) {
-    loginAsDemo('customer');
-  }
+  React.useEffect(() => {
+    if (!user) {
+      loginAsDemo('customer');
+    }
+  }, [user, loginAsDemo]);
   return children;
 };
 

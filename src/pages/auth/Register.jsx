@@ -50,19 +50,19 @@ export const Register = () => {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md glass-panel p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
+      <div className="w-full max-w-md glass-panel p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 shadow-2xl space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/20">
             <Car className="w-6 h-6 text-slate-950" />
           </div>
-          <h1 className="text-2xl font-black text-slate-100 tracking-tight">Create Account</h1>
-          <p className="text-xs text-slate-400">Join RentFlow for instant booking and verified fleet rentals</p>
+          <h1 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Create Account</h1>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Join RentFlow for instant booking and verified fleet rentals</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Full Legal Name</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Full Legal Name</label>
             <div className="relative">
               <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -70,14 +70,14 @@ export const Register = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Kamal Perera"
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Email Address</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Email Address</label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -85,14 +85,14 @@ export const Register = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="kamal@example.com"
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Mobile Phone</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Mobile Phone</label>
             <div className="relative">
               <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -100,22 +100,22 @@ export const Register = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+94 77 123 4567"
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Account Role</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Account Role</label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => setRole('customer')}
                 className={`py-2 px-3 rounded-xl border font-semibold text-center transition-all ${
                   role === 'customer'
-                    ? 'bg-amber-500/15 border-amber-500 text-amber-400'
-                    : 'bg-slate-900 border-slate-800 text-slate-400'
+                    ? 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400'
+                    : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 Customer
@@ -125,8 +125,8 @@ export const Register = () => {
                 onClick={() => setRole('admin')}
                 className={`py-2 px-3 rounded-xl border font-semibold text-center transition-all ${
                   role === 'admin'
-                    ? 'bg-purple-500/15 border-purple-500 text-purple-300'
-                    : 'bg-slate-900 border-slate-800 text-slate-400'
+                    ? 'bg-purple-500/15 border-purple-500 text-purple-700 dark:text-purple-300'
+                    : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 Admin
@@ -135,7 +135,7 @@ export const Register = () => {
           </div>
 
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Password</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Password</label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -143,7 +143,7 @@ export const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters"
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 required
               />
             </div>
@@ -161,9 +161,9 @@ export const Register = () => {
           </Button>
         </form>
 
-        <p className="text-center text-xs text-slate-400">
+        <p className="text-center text-xs text-slate-600 dark:text-slate-400">
           Already registered?{' '}
-          <Link to="/login" className="text-amber-400 hover:text-amber-300 font-semibold">
+          <Link to="/login" className="text-amber-600 dark:text-amber-400 hover:underline font-semibold">
             Sign In here
           </Link>
         </p>

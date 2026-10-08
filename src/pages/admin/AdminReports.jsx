@@ -86,12 +86,12 @@ export const AdminReports = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Fleet Intelligence & Financial Analytics
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
             Category utilization metrics, vehicle yield, and executive reporting.
           </p>
         </div>
@@ -108,34 +108,34 @@ export const AdminReports = () => {
 
       {/* Top 3 Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
-          <span className="text-xs font-semibold text-slate-400 uppercase">Gross Rental Volume</span>
-          <h3 className="text-2xl font-black text-amber-400">{formatPrice(totalRev)}</h3>
-          <p className="text-[11px] text-slate-400">Total pipeline booking value</p>
+        <div className="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-2">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Gross Rental Volume</span>
+          <h3 className="text-2xl font-black text-amber-600 dark:text-amber-400">{formatPrice(totalRev)}</h3>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400">Total pipeline booking value</p>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
-          <span className="text-xs font-semibold text-slate-400 uppercase">Total Completed Dispatches</span>
-          <h3 className="text-2xl font-black text-emerald-400">
+        <div className="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-2">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Total Completed Dispatches</span>
+          <h3 className="text-2xl font-black text-emerald-600 dark:text-emerald-400">
             {bookings.filter(b => b.booking_status === 'completed' || b.booking_status === 'active').length} Trips
           </h3>
-          <p className="text-[11px] text-slate-400">Successfully dispatched vehicles</p>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400">Successfully dispatched vehicles</p>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
-          <span className="text-xs font-semibold text-slate-400 uppercase">Active Fleet Size</span>
-          <h3 className="text-2xl font-black text-slate-100">{vehicles.length} Units</h3>
-          <p className="text-[11px] text-slate-400">Managed across 4 regional depots</p>
+        <div className="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-2">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Active Fleet Size</span>
+          <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100">{vehicles.length} Units</h3>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400">Managed across 4 regional depots</p>
         </div>
       </div>
 
       {/* Category Performance Breakdown */}
-      <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-        <h3 className="text-base font-bold text-slate-100">Category Yield & Fleet Distribution</h3>
+      <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-4">
+        <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">Category Yield & Fleet Distribution</h3>
         
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-900/80 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-50 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="py-3 px-4">Vehicle Category</th>
                 <th className="py-3 px-4">Fleet Count</th>
@@ -144,32 +144,32 @@ export const AdminReports = () => {
                 <th className="py-3 px-4 text-right">Revenue Share</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
               {categoryStats.map((item) => {
                 const sharePercent = totalRev > 0 ? Math.round((item.revenue / totalRev) * 100) : 0;
                 return (
-                  <tr key={item.category} className="hover:bg-slate-900/40 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-slate-200">
+                  <tr key={item.category} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-slate-800 dark:text-slate-200">
                       {item.category}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-300 font-mono">
+                    <td className="py-3.5 px-4 text-slate-600 dark:text-slate-300 font-mono">
                       {item.fleetCount} Vehicles
                     </td>
-                    <td className="py-3.5 px-4 text-slate-300 font-mono">
+                    <td className="py-3.5 px-4 text-slate-600 dark:text-slate-300 font-mono">
                       {item.rentalsCount} Bookings
                     </td>
-                    <td className="py-3.5 px-4 font-mono font-bold text-amber-400">
+                    <td className="py-3.5 px-4 font-mono font-bold text-amber-600 dark:text-amber-400">
                       {formatPrice(item.revenue)}
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <div className="w-16 h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                        <div className="w-16 h-1.5 bg-slate-200 dark:bg-slate-900 rounded-full overflow-hidden">
                           <div
                             style={{ width: `${sharePercent}%` }}
                             className="h-full bg-amber-500 rounded-full"
                           />
                         </div>
-                        <span className="font-mono text-slate-300 w-8">{sharePercent}%</span>
+                        <span className="font-mono text-slate-600 dark:text-slate-300 w-8">{sharePercent}%</span>
                       </div>
                     </td>
                   </tr>
@@ -181,30 +181,30 @@ export const AdminReports = () => {
       </div>
 
       {/* Top 5 Most Rented Vehicles */}
-      <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-        <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-          <Award className="w-5 h-5 text-amber-400" /> Top Performing Fleet Vehicles
+      <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-4">
+        <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <Award className="w-5 h-5 text-amber-500 dark:text-amber-400" /> Top Performing Fleet Vehicles
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {vehicleRentalCounts.map((v, i) => (
-            <div key={v.id} className="p-4 bg-slate-900/70 rounded-2xl border border-slate-800 space-y-2 relative">
-              <span className="absolute top-2 right-2 w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold flex items-center justify-center">
+            <div key={v.id} className="p-4 bg-slate-50 dark:bg-slate-900/70 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2 relative">
+              <span className="absolute top-2 right-2 w-6 h-6 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-bold flex items-center justify-center">
                 #{i + 1}
               </span>
               <img
                 src={v.image_url}
                 alt={v.model}
-                className="w-full h-24 object-cover rounded-xl border border-slate-700/60"
+                className="w-full h-24 object-cover rounded-xl border border-slate-200 dark:border-slate-700/60"
               />
               <div>
-                <span className="text-[10px] text-amber-400 uppercase font-bold">{v.category}</span>
-                <h4 className="font-bold text-slate-100 text-xs truncate">{v.brand} {v.model}</h4>
-                <p className="text-[11px] text-slate-400 font-mono">{v.registration_no}</p>
+                <span className="text-[10px] text-amber-600 dark:text-amber-400 uppercase font-bold">{v.category}</span>
+                <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs truncate">{v.brand} {v.model}</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{v.registration_no}</p>
               </div>
-              <div className="pt-2 border-t border-slate-800 flex justify-between items-center text-[11px]">
-                <span className="text-slate-400">Bookings:</span>
-                <span className="font-bold text-slate-100">{v.rentalCount} Trips</span>
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-[11px]">
+                <span className="text-slate-500 dark:text-slate-400">Bookings:</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100">{v.rentalCount} Trips</span>
               </div>
             </div>
           ))}

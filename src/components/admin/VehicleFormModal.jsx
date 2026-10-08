@@ -148,36 +148,36 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
         {/* Row 1: Brand & Model & Year */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Brand *</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Brand *</label>
             <input
               type="text"
               value={formData.brand}
               onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
               placeholder="e.g. Toyota, Mercedes-Benz"
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
               required
             />
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Model *</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Model *</label>
             <input
               type="text"
               value={formData.model}
               onChange={(e) => setFormData({ ...formData, model: e.target.value })}
               placeholder="e.g. Prius, Land Cruiser"
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
               required
             />
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Year</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Year</label>
             <input
               type="number"
               value={formData.year}
               min="2015"
               max="2027"
               onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
             />
           </div>
         </div>
@@ -185,11 +185,11 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
         {/* Row 2: Category, Registration, Status */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Category</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Category</label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>{c}</option>
@@ -197,22 +197,22 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
             </select>
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Registration No. *</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Registration No. *</label>
             <input
               type="text"
               value={formData.registration_no}
               onChange={(e) => setFormData({ ...formData, registration_no: e.target.value })}
               placeholder="e.g. CAB-1234, WP-KS-4501"
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 font-mono uppercase focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono uppercase focus:outline-none focus:ring-1 focus:ring-amber-500"
               required
             />
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Status</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Status</label>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 capitalize focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 capitalize focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
               {STATUSES.map((s) => (
                 <option key={s} value={s}>{s}</option>
@@ -224,11 +224,11 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
         {/* Row 3: Fuel, Transmission, Seats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Fuel Type</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Fuel Type</label>
             <select
               value={formData.fuel_type}
               onChange={(e) => setFormData({ ...formData, fuel_type: e.target.value })}
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
               {FUEL_TYPES.map((f) => (
                 <option key={f} value={f}>{f}</option>
@@ -236,11 +236,11 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
             </select>
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Transmission</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Transmission</label>
             <select
               value={formData.transmission}
               onChange={(e) => setFormData({ ...formData, transmission: e.target.value })}
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
               {TRANSMISSIONS.map((t) => (
                 <option key={t} value={t}>{t}</option>
@@ -248,57 +248,57 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
             </select>
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Seats Count</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Seats Count</label>
             <input
               type="number"
               min="1"
               max="60"
               value={formData.seats}
               onChange={(e) => setFormData({ ...formData, seats: e.target.value })}
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
         </div>
 
         {/* Row 4: Pricing Schedule (Per Day, Per Hour, Deposit) */}
-        <div className="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label className="block text-amber-400 font-semibold mb-1">Daily Rental (LKR) *</label>
+            <label className="block text-amber-600 dark:text-amber-400 font-semibold mb-1">Daily Rental (LKR) *</label>
             <input
               type="number"
               min="100"
               value={formData.price_per_day}
               onChange={(e) => setFormData({ ...formData, price_per_day: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
               required
             />
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Hourly Rate (LKR)</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Hourly Rate (LKR)</label>
             <input
               type="number"
               min="0"
               value={formData.price_per_hour}
               onChange={(e) => setFormData({ ...formData, price_per_hour: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Security Deposit (LKR)</label>
+            <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Security Deposit (LKR)</label>
             <input
               type="number"
               min="0"
               value={formData.security_deposit}
               onChange={(e) => setFormData({ ...formData, security_deposit: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
           </div>
         </div>
 
         {/* Media: Image URL */}
         <div>
-          <label className="block text-slate-300 font-semibold mb-1 flex items-center gap-1.5">
-            <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
+          <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1 flex items-center gap-1.5">
+            <ImageIcon className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
             Vehicle Image URL (or Supabase Storage URL)
           </label>
           <input
@@ -306,37 +306,37 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
             value={formData.image_url}
             onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
             placeholder="https://..."
-            className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
             required
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-slate-300 font-semibold mb-1">Overview Description</label>
+          <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Overview Description</label>
           <textarea
             rows="2"
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             placeholder="Vehicle specifications, recommended usage and performance..."
-            className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
           />
         </div>
 
         {/* Features Tag Input */}
         <div>
-          <label className="block text-slate-300 font-semibold mb-1.5">Vehicle Features</label>
+          <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1.5">Vehicle Features</label>
           <div className="flex flex-wrap gap-1.5 mb-2">
             {formData.features.map((feat, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-1 bg-slate-800 text-slate-200 px-2 py-0.5 rounded-md text-[11px] border border-slate-700"
+                className="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2 py-0.5 rounded-md text-[11px] border border-slate-300 dark:border-slate-700"
               >
                 {feat}
                 <button
                   type="button"
                   onClick={() => handleRemoveFeature(i)}
-                  className="text-slate-400 hover:text-rose-400"
+                  className="text-slate-400 hover:text-rose-500"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -350,7 +350,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               onChange={(e) => setFormData({ ...formData, newFeature: e.target.value })}
               onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddFeature(); } }}
               placeholder="Type feature (e.g. Panoramic Sunroof) and press Enter"
-              className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
             <Button variant="secondary" size="sm" type="button" onClick={handleAddFeature}>
               Add
@@ -359,7 +359,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
           <Button variant="ghost" size="sm" onClick={onClose} type="button">
             Cancel
           </Button>
