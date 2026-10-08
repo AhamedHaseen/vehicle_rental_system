@@ -19,7 +19,7 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/30" />
-        
+
         {/* Top Badges */}
         <div className="absolute top-3 left-3 flex gap-2">
           <span className="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-slate-950/80 backdrop-blur-md text-[#38bdf8] border border-[#023e8a]/40">

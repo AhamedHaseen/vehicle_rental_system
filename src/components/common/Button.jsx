@@ -22,10 +22,10 @@ export const Button = ({
   };
 
   const variantClasses = {
-    primary: "bg-[#023e8a] hover:bg-[#0077b6] text-white font-semibold shadow-lg shadow-[#023e8a]/25 focus:ring-[#023e8a] border border-[#023e8a]/30",
-    secondary: "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700/80 focus:ring-slate-400 dark:focus:ring-slate-600 shadow-sm",
-    dark: "bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 focus:ring-slate-700",
-    outline: "border border-[#023e8a] hover:bg-[#023e8a]/10 text-[#023e8a] dark:text-[#60a5fa] focus:ring-[#023e8a] font-semibold",
+    primary: "bg-[#0077b6] hover:bg-[#023e8a] dark:bg-[#023e8a] dark:hover:bg-[#0077b6] text-white font-semibold shadow-lg shadow-[#0077b6]/25 dark:shadow-[#023e8a]/25 focus:ring-[#0077b6] dark:focus:ring-[#023e8a] border border-[#0077b6]/30 dark:border-[#023e8a]/30 transition-all duration-300",
+    secondary: "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700/80 focus:ring-slate-400 dark:focus:ring-slate-600 shadow-sm transition-all duration-300",
+    dark: "bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 focus:ring-slate-700 transition-all duration-300",
+    outline: "border border-[#0077b6] dark:border-[#023e8a] hover:bg-[#0077b6]/10 dark:hover:bg-[#023e8a]/10 text-[#0077b6] dark:text-[#60a5fa] focus:ring-[#0077b6] dark:focus:ring-[#023e8a] font-semibold transition-all duration-300",
     danger: "bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-lg shadow-rose-600/20 focus:ring-rose-500 border border-rose-500/30",
     ghost: "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:ring-slate-400 dark:focus:ring-slate-700 font-medium",
     emerald: "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-lg shadow-emerald-600/20 focus:ring-emerald-500 border border-emerald-500/30"

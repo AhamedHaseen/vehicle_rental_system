@@ -60,12 +60,12 @@ export const CustomerProfile = () => {
         <img
           src={user?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${user?.full_name || 'User'}`}
           alt={user?.full_name}
-          className="w-20 h-20 rounded-2xl object-cover ring-2 ring-[#023e8a]/40 shadow-xl"
+          className="w-20 h-20 rounded-2xl object-cover ring-2 ring-[#0077b6]/40 dark:ring-[#023e8a]/40 shadow-xl"
         />
         <div className="flex-1 text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start gap-2">
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">{user?.full_name}</h1>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#023e8a]/15 text-[#023e8a] dark:text-[#38bdf8] font-semibold border border-[#023e8a]/25 capitalize">
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#0077b6]/15 text-[#0077b6] dark:bg-[#023e8a]/20 dark:text-[#38bdf8] font-semibold border border-[#0077b6]/25 capitalize">
               {user?.role || 'Customer'}
             </span>
           </div>
@@ -85,7 +85,7 @@ export const CustomerProfile = () => {
         <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-5">
           <div className="pb-3 border-b border-slate-200 dark:border-slate-800">
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
-              <User className="w-4 h-4 text-[#023e8a] dark:text-[#38bdf8]" /> Personal & Contact Info
+              <User className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" /> Personal & Contact Info
             </h3>
           </div>
 
@@ -96,7 +96,7 @@ export const CustomerProfile = () => {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
                 required
               />
             </div>
@@ -118,7 +118,7 @@ export const CustomerProfile = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+94 77 123 4567"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
               />
             </div>
 
@@ -128,7 +128,7 @@ export const CustomerProfile = () => {
                 type="text"
                 value={licenseNo}
                 onChange={(e) => setLicenseNo(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
               />
             </div>
 
@@ -138,7 +138,7 @@ export const CustomerProfile = () => {
                 type="text"
                 value={idCardNo}
                 onChange={(e) => setIdCardNo(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
               />
             </div>
 
@@ -152,7 +152,7 @@ export const CustomerProfile = () => {
         <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-5">
           <div className="pb-3 border-b border-slate-200 dark:border-slate-800">
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
-              <Lock className="w-4 h-4 text-[#023e8a] dark:text-[#38bdf8]" /> Security & Password
+              <Lock className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" /> Security & Password
             </h3>
           </div>
 
@@ -164,7 +164,7 @@ export const CustomerProfile = () => {
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a] font-mono"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6] font-mono"
                 required
               />
             </div>
@@ -176,7 +176,7 @@ export const CustomerProfile = () => {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="At least 6 characters"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a] font-mono"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6] font-mono"
                 required
               />
             </div>
@@ -188,7 +188,7 @@ export const CustomerProfile = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Repeat new password"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#023e8a] font-mono"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6] font-mono"
                 required
               />
             </div>

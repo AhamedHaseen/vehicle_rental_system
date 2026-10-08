@@ -55,7 +55,7 @@ export const Navbar = () => {
             </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-1">
-                Rent<span className="text-[#023e8a] dark:text-[#38bdf8]">Flow</span>
+                Rent<span className="text-[#0077b6] dark:text-[#38bdf8]">Flow</span>
               </span>
               <span className="block text-[10px] tracking-widest uppercase text-slate-500 dark:text-slate-400 -mt-1 font-semibold">
                 Fleet & Rentals
@@ -69,7 +69,7 @@ export const Navbar = () => {
               to="/"
               className={`px-3.5 py-2 rounded-lg transition-colors ${
                 isActivePath('/')
-                  ? 'text-[#023e8a] dark:text-[#38bdf8] bg-[#023e8a]/10 font-semibold'
+                  ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 font-semibold'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
@@ -80,7 +80,7 @@ export const Navbar = () => {
               to="/catalog"
               className={`px-3.5 py-2 rounded-lg transition-colors ${
                 isActivePath('/catalog')
-                  ? 'text-[#023e8a] dark:text-[#38bdf8] bg-[#023e8a]/10 font-semibold'
+                  ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 font-semibold'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
@@ -91,7 +91,7 @@ export const Navbar = () => {
               to="/about"
               className={`px-3.5 py-2 rounded-lg transition-colors ${
                 isActivePath('/about')
-                  ? 'text-[#023e8a] dark:text-[#38bdf8] bg-[#023e8a]/10 font-semibold'
+                  ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 font-semibold'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
@@ -102,7 +102,7 @@ export const Navbar = () => {
               to="/contact"
               className={`px-3.5 py-2 rounded-lg transition-colors ${
                 isActivePath('/contact')
-                  ? 'text-[#023e8a] dark:text-[#38bdf8] bg-[#023e8a]/10 font-semibold'
+                  ? 'text-[#0077b6] dark:text-[#38bdf8] bg-[#0077b6]/10 dark:bg-[#023e8a]/20 font-semibold'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
@@ -116,7 +116,7 @@ export const Navbar = () => {
           {/* Theme Toggle Button (Light / Dark) */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 hover:text-[#023e8a] dark:hover:text-[#38bdf8] hover:border-[#023e8a]/40 transition-colors btn-tactile"
+            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 hover:text-[#0077b6] dark:hover:text-[#38bdf8] hover:border-[#0077b6]/40 transition-colors btn-tactile"
             title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
             aria-label="Toggle Theme"
           >
@@ -132,7 +132,7 @@ export const Navbar = () => {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 text-xs text-slate-800 dark:text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#023e8a] cursor-pointer font-semibold"
+              className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 text-xs text-slate-800 dark:text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0077b6] cursor-pointer font-semibold"
             >
               <option value="LKR">LKR (Rs.)</option>
               <option value="USD">USD ($)</option>
@@ -149,7 +149,7 @@ export const Navbar = () => {
             >
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#023e8a] text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
+                <span className="absolute top-1 right-1 w-4 h-4 bg-[#0077b6] dark:bg-[#023e8a] text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
                   {unreadCount}
                 </span>
               )}
@@ -159,7 +159,7 @@ export const Navbar = () => {
               <div className="absolute right-0 mt-2 w-80 sm:w-96 glass-panel rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 bg-white dark:bg-slate-950">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
                   <h4 className="font-semibold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                    <Bell className="w-4 h-4 text-[#023e8a] dark:text-[#38bdf8]" /> Notifications
+                    <Bell className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" /> Notifications
                   </h4>
                   <span className="text-xs text-slate-500 dark:text-slate-400">{unreadCount} unread</span>
                 </div>
@@ -173,12 +173,12 @@ export const Navbar = () => {
                         key={n.id}
                         onClick={() => handleMarkAsRead(n.id)}
                         className={`py-3 px-1 cursor-pointer transition-colors ${
-                          !n.is_read ? 'bg-[#023e8a]/5' : 'opacity-70'
+                          !n.is_read ? 'bg-[#0077b6]/5 dark:bg-[#023e8a]/10' : 'opacity-70'
                         }`}
                       >
                         <div className="flex items-start justify-between">
                           <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">{n.title}</p>
-                          {!n.is_read && <span className="w-1.5 h-1.5 rounded-full bg-[#023e8a] dark:bg-[#38bdf8] mt-1" />}
+                          {!n.is_read && <span className="w-1.5 h-1.5 rounded-full bg-[#0077b6] dark:bg-[#38bdf8] mt-1" />}
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2 leading-relaxed">{n.message}</p>
                       </div>
@@ -199,7 +199,7 @@ export const Navbar = () => {
                 <img
                   src={user.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${user.full_name || 'User'}`}
                   alt={user.full_name || 'User'}
-                  className="w-8 h-8 rounded-lg object-cover ring-1 ring-[#023e8a]/30"
+                  className="w-8 h-8 rounded-lg object-cover ring-1 ring-[#0077b6]/30 dark:ring-[#023e8a]/40"
                 />
                 <span className="hidden xl:block text-xs font-semibold text-slate-700 dark:text-slate-200 max-w-[120px] truncate">
                   {user.full_name}
@@ -212,7 +212,7 @@ export const Navbar = () => {
                   <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
                     <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">{user.full_name}</p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user.email}</p>
-                    <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold rounded-full bg-[#023e8a]/15 text-[#023e8a] dark:text-[#38bdf8] uppercase">
+                    <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold rounded-full bg-[#0077b6]/15 text-[#0077b6] dark:bg-[#023e8a]/20 dark:text-[#38bdf8] uppercase">
                       {role}
                     </span>
                   </div>

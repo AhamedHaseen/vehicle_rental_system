@@ -123,7 +123,7 @@ export const BrowseVehicles = () => {
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
               placeholder="Search Toyota, Mercedes, Prado..."
-              className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+              className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
             />
           </div>
 
@@ -143,11 +143,11 @@ export const BrowseVehicles = () => {
         <aside className={`md:block ${showMobileFilters ? 'block' : 'hidden'} space-y-6 glass-panel p-5 rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900/70 h-fit sticky top-24`}>
           <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <Filter className="w-3.5 h-3.5 text-[#023e8a] dark:text-[#38bdf8]" /> Filters
+              <Filter className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8]" /> Filters
             </span>
             <button
               onClick={handleResetFilters}
-              className="text-[11px] text-[#023e8a] dark:text-[#38bdf8] hover:text-[#0077b6] flex items-center gap-1 font-semibold"
+              className="text-[11px] text-[#0077b6] dark:text-[#38bdf8] hover:text-[#023e8a] flex items-center gap-1 font-semibold"
             >
               <RotateCcw className="w-3 h-3" /> Reset
             </button>
@@ -163,12 +163,12 @@ export const BrowseVehicles = () => {
                   onClick={() => setCategory(cat)}
                   className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center justify-between ${
                     category === cat
-                      ? 'bg-[#023e8a]/15 text-[#023e8a] dark:text-[#38bdf8] font-semibold'
+                      ? 'bg-[#0077b6]/15 text-[#0077b6] dark:text-[#38bdf8] font-semibold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
                   <span>{cat}</span>
-                  {category === cat && <span className="w-1.5 h-1.5 rounded-full bg-[#023e8a] dark:bg-[#38bdf8]" />}
+                  {category === cat && <span className="w-1.5 h-1.5 rounded-full bg-[#0077b6] dark:bg-[#38bdf8]" />}
                 </button>
               ))}
             </div>
@@ -178,7 +178,7 @@ export const BrowseVehicles = () => {
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Max Daily Rate</label>
-              <span className="text-xs font-mono font-bold text-[#023e8a] dark:text-[#38bdf8]">{formatPrice(maxPrice)}</span>
+              <span className="text-xs font-mono font-bold text-[#0077b6] dark:text-[#38bdf8]">{formatPrice(maxPrice)}</span>
             </div>
             <input
               type="range"
@@ -187,7 +187,7 @@ export const BrowseVehicles = () => {
               step="2000"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-full accent-[#023e8a] h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg cursor-pointer"
+              className="w-full accent-[#0077b6] h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg cursor-pointer"
             />
             <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
               <span>{formatPrice(4000)}</span>
@@ -201,7 +201,7 @@ export const BrowseVehicles = () => {
             <select
               value={fuelType}
               onChange={(e) => setFuelType(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
             >
               {FUEL_TYPES.map((f) => (
                 <option key={f} value={f}>{f}</option>
@@ -215,7 +215,7 @@ export const BrowseVehicles = () => {
             <select
               value={transmission}
               onChange={(e) => setTransmission(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
             >
               {TRANSMISSIONS.map((t) => (
                 <option key={t} value={t}>{t}</option>
@@ -230,7 +230,7 @@ export const BrowseVehicles = () => {
                 type="checkbox"
                 checked={availableOnly}
                 onChange={(e) => setAvailableOnly(e.target.checked)}
-                className="rounded bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-700 text-[#023e8a] focus:ring-[#023e8a] w-4 h-4"
+                className="rounded bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-700 text-[#0077b6] focus:ring-[#0077b6] w-4 h-4"
               />
               <span>Available Vehicles Only</span>
             </label>
@@ -248,7 +248,7 @@ export const BrowseVehicles = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-slate-200 rounded-lg px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+                className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-slate-200 rounded-lg px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
               >
                 <option value="featured">Featured / Default</option>
                 <option value="price_asc">Price: Low to High</option>

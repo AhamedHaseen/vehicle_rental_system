@@ -49,7 +49,7 @@ export const Login = () => {
       <div className="w-full max-w-md glass-panel p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 shadow-2xl space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#023e8a] to-[#0077b6] flex items-center justify-center mx-auto shadow-lg shadow-[#023e8a]/25">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0077b6] to-[#023e8a] flex items-center justify-center mx-auto shadow-lg shadow-[#0077b6]/25">
             <Car className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Sign In to RentFlow</h1>
@@ -58,7 +58,7 @@ export const Login = () => {
 
         {/* 1-Click Fast Evaluation Buttons */}
         <div className="p-3.5 bg-slate-50 dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#023e8a] dark:text-[#38bdf8] flex items-center gap-1.5 justify-center">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] flex items-center gap-1.5 justify-center">
             <Sparkles className="w-3.5 h-3.5" /> Instant 1-Click Demo Evaluation
           </span>
           <div className="grid grid-cols-2 gap-2">
@@ -67,7 +67,7 @@ export const Login = () => {
               onClick={() => handleDemoLogin('customer')}
               className="py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors btn-tactile"
             >
-              <UserCheck className="w-3.5 h-3.5 text-[#023e8a] dark:text-[#38bdf8]" />
+              <UserCheck className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8]" />
               <span>Customer Demo</span>
             </button>
             <button
@@ -98,7 +98,7 @@ export const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@domain.com"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
                 required
               />
             </div>
@@ -110,7 +110,7 @@ export const Login = () => {
               <button
                 type="button"
                 onClick={() => success('Password Reset', 'Password reset email simulation dispatched.')}
-                className="text-[11px] text-[#023e8a] dark:text-[#38bdf8] hover:underline"
+                className="text-[11px] text-[#0077b6] dark:text-[#38bdf8] hover:underline"
               >
                 Forgot?
               </button>
@@ -122,7 +122,7 @@ export const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#023e8a]"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
                 required
               />
             </div>
@@ -142,7 +142,7 @@ export const Login = () => {
 
         <p className="text-center text-xs text-slate-600 dark:text-slate-400">
           Don't have an account yet?{' '}
-          <Link to="/register" className="text-[#023e8a] dark:text-[#38bdf8] hover:underline font-semibold">
+          <Link to="/register" className="text-[#0077b6] dark:text-[#38bdf8] hover:underline font-semibold">
             Register new account
           </Link>
         </p>

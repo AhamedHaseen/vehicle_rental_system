@@ -44,7 +44,7 @@ export const VehicleDetail = () => {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <div className="w-12 h-12 border-4 border-[#023e8a]/20 border-t-[#023e8a] rounded-full animate-spin mx-auto" />
+        <div className="w-12 h-12 border-4 border-[#0077b6]/20 border-t-[#0077b6] dark:border-[#023e8a]/20 dark:border-t-[#38bdf8] rounded-full animate-spin mx-auto" />
       </div>
     );
   }
@@ -68,7 +68,7 @@ export const VehicleDetail = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Back button & Breadcrumb */}
       <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-        <Link to="/catalog" className="hover:text-[#023e8a] dark:hover:text-[#38bdf8] flex items-center gap-1 font-medium text-slate-700 dark:text-slate-300">
+        <Link to="/catalog" className="hover:text-[#0077b6] dark:hover:text-[#38bdf8] flex items-center gap-1 font-medium text-slate-700 dark:text-slate-300">
           <ArrowLeft className="w-3.5 h-3.5" /> Fleet
         </Link>
         <ChevronRight className="w-3 h-3 text-slate-400 dark:text-slate-600" />
@@ -106,7 +106,7 @@ export const VehicleDetail = () => {
                     key={i}
                     onClick={() => setActiveImage(img)}
                     className={`relative w-24 h-16 rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
-                      activeImage === img ? 'border-[#023e8a] scale-95' : 'border-transparent opacity-70 hover:opacity-100'
+                      activeImage === img ? 'border-[#0077b6] dark:border-[#38bdf8] scale-95' : 'border-transparent opacity-70 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt="thumbnail" className="w-full h-full object-cover" />
@@ -120,7 +120,7 @@ export const VehicleDetail = () => {
           <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <span className="text-xs font-bold text-[#023e8a] dark:text-[#38bdf8] uppercase tracking-widest">{vehicle.brand}</span>
+                <span className="text-xs font-bold text-[#0077b6] dark:text-[#38bdf8] uppercase tracking-widest">{vehicle.brand}</span>
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100">
                   {vehicle.model} ({vehicle.year})
                 </h1>
@@ -128,14 +128,14 @@ export const VehicleDetail = () => {
                   <span className="font-mono bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">{vehicle.registration_no}</span>
                   <span>•</span>
                   <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
-                    <MapPin className="w-3.5 h-3.5 text-[#023e8a] dark:text-[#38bdf8]" /> {vehicle.location || 'Colombo Flagship Hub'}
+                    <MapPin className="w-3.5 h-3.5 text-[#0077b6] dark:text-[#38bdf8]" /> {vehicle.location || 'Colombo Flagship Hub'}
                   </span>
                 </p>
               </div>
 
               <div className="text-right">
                 <span className="text-xs text-slate-500 dark:text-slate-400 block font-medium">Daily Rental Rate</span>
-                <span className="text-2xl sm:text-3xl font-black text-[#023e8a] dark:text-[#38bdf8]">
+                <span className="text-2xl sm:text-3xl font-black text-[#0077b6] dark:text-[#38bdf8]">
                   {formatPrice(vehicle.price_per_day)}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">/day</span>
@@ -252,7 +252,7 @@ export const VehicleDetail = () => {
             <div>
               <span className="text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">Pricing Summary</span>
               <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-3xl font-extrabold text-[#023e8a] dark:text-[#38bdf8]">
+                <span className="text-3xl font-extrabold text-[#0077b6] dark:text-[#38bdf8]">
                   {formatPrice(vehicle.price_per_day)}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">/day</span>
@@ -285,7 +285,7 @@ export const VehicleDetail = () => {
               variant={isAvailable ? 'primary' : 'secondary'}
               size="lg"
               disabled={!isAvailable}
-              className="w-full text-base font-bold shadow-lg shadow-[#023e8a]/20"
+              className="w-full text-base font-bold shadow-lg shadow-[#0077b6]/20 dark:shadow-[#023e8a]/20"
               onClick={() => setIsBookingOpen(true)}
             >
               {isAvailable ? 'Proceed to Reservation' : 'Currently Rented Out'}

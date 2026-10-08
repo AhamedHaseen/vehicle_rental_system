@@ -93,7 +93,7 @@ export const MyBookings = () => {
             onClick={() => setFilter(tab)}
             className={`px-3 py-1.5 rounded-xl font-semibold capitalize whitespace-nowrap transition-colors ${
               filter === tab
-                ? 'bg-[#023e8a]/15 text-[#023e8a] dark:text-[#38bdf8] border border-[#023e8a]/30'
+                ? 'bg-[#0077b6]/15 text-[#0077b6] dark:text-[#38bdf8] border border-[#0077b6]/30 shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
             }`}
           >
@@ -144,12 +144,12 @@ export const MyBookings = () => {
                   {/* Left: Vehicle & Code Header */}
                   <div className="space-y-2 flex-1">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs font-bold px-2.5 py-1 bg-slate-100 dark:bg-slate-900 text-[#023e8a] dark:text-[#38bdf8] rounded-md border border-[#023e8a]/20">
+                      <span className="font-mono text-xs font-bold px-2.5 py-1 bg-slate-100 dark:bg-slate-900 text-[#0077b6] dark:text-[#38bdf8] rounded-md border border-[#0077b6]/20">
                         {b.booking_code}
                       </span>
                       <Badge status={b.booking_status} />
                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${
-                        b.payment_status === 'paid' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-[#023e8a]/10 text-[#023e8a] dark:text-[#38bdf8]'
+                        b.payment_status === 'paid' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-[#0077b6]/10 text-[#0077b6] dark:text-[#38bdf8]'
                       }`}>
                         Payment: {b.payment_status?.toUpperCase()}
                       </span>
@@ -162,7 +162,7 @@ export const MyBookings = () => {
                     {/* Timeline Info */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700 dark:text-slate-300 pt-2">
                       <div className="flex items-start gap-2">
-                        <Calendar className="w-4 h-4 text-[#023e8a] dark:text-[#38bdf8] shrink-0 mt-0.5" />
+                        <Calendar className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8] shrink-0 mt-0.5" />
                         <div>
                           <span className="text-slate-500 dark:text-slate-400 text-[11px] block">Pickup Schedule</span>
                           <span>{startDateFormatted}</span>
@@ -171,7 +171,7 @@ export const MyBookings = () => {
                       </div>
 
                       <div className="flex items-start gap-2">
-                        <Clock className="w-4 h-4 text-[#023e8a] dark:text-[#38bdf8] shrink-0 mt-0.5" />
+                        <Clock className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8] shrink-0 mt-0.5" />
                         <div>
                           <span className="text-slate-500 dark:text-slate-400 text-[11px] block">Return Schedule</span>
                           <span>{endDateFormatted}</span>
@@ -184,7 +184,7 @@ export const MyBookings = () => {
                   {/* Middle: Total Amount */}
                   <div className="lg:text-right border-t lg:border-t-0 pt-4 lg:pt-0 border-slate-200 dark:border-slate-800 shrink-0">
                     <span className="text-xs text-slate-500 dark:text-slate-400 block font-medium">Total Amount</span>
-                    <span className="text-2xl font-extrabold text-[#023e8a] dark:text-[#38bdf8] block">
+                    <span className="text-2xl font-extrabold text-[#0077b6] dark:text-[#38bdf8] block">
                       {formatPrice(b.total_amount)}
                     </span>
                     <span className="text-[11px] text-slate-500 block mt-0.5">
@@ -268,7 +268,7 @@ export const MyBookings = () => {
 
               <div>
                 <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">Pass Code</span>
-                <p className="font-mono text-xl font-extrabold text-[#023e8a] dark:text-[#38bdf8]">{activePassBooking.booking_code}</p>
+                <p className="font-mono text-xl font-extrabold text-[#0077b6] dark:text-[#38bdf8]">{activePassBooking.booking_code}</p>
               </div>
 
               <div className="text-left bg-white dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
@@ -302,7 +302,7 @@ export const MyBookings = () => {
                 <p className="text-slate-600 dark:text-slate-400 font-mono">GST / VAT: LK-990124-V</p>
               </div>
               <div className="text-right">
-                <span className="text-[#023e8a] dark:text-[#38bdf8] font-bold font-mono text-sm">{activeReceiptBooking.booking_code}</span>
+                <span className="text-[#0077b6] dark:text-[#38bdf8] font-bold font-mono text-sm">{activeReceiptBooking.booking_code}</span>
                 <p className="text-slate-500 dark:text-slate-400">{new Date(activeReceiptBooking.created_at).toLocaleDateString()}</p>
               </div>
             </div>
@@ -334,7 +334,7 @@ export const MyBookings = () => {
               )}
               <div className="flex justify-between text-slate-900 dark:text-slate-100 font-bold text-sm pt-2 border-t border-slate-200 dark:border-slate-800">
                 <span>Grand Total Paid:</span>
-                <span className="text-[#023e8a] dark:text-[#38bdf8] font-mono text-base">{formatPrice(activeReceiptBooking.total_amount)}</span>
+                <span className="text-[#0077b6] dark:text-[#38bdf8] font-mono text-base">{formatPrice(activeReceiptBooking.total_amount)}</span>
               </div>
             </div>
 
@@ -369,7 +369,7 @@ export const MyBookings = () => {
           <div className="space-y-4 text-xs text-slate-700 dark:text-slate-300">
             <p className="leading-relaxed">
               In accordance with our 24-hour cancellation policy, your full payment and pre-authorized security deposit of{' '}
-              <strong className="text-[#023e8a] dark:text-[#38bdf8]">{formatPrice(cancelModalBooking.total_amount)}</strong> will be released back to your original payment method.
+              <strong className="text-[#0077b6] dark:text-[#38bdf8]">{formatPrice(cancelModalBooking.total_amount)}</strong> will be released back to your original payment method.
             </p>
             <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
               <Button variant="ghost" size="sm" onClick={() => setCancelModalBooking(null)}>
