@@ -10,7 +10,7 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
   const isAvailable = vehicle.status === 'available';
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden border border-slate-800/80 flex flex-col group">
+    <div className="glass-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 flex flex-col group">
       {/* Vehicle Media Header */}
       <div className="relative h-52 w-full overflow-hidden bg-slate-900">
         <img
@@ -43,27 +43,27 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
         <div>
           <div className="flex items-start justify-between gap-2 mb-2">
             <div>
-              <p className="text-xs font-semibold text-amber-500 uppercase tracking-wider">{vehicle.brand}</p>
-              <h3 className="text-lg font-bold text-slate-100 group-hover:text-amber-400 transition-colors">
+              <p className="text-xs font-semibold text-amber-600 dark:text-amber-500 uppercase tracking-wider">{vehicle.brand}</p>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                 {vehicle.model}
               </h3>
             </div>
-            <span className="text-xs font-semibold text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/60">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/60 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700/60">
               {vehicle.year}
             </span>
           </div>
 
           {/* Quick Specs Pill Row */}
-          <div className="grid grid-cols-3 gap-2 my-4 text-xs text-slate-300">
-            <div className="flex items-center gap-1.5 bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+          <div className="grid grid-cols-3 gap-2 my-4 text-xs text-slate-600 dark:text-slate-300">
+            <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900/60 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
               <Users className="w-3.5 h-3.5 text-slate-400" />
               <span>{vehicle.seats} Seats</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+            <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900/60 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
               <Fuel className="w-3.5 h-3.5 text-slate-400" />
               <span className="truncate">{vehicle.fuel_type}</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+            <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900/60 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
               <Gauge className="w-3.5 h-3.5 text-slate-400" />
               <span className="truncate">{vehicle.transmission}</span>
             </div>
@@ -71,20 +71,20 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
         </div>
 
         {/* Pricing & Call to Action */}
-        <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
           <div>
-            <span className="text-[11px] text-slate-400 block font-medium">Daily Rate</span>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Daily Rate</span>
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-extrabold text-amber-400">
+              <span className="text-lg font-extrabold text-amber-600 dark:text-amber-400">
                 {formatPrice(vehicle.price_per_day)}
               </span>
-              <span className="text-xs text-slate-400">/day</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">/day</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Link to={`/vehicle/${vehicle.id}`}>
-              <Button variant="ghost" size="sm" className="text-xs">
+              <Button variant="ghost" size="sm" className="text-xs text-slate-600 dark:text-slate-300">
                 Specs
               </Button>
             </Link>
