@@ -7,6 +7,7 @@ import { getVehicles } from '../../services/dataService';
 import { VehicleCard } from '../../components/customer/VehicleCard';
 import { BookingModal } from '../../components/customer/BookingModal';
 import { Button } from '../../components/common/Button';
+import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { useCurrency } from '../../context/CurrencyContext';
 
 const CATEGORIES = ['All', 'Car', 'SUV', 'Luxury Vehicle', 'Van', 'Motorbike', 'Three-Wheeler'];
@@ -104,7 +105,7 @@ export const BrowseVehicles = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Header and Search Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+      <ScrollReveal direction="down" duration={600} className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Vehicle Fleet Catalog
@@ -135,7 +136,7 @@ export const BrowseVehicles = () => {
             <SlidersHorizontal className="w-4 h-4" />
           </button>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Main Content Layout (Sidebar Filters + Vehicle Grid) */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -248,7 +249,7 @@ export const BrowseVehicles = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-slate-200 rounded-lg px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-slate-200 rounded-lg px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
               >
                 <option value="featured">Featured / Default</option>
                 <option value="price_asc">Price: Low to High</option>
@@ -278,12 +279,18 @@ export const BrowseVehicles = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredVehicles.map((vehicle) => (
-                <VehicleCard
+              {filteredVehicles.map((vehicle, idx) => (
+                <ScrollReveal
                   key={vehicle.id}
-                  vehicle={vehicle}
-                  onBookClick={(v) => setSelectedVehicleForBooking(v)}
-                />
+                  direction="auto"
+                  delay={(idx % 6) * 65}
+                  duration={500}
+                >
+                  <VehicleCard
+                    vehicle={vehicle}
+                    onBookClick={(v) => setSelectedVehicleForBooking(v)}
+                  />
+                </ScrollReveal>
               ))}
             </div>
           )}

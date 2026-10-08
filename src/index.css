@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
@@ -179,4 +179,46 @@ html.dark .glass-card:hover {
 .animate-gradient-text {
   background-size: 200% auto;
   animation: gradientShift 6s ease infinite;
+}
+
+/* Smooth Page Transitions */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.998);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Luxury Top Route Navigation Indicator Beam */
+@keyframes topBeam {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-top-beam {
+  animation: topBeam 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Smooth HTML scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Bidirectional Scroll Reveal Helpers */
+.scroll-reveal-container {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }

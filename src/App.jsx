@@ -8,6 +8,7 @@ import { ThemeProvider } from './context/ThemeContext';
 // Layout components
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
+import { PageTransition } from './components/common/PageTransition';
 
 // Customer Pages
 import { Home } from './pages/customer/Home';
@@ -64,59 +65,61 @@ function App() {
                 <Navbar />
 
                 <main className="flex-1">
-                  <Routes>
-                    {/* Primary Customer & Public Routes */}
-                    <Route path="/" element={<Home />} />
-                    <Route path="/catalog" element={<BrowseVehicles />} />
-                    <Route path="/vehicles" element={<Navigate to="/catalog" replace />} />
-                    <Route path="/about" element={<AboutUs />} />
-                    <Route path="/contact" element={<ContactUs />} />
-                    <Route path="/vehicle/:id" element={<VehicleDetail />} />
+                  <PageTransition>
+                    <Routes>
+                      {/* Primary Customer & Public Routes */}
+                      <Route path="/" element={<Home />} />
+                      <Route path="/catalog" element={<BrowseVehicles />} />
+                      <Route path="/vehicles" element={<Navigate to="/catalog" replace />} />
+                      <Route path="/about" element={<AboutUs />} />
+                      <Route path="/contact" element={<ContactUs />} />
+                      <Route path="/vehicle/:id" element={<VehicleDetail />} />
 
-                    <Route
-                      path="/my-bookings"
-                      element={
-                        <CustomerRoute>
-                          <MyBookings />
-                        </CustomerRoute>
-                      }
-                    />
-                    <Route
-                      path="/profile"
-                      element={
-                        <CustomerRoute>
-                          <CustomerProfile />
-                        </CustomerRoute>
-                      }
-                    />
+                      <Route
+                        path="/my-bookings"
+                        element={
+                          <CustomerRoute>
+                            <MyBookings />
+                          </CustomerRoute>
+                        }
+                      />
+                      <Route
+                        path="/profile"
+                        element={
+                          <CustomerRoute>
+                            <CustomerProfile />
+                          </CustomerRoute>
+                        }
+                      />
 
-                    {/* Auth */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+                      {/* Auth */}
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
 
-                    {/* Admin Command Center via /admin */}
-                    <Route
-                      path="/admin"
-                      element={
-                        <AdminRoute>
-                          <AdminLayout />
-                        </AdminRoute>
-                      }
-                    >
-                      {/* Direct /admin lands on AdminDashboard */}
-                      <Route index element={<AdminDashboard />} />
-                      <Route path="dashboard" element={<AdminDashboard />} />
-                      <Route path="fleet" element={<AdminFleet />} />
-                      <Route path="bookings" element={<AdminBookings />} />
-                      <Route path="customers" element={<AdminCustomers />} />
-                      <Route path="payments" element={<AdminPayments />} />
-                      <Route path="reports" element={<AdminReports />} />
-                      <Route path="settings" element={<AdminSettings />} />
-                    </Route>
+                      {/* Admin Command Center via /admin */}
+                      <Route
+                        path="/admin"
+                        element={
+                          <AdminRoute>
+                            <AdminLayout />
+                          </AdminRoute>
+                        }
+                      >
+                        {/* Direct /admin lands on AdminDashboard */}
+                        <Route index element={<AdminDashboard />} />
+                        <Route path="dashboard" element={<AdminDashboard />} />
+                        <Route path="fleet" element={<AdminFleet />} />
+                        <Route path="bookings" element={<AdminBookings />} />
+                        <Route path="customers" element={<AdminCustomers />} />
+                        <Route path="payments" element={<AdminPayments />} />
+                        <Route path="reports" element={<AdminReports />} />
+                        <Route path="settings" element={<AdminSettings />} />
+                      </Route>
 
-                    {/* Fallback */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                  </Routes>
+                      {/* Fallback */}
+                      <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                  </PageTransition>
                 </main>
 
                 <Footer />
