@@ -1,0 +1,343 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { 
+  Car, Shield, Bell, User, LogOut, ChevronDown, 
+  Database, RefreshCw, LayoutDashboard, CalendarCheck, Settings,
+  Menu, X, Sparkles
+} from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useCurrency } from '../../context/CurrencyContext';
+import { isSupabaseConfigured } from '../../services/supabase';
+import { getNotifications, markNotificationRead } from '../../services/dataService';
+import { SupabaseSetupModal } from '../common/SupabaseSetupModal';
+import { RoleSwitcherModal } from '../common/RoleSwitcherModal';
+import { Button } from '../common/Button';
+
+export const Navbar = () => {
+  const { user, role, isAdmin, logout } = useAuth();
+  const { currency, setCurrency } = useCurrency();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [isSupabaseModalOpen, setIsSupabaseModalOpen] = useState(false);
+  const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  const isConnected = isSupabaseConfigured();
+
+  useEffect(() => {
+    const fetchNotifs = async () => {
+      const list = await getNotifications(user?.id || 'all');
+      setNotifications(list);
+    };
+    fetchNotifs();
+  }, [user]);
+
+  const unreadCount = notifications.filter(n => !n.is_read).length;
+
+  const handleMarkAsRead = (id) => {
+    markNotificationRead(id);
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, is_read: true } : n));
+  };
+
+  const isActivePath = (path) => location.pathname === path;
+
+  return (
+    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+        {/* Brand Logo */}
+        <div className="flex items-center gap-8">
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+              <Car className="w-5 h-5 text-slate-950" />
+            </div>
+            <div>
+              <span className="text-xl font-bold tracking-tight text-slate-100 flex items-center gap-1">
+                Rent<span className="text-amber-400">Flow</span>
+              </span>
+              <span className="block text-[10px] tracking-widest uppercase text-slate-400 -mt-1 font-semibold">
+                Fleet & Rentals
+              </span>
+            </div>
+          </Link>
+
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+            <Link
+              to="/catalog"
+              className={`px-3.5 py-2 rounded-lg transition-colors ${
+                isActivePath('/catalog')
+                  ? 'text-amber-400 bg-amber-500/10'
+                  : 'text-slate-300 hover:text-slate-100 hover:bg-slate-850'
+              }`}
+            >
+              Browse Fleet
+            </Link>
+
+            {user && (
+              <Link
+                to="/my-bookings"
+                className={`px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 ${
+                  isActivePath('/my-bookings')
+                    ? 'text-amber-400 bg-amber-500/10'
+                    : 'text-slate-300 hover:text-slate-100 hover:bg-slate-850'
+                }`}
+              >
+                <CalendarCheck className="w-4 h-4" />
+                My Bookings
+              </Link>
+            )}
+
+            {isAdmin && (
+              <Link
+                to="/admin/dashboard"
+                className={`px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 font-semibold ${
+                  location.pathname.startsWith('/admin')
+                    ? 'text-purple-400 bg-purple-500/15 border border-purple-500/30'
+                    : 'text-purple-300 hover:text-purple-200 hover:bg-purple-950/40'
+                }`}
+              >
+                <Shield className="w-4 h-4 text-purple-400" />
+                Admin Command
+              </Link>
+            )}
+          </nav>
+        </div>
+
+        {/* Right Action Icons & Controls */}
+        <div className="flex items-center gap-3">
+          {/* Supabase Status Pill */}
+          <button
+            onClick={() => setIsSupabaseModalOpen(true)}
+            className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${
+              isConnected
+                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                : 'bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
+            }`}
+            title="Click to view or update Supabase settings"
+          >
+            <Database className="w-3.5 h-3.5" />
+            <span>{isConnected ? 'Supabase Live' : 'Sandbox DB'}</span>
+          </button>
+
+          {/* Currency Switcher */}
+          <div className="relative">
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              className="bg-slate-900 border border-slate-700/80 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer font-semibold"
+            >
+              <option value="LKR">LKR (Rs.)</option>
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+            </select>
+          </div>
+
+          {/* Role Switcher Pill */}
+          <button
+            onClick={() => setIsRoleModalOpen(true)}
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 transition-colors"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Role: <strong className="text-amber-400 capitalize">{role}</strong></span>
+            <RefreshCw className="w-3 h-3 text-slate-400 ml-0.5" />
+          </button>
+
+          {/* Notifications Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setIsNotifOpen(!isNotifOpen)}
+              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors relative"
+              aria-label="Notifications"
+            >
+              <Bell className="w-5 h-5" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 bg-amber-500 text-slate-950 text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+
+            {isNotifOpen && (
+              <div className="absolute right-0 mt-2 w-80 sm:w-96 glass-panel rounded-2xl border border-slate-700 shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <h4 className="font-semibold text-sm text-slate-100 flex items-center gap-2">
+                    <Bell className="w-4 h-4 text-amber-400" /> Notifications
+                  </h4>
+                  <span className="text-xs text-slate-400">{unreadCount} unread</span>
+                </div>
+
+                <div className="mt-2 divide-y divide-slate-800/60 max-h-72 overflow-y-auto">
+                  {notifications.length === 0 ? (
+                    <p className="text-xs text-slate-500 py-6 text-center">No notifications yet</p>
+                  ) : (
+                    notifications.map((n) => (
+                      <div
+                        key={n.id}
+                        onClick={() => handleMarkAsRead(n.id)}
+                        className={`py-3 px-1 cursor-pointer transition-colors ${
+                          !n.is_read ? 'bg-amber-500/5' : 'opacity-70'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between">
+                          <p className="text-xs font-semibold text-slate-200">{n.title}</p>
+                          {!n.is_read && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1" />}
+                        </div>
+                        <p className="text-xs text-slate-400 mt-0.5 line-clamp-2 leading-relaxed">{n.message}</p>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* User Account / Auth Dropdown */}
+          {user ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-800/80 transition-colors border border-transparent hover:border-slate-700"
+              >
+                <img
+                  src={user.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${user.full_name || 'User'}`}
+                  alt={user.full_name || 'User'}
+                  className="w-8 h-8 rounded-lg object-cover ring-1 ring-amber-500/30"
+                />
+                <span className="hidden xl:block text-xs font-semibold text-slate-200 max-w-[120px] truncate">
+                  {user.full_name}
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              </button>
+
+              {isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 glass-panel rounded-2xl border border-slate-700 shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95">
+                  <div className="px-3 py-2 border-b border-slate-800">
+                    <p className="text-xs font-semibold text-slate-100">{user.full_name}</p>
+                    <p className="text-[11px] text-slate-400 truncate">{user.email}</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold rounded-full bg-amber-500/20 text-amber-400 uppercase">
+                      {role}
+                    </span>
+                  </div>
+
+                  <div className="py-1">
+                    <Link
+                      to="/profile"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 rounded-lg"
+                    >
+                      <User className="w-4 h-4 text-slate-400" /> Profile & Documents
+                    </Link>
+                    <Link
+                      to="/my-bookings"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 rounded-lg"
+                    >
+                      <CalendarCheck className="w-4 h-4 text-slate-400" /> My Bookings
+                    </Link>
+                    {isAdmin && (
+                      <Link
+                        to="/admin/dashboard"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 text-xs text-purple-300 hover:bg-purple-950/40 rounded-lg font-semibold"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-purple-400" /> Admin Command
+                      </Link>
+                    )}
+                  </div>
+
+                  <div className="pt-1 border-t border-slate-800">
+                    <button
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        logout();
+                        navigate('/');
+                      }}
+                      className="flex w-full items-center gap-2 px-3 py-2 text-xs text-rose-400 hover:bg-rose-500/10 rounded-lg font-medium"
+                    >
+                      <LogOut className="w-4 h-4" /> Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link to="/login">
+                <Button variant="ghost" size="sm">Sign In</Button>
+              </Link>
+              <Link to="/register">
+                <Button variant="primary" size="sm">Register</Button>
+              </Link>
+            </div>
+          )}
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-slate-400 hover:text-white"
+            aria-label="Toggle mobile menu"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile nav drawer */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-800 bg-slate-950 p-4 space-y-3">
+          <Link
+            to="/catalog"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium"
+          >
+            Browse Fleet
+          </Link>
+          <Link
+            to="/my-bookings"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium"
+          >
+            My Bookings
+          </Link>
+          {isAdmin && (
+            <Link
+              to="/admin/dashboard"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-purple-300 bg-purple-950/30 text-sm font-semibold"
+            >
+              Admin Command Center
+            </Link>
+          )}
+          <div className="pt-2 flex items-center justify-between border-t border-slate-800">
+            <button
+              onClick={() => { setIsMobileMenuOpen(false); setIsRoleModalOpen(true); }}
+              className="text-xs text-amber-400 font-semibold"
+            >
+              Switch Role ({role})
+            </button>
+            <button
+              onClick={() => { setIsMobileMenuOpen(false); setIsSupabaseModalOpen(true); }}
+              className="text-xs text-slate-400"
+            >
+              Supabase Status
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modals */}
+      <SupabaseSetupModal
+        isOpen={isSupabaseModalOpen}
+        onClose={() => setIsSupabaseModalOpen(false)}
+      />
+      <RoleSwitcherModal
+        isOpen={isRoleModalOpen}
+        onClose={() => setIsRoleModalOpen(false)}
+      />
+    </header>
+  );
+};
