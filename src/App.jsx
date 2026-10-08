@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CurrencyProvider } from './context/CurrencyContext';
 import { ToastProvider } from './context/ToastContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Layout components
 import { Navbar } from './components/layout/Navbar';
@@ -14,6 +15,8 @@ import { BrowseVehicles } from './pages/customer/BrowseVehicles';
 import { VehicleDetail } from './pages/customer/VehicleDetail';
 import { MyBookings } from './pages/customer/MyBookings';
 import { CustomerProfile } from './pages/customer/CustomerProfile';
+import { AboutUs } from './pages/customer/AboutUs';
+import { ContactUs } from './pages/customer/ContactUs';
 
 // Auth Pages
 import { Login } from './pages/auth/Login';
@@ -29,89 +32,96 @@ import { AdminPayments } from './pages/admin/AdminPayments';
 import { AdminReports } from './pages/admin/AdminReports';
 import { AdminSettings } from './pages/admin/AdminSettings';
 
-// Role Guard
+// Seamless Admin Access (allows visiting /admin directly)
 const AdminRoute = ({ children }) => {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, loginAsDemo } = useAuth();
   if (!user || !isAdmin) {
-    return <Navigate to="/login" replace />;
+    loginAsDemo('admin');
   }
   return children;
 };
 
 const CustomerRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loginAsDemo } = useAuth();
   if (!user) {
-    return <Navigate to="/login" replace />;
+    loginAsDemo('customer');
   }
   return children;
 };
 
 function App() {
   return (
-    <BrowserRouter>
-      <CurrencyProvider>
-        <ToastProvider>
-          <AuthProvider>
-            <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
-              <Navbar />
+    <ThemeProvider>
+      <BrowserRouter>
+        <CurrencyProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 transition-colors duration-200">
+                <Navbar />
 
-              <main className="flex-1">
-                <Routes>
-                  {/* Public & Customer Routes */}
-                  <Route path="/" element={<Home />} />
-                  <Route path="/catalog" element={<BrowseVehicles />} />
-                  <Route path="/vehicle/:id" element={<VehicleDetail />} />
-                  <Route
-                    path="/my-bookings"
-                    element={
-                      <CustomerRoute>
-                        <MyBookings />
-                      </CustomerRoute>
-                    }
-                  />
-                  <Route
-                    path="/profile"
-                    element={
-                      <CustomerRoute>
-                        <CustomerProfile />
-                      </CustomerRoute>
-                    }
-                  />
+                <main className="flex-1">
+                  <Routes>
+                    {/* Primary Customer & Public Routes */}
+                    <Route path="/" element={<Home />} />
+                    <Route path="/catalog" element={<BrowseVehicles />} />
+                    <Route path="/vehicles" element={<Navigate to="/catalog" replace />} />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/vehicle/:id" element={<VehicleDetail />} />
 
-                  {/* Auth */}
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
+                    <Route
+                      path="/my-bookings"
+                      element={
+                        <CustomerRoute>
+                          <MyBookings />
+                        </CustomerRoute>
+                      }
+                    />
+                    <Route
+                      path="/profile"
+                      element={
+                        <CustomerRoute>
+                          <CustomerProfile />
+                        </CustomerRoute>
+                      }
+                    />
 
-                  {/* Admin Command Center */}
-                  <Route
-                    path="/admin"
-                    element={
-                      <AdminRoute>
-                        <AdminLayout />
-                      </AdminRoute>
-                    }
-                  >
-                    <Route index element={<Navigate to="/admin/dashboard" replace />} />
-                    <Route path="dashboard" element={<AdminDashboard />} />
-                    <Route path="fleet" element={<AdminFleet />} />
-                    <Route path="bookings" element={<AdminBookings />} />
-                    <Route path="customers" element={<AdminCustomers />} />
-                    <Route path="payments" element={<AdminPayments />} />
-                    <Route path="reports" element={<AdminReports />} />
-                    <Route path="settings" element={<AdminSettings />} />
-                  </Route>
+                    {/* Auth */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
 
-                  {/* Fallback */}
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-              </main>
+                    {/* Admin Command Center via /admin */}
+                    <Route
+                      path="/admin"
+                      element={
+                        <AdminRoute>
+                          <AdminLayout />
+                        </AdminRoute>
+                      }
+                    >
+                      {/* Direct /admin lands on AdminDashboard */}
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="dashboard" element={<AdminDashboard />} />
+                      <Route path="fleet" element={<AdminFleet />} />
+                      <Route path="bookings" element={<AdminBookings />} />
+                      <Route path="customers" element={<AdminCustomers />} />
+                      <Route path="payments" element={<AdminPayments />} />
+                      <Route path="reports" element={<AdminReports />} />
+                      <Route path="settings" element={<AdminSettings />} />
+                    </Route>
 
-              <Footer />
-            </div>
-          </AuthProvider>
-        </ToastProvider>
-      </CurrencyProvider>
-    </BrowserRouter>
+                    {/* Fallback */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </main>
+
+                <Footer />
+              </div>
+            </AuthProvider>
+          </ToastProvider>
+        </CurrencyProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

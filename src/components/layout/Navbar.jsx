@@ -3,10 +3,11 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Car, Shield, Bell, User, LogOut, ChevronDown, 
   Database, RefreshCw, LayoutDashboard, CalendarCheck, Settings,
-  Menu, X, Sparkles
+  Menu, X, Sparkles, Sun, Moon
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCurrency } from '../../context/CurrencyContext';
+import { useTheme } from '../../context/ThemeContext';
 import { isSupabaseConfigured } from '../../services/supabase';
 import { getNotifications, markNotificationRead } from '../../services/dataService';
 import { SupabaseSetupModal } from '../common/SupabaseSetupModal';
@@ -14,8 +15,9 @@ import { RoleSwitcherModal } from '../common/RoleSwitcherModal';
 import { Button } from '../common/Button';
 
 export const Navbar = () => {
-  const { user, role, isAdmin, logout } = useAuth();
+  const { user, role, isAdmin, loginAsDemo, logout } = useAuth();
   const { currency, setCurrency } = useCurrency();
+  const { theme, isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -45,8 +47,16 @@ export const Navbar = () => {
 
   const isActivePath = (path) => location.pathname === path;
 
+  const handleAdminClick = () => {
+    if (!isAdmin) {
+      // Auto-switch to admin demo so user reaches /admin smoothly without being blocked
+      loginAsDemo('admin');
+    }
+    navigate('/admin');
+  };
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Brand Logo */}
         <div className="flex items-center gap-8">
@@ -64,63 +74,82 @@ export const Navbar = () => {
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
+          {/* Primary Nav Links: Home, All Vehicles, About Us, Contact Us */}
           <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+            <Link
+              to="/"
+              className={`px-3.5 py-2 rounded-lg transition-colors ${
+                isActivePath('/')
+                  ? 'text-amber-400 bg-amber-500/10 font-semibold'
+                  : 'text-slate-300 hover:text-slate-100 hover:bg-slate-850'
+              }`}
+            >
+              Home
+            </Link>
+
             <Link
               to="/catalog"
               className={`px-3.5 py-2 rounded-lg transition-colors ${
                 isActivePath('/catalog')
-                  ? 'text-amber-400 bg-amber-500/10'
+                  ? 'text-amber-400 bg-amber-500/10 font-semibold'
                   : 'text-slate-300 hover:text-slate-100 hover:bg-slate-850'
               }`}
             >
-              Browse Fleet
+              All Vehicles
             </Link>
 
-            {user && (
-              <Link
-                to="/my-bookings"
-                className={`px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 ${
-                  isActivePath('/my-bookings')
-                    ? 'text-amber-400 bg-amber-500/10'
-                    : 'text-slate-300 hover:text-slate-100 hover:bg-slate-850'
-                }`}
-              >
-                <CalendarCheck className="w-4 h-4" />
-                My Bookings
-              </Link>
-            )}
+            <Link
+              to="/about"
+              className={`px-3.5 py-2 rounded-lg transition-colors ${
+                isActivePath('/about')
+                  ? 'text-amber-400 bg-amber-500/10 font-semibold'
+                  : 'text-slate-300 hover:text-slate-100 hover:bg-slate-850'
+              }`}
+            >
+              About Us
+            </Link>
 
-            {isAdmin && (
-              <Link
-                to="/admin/dashboard"
-                className={`px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 font-semibold ${
-                  location.pathname.startsWith('/admin')
-                    ? 'text-purple-400 bg-purple-500/15 border border-purple-500/30'
-                    : 'text-purple-300 hover:text-purple-200 hover:bg-purple-950/40'
-                }`}
-              >
-                <Shield className="w-4 h-4 text-purple-400" />
-                Admin Command
-              </Link>
-            )}
+            <Link
+              to="/contact"
+              className={`px-3.5 py-2 rounded-lg transition-colors ${
+                isActivePath('/contact')
+                  ? 'text-amber-400 bg-amber-500/10 font-semibold'
+                  : 'text-slate-300 hover:text-slate-100 hover:bg-slate-850'
+              }`}
+            >
+              Contact Us
+            </Link>
           </nav>
         </div>
 
-        {/* Right Action Icons & Controls */}
+        {/* Right Controls */}
         <div className="flex items-center gap-3">
-          {/* Supabase Status Pill */}
+          {/* Admin Dashboard Direct Quick Link */}
           <button
-            onClick={() => setIsSupabaseModalOpen(true)}
-            className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${
-              isConnected
-                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
-                : 'bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
+            onClick={handleAdminClick}
+            className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+              location.pathname.startsWith('/admin')
+                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/25 ring-2 ring-purple-400/40'
+                : 'bg-purple-950/40 text-purple-300 border border-purple-800/60 hover:bg-purple-900/40'
             }`}
-            title="Click to view or update Supabase settings"
+            title="Open Admin Command Center (/admin)"
           >
-            <Database className="w-3.5 h-3.5" />
-            <span>{isConnected ? 'Supabase Live' : 'Sandbox DB'}</span>
+            <Shield className="w-3.5 h-3.5 text-purple-400" />
+            <span>Admin Command</span>
+          </button>
+
+          {/* Theme Toggle Button (Light / Dark) */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-xl bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-amber-400 hover:border-amber-500/40 transition-colors btn-tactile"
+            title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
+            aria-label="Toggle Theme"
+          >
+            {isDark ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-slate-700" />
+            )}
           </button>
 
           {/* Currency Switcher */}
@@ -136,14 +165,18 @@ export const Navbar = () => {
             </select>
           </div>
 
-          {/* Role Switcher Pill */}
+          {/* Supabase Status Pill */}
           <button
-            onClick={() => setIsRoleModalOpen(true)}
-            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 transition-colors"
+            onClick={() => setIsSupabaseModalOpen(true)}
+            className={`hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${
+              isConnected
+                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                : 'bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
+            }`}
+            title="Click to view or update Supabase settings"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Role: <strong className="text-amber-400 capitalize">{role}</strong></span>
-            <RefreshCw className="w-3 h-3 text-slate-400 ml-0.5" />
+            <Database className="w-3.5 h-3.5" />
+            <span>{isConnected ? 'Supabase Live' : 'Sandbox DB'}</span>
           </button>
 
           {/* Notifications Dropdown */}
@@ -225,6 +258,13 @@ export const Navbar = () => {
 
                   <div className="py-1">
                     <Link
+                      to="/my-bookings"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 rounded-lg"
+                    >
+                      <CalendarCheck className="w-4 h-4 text-slate-400" /> My Bookings
+                    </Link>
+                    <Link
                       to="/profile"
                       onClick={() => setIsUserMenuOpen(false)}
                       className="flex items-center gap-2 px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 rounded-lg"
@@ -232,21 +272,15 @@ export const Navbar = () => {
                       <User className="w-4 h-4 text-slate-400" /> Profile & Documents
                     </Link>
                     <Link
-                      to="/my-bookings"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 rounded-lg"
+                      to="/admin"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        if (!isAdmin) loginAsDemo('admin');
+                      }}
+                      className="flex items-center gap-2 px-3 py-2 text-xs text-purple-300 hover:bg-purple-950/40 rounded-lg font-semibold"
                     >
-                      <CalendarCheck className="w-4 h-4 text-slate-400" /> My Bookings
+                      <LayoutDashboard className="w-4 h-4 text-purple-400" /> Admin Command (/admin)
                     </Link>
-                    {isAdmin && (
-                      <Link
-                        to="/admin/dashboard"
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-2 px-3 py-2 text-xs text-purple-300 hover:bg-purple-950/40 rounded-lg font-semibold"
-                      >
-                        <LayoutDashboard className="w-4 h-4 text-purple-400" /> Admin Command
-                      </Link>
-                    )}
                   </div>
 
                   <div className="pt-1 border-t border-slate-800">
@@ -290,42 +324,43 @@ export const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-slate-800 bg-slate-950 p-4 space-y-3">
           <Link
+            to="/"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium"
+          >
+            Home
+          </Link>
+          <Link
             to="/catalog"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium"
           >
-            Browse Fleet
+            All Vehicles
           </Link>
           <Link
-            to="/my-bookings"
+            to="/about"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium"
           >
-            My Bookings
+            About Us
           </Link>
-          {isAdmin && (
-            <Link
-              to="/admin/dashboard"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-purple-300 bg-purple-950/30 text-sm font-semibold"
-            >
-              Admin Command Center
-            </Link>
-          )}
-          <div className="pt-2 flex items-center justify-between border-t border-slate-800">
-            <button
-              onClick={() => { setIsMobileMenuOpen(false); setIsRoleModalOpen(true); }}
-              className="text-xs text-amber-400 font-semibold"
-            >
-              Switch Role ({role})
-            </button>
-            <button
-              onClick={() => { setIsMobileMenuOpen(false); setIsSupabaseModalOpen(true); }}
-              className="text-xs text-slate-400"
-            >
-              Supabase Status
-            </button>
-          </div>
+          <Link
+            to="/contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium"
+          >
+            Contact Us
+          </Link>
+          <button
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              handleAdminClick();
+            }}
+            className="w-full text-left px-3 py-2 rounded-lg text-purple-300 bg-purple-950/40 text-sm font-semibold flex items-center gap-2"
+          >
+            <Shield className="w-4 h-4 text-purple-400" />
+            Admin Command (/admin)
+          </button>
         </div>
       )}
 
