@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
   Search, RotateCcw, Car
 } from 'lucide-react';
 import { getVehicles } from '../../services/dataService';
 import { VehicleCard } from '../../components/customer/VehicleCard';
-import { BookingModal } from '../../components/customer/BookingModal';
 import { Button } from '../../components/common/Button';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { useCurrency } from '../../context/CurrencyContext';
@@ -15,12 +14,12 @@ const FUEL_TYPES = ['All', 'Petrol', 'Diesel', 'Hybrid', 'Electric'];
 const TRANSMISSIONS = ['All', 'Automatic', 'Manual'];
 
 export const BrowseVehicles = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { formatPrice } = useCurrency();
 
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedVehicleForBooking, setSelectedVehicleForBooking] = useState(null);
 
   // Filters State
   const categoryParam = searchParams.get('category') || 'All';
@@ -314,23 +313,13 @@ export const BrowseVehicles = () => {
                 >
                   <VehicleCard
                     vehicle={vehicle}
-                    onBookClick={(v) => setSelectedVehicleForBooking(v)}
+                    onBookClick={(v) => navigate(`/vehicles/${v.id}`)}
                   />
                 </ScrollReveal>
               ))}
             </div>
           )}
         </main>
-
-      {/* Booking Modal */}
-      {selectedVehicleForBooking && (
-        <BookingModal
-          isOpen={Boolean(selectedVehicleForBooking)}
-          onClose={() => setSelectedVehicleForBooking(null)}
-          vehicle={selectedVehicleForBooking}
-          onBookingSuccess={() => { }}
-        />
-      )}
     </div>
   );
 };

@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import { getVehicles, getReviews } from '../../services/dataService';
 import { VehicleCard } from '../../components/customer/VehicleCard';
-import { BookingModal } from '../../components/customer/BookingModal';
 import { Button } from '../../components/common/Button';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 
@@ -26,7 +25,6 @@ export const Home = () => {
   const [vehicles, setVehicles] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedVehicleForBooking, setSelectedVehicleForBooking] = useState(null);
 
   // Search Bar Form State
   const [searchCategory, setSearchCategory] = useState('');
@@ -212,7 +210,7 @@ export const Home = () => {
               >
                 <VehicleCard
                   vehicle={vehicle}
-                  onBookClick={(v) => setSelectedVehicleForBooking(v)}
+                  onBookClick={(v) => navigate(`/vehicles/${v.id}`)}
                 />
               </ScrollReveal>
             ))}
@@ -435,18 +433,6 @@ export const Home = () => {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* Booking Modal */}
-      {selectedVehicleForBooking && (
-        <BookingModal
-          isOpen={Boolean(selectedVehicleForBooking)}
-          onClose={() => setSelectedVehicleForBooking(null)}
-          vehicle={selectedVehicleForBooking}
-          onBookingSuccess={() => {
-            navigate('/my-bookings');
-          }}
-        />
-      )}
     </div>
   );
 };

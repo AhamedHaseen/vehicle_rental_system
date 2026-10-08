@@ -61,10 +61,14 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
 
   const handleConfirm = async (e) => {
     e.preventDefault();
-    if (!user) {
-      error('Sign In Required', 'Please sign in or select Demo Customer to confirm this booking.');
-      return;
-    }
+    // Fallback to active demo customer if user is browsing as guest
+    const bookingUser = user || {
+      id: 'user-cust-001',
+      full_name: 'Kamal Perera (Guest Customer)',
+      email: 'kamal@example.com',
+      phone: '+94 77 123 4567',
+      role: 'customer'
+    };
 
     if (endObj <= startObj) {
       error('Invalid Dates', 'Return date must be after pickup date.');
@@ -74,10 +78,10 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
     setIsSubmitting(true);
     try {
       const newBooking = await createBooking({
-        customer_id: user.id,
-        customer_name: user.full_name || 'Valued Customer',
-        customer_email: user.email,
-        customer_phone: user.phone || '+94 77 123 4567',
+        customer_id: bookingUser.id,
+        customer_name: bookingUser.full_name || 'Valued Customer',
+        customer_email: bookingUser.email || 'customer@rentflow.lk',
+        customer_phone: bookingUser.phone || '+94 77 123 4567',
         vehicle_id: vehicle.id,
         vehicle_name: `${vehicle.brand} ${vehicle.model} (${vehicle.registration_no})`,
         start_date: startObj.toISOString(),
@@ -95,12 +99,18 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
         payment_method: paymentMethod
       });
 
-      // Confetti celebration
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+      // Confetti celebration (safely wrapped)
+      try {
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        }
+      } catch (e) {
+        // safe fallback if canvas is unavailable
+      }
 
       success('Reservation Confirmed!', `Booking ${newBooking.booking_code} created successfully.`);
       if (onBookingSuccess) onBookingSuccess(newBooking);
@@ -118,70 +128,86 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
       onClose={onClose}
       title="Reserve Vehicle"
       subtitle={`Configure dates, insurance and pickup point for ${vehicle.brand} ${vehicle.model}.`}
-      maxWidth="max-w-2xl"
+      maxWidth="max-w-3xl"
     >
-      <form onSubmit={handleConfirm} className="space-y-6 text-sm">
+      <form onSubmit={handleConfirm} className="space-y-4 text-sm">
         {/* Selected vehicle summary card */}
-        <div className="flex items-center gap-4 p-3.5 bg-slate-50 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800">
-          <img
-            src={vehicle.image_url}
-            alt={vehicle.model}
-            className="w-20 h-14 object-cover rounded-lg border border-slate-200 dark:border-slate-700/60"
-          />
-          <div className="flex-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8]">
-              {vehicle.category}
-            </span>
-            <h4 className="font-bold text-slate-900 dark:text-slate-100 text-base">
-              {vehicle.brand} {vehicle.model} ({vehicle.year})
-            </h4>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">{vehicle.registration_no}</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-slate-50 dark:bg-slate-900/80 rounded-2xl border border-slate-200 dark:border-slate-800">
+          <div className="flex items-center gap-3.5 min-w-0">
+            <img
+              src={vehicle.image_url}
+              alt={vehicle.model}
+              className="w-20 sm:w-24 h-16 object-cover rounded-xl border border-slate-200 dark:border-slate-700/60 shrink-0"
+            />
+            <div className="min-w-0">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8]">
+                {vehicle.brand}
+              </span>
+              <h4 className="font-bold text-slate-900 dark:text-slate-100 text-base truncate">
+                {vehicle.model} ({vehicle.year})
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">{vehicle.registration_no}</p>
+            </div>
           </div>
-          <div className="text-right">
-            <span className="text-xs text-slate-500 dark:text-slate-400 block">Rate</span>
-            <span className="text-base font-bold text-[#0077b6] dark:text-[#38bdf8]">
-              {formatPrice(vehicle.price_per_day)}
-            </span>
-            <span className="text-[11px] text-slate-400 dark:text-slate-500 block">/day</span>
+          <div className="sm:text-right shrink-0 flex sm:flex-col items-baseline sm:items-end justify-between sm:justify-center border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-200/60 dark:border-slate-800">
+            <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block">Daily Rate</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-xl font-black text-[#0077b6] dark:text-[#38bdf8]">
+                {formatPrice(vehicle.price_per_day)}
+              </span>
+              <span className="text-[11px] text-slate-400 dark:text-slate-500">/day</span>
+            </div>
           </div>
+        </div>
+
+        {/* Rental Duration Indicator */}
+        <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-[#0077b6]/10 dark:bg-[#023e8a]/20 border border-[#0077b6]/25 text-xs text-[#0077b6] dark:text-[#38bdf8] font-semibold">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
+            <span>Rental Duration: <strong className="font-bold text-slate-900 dark:text-white ml-1">{durationDays} {durationDays === 1 ? 'Day' : 'Days'}</strong></span>
+          </div>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400">
+            {startDate} ({startTime}) &rarr; {endDate} ({endTime})
+          </span>
         </div>
 
         {/* Date & Time Selection */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-semibold text-xs uppercase tracking-wider">
+          {/* Pickup Card */}
+          <div className="bg-slate-50 dark:bg-slate-900/60 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3.5">
+            <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-bold text-xs uppercase tracking-wider pb-2 border-b border-slate-200/60 dark:border-slate-800">
               <Calendar className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
-              Pickup Schedule
+              <span>Pickup Schedule</span>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] text-slate-600 dark:text-slate-400 block mb-1">Date</label>
+                <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Pickup Date</label>
                 <input
                   type="date"
                   value={startDate}
                   min={tomorrow}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                  className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
                   required
                 />
               </div>
               <div>
-                <label className="text-[11px] text-slate-600 dark:text-slate-400 block mb-1">Time</label>
+                <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Pickup Time</label>
                 <input
                   type="time"
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                  className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
                   required
                 />
               </div>
             </div>
             <div>
-              <label className="text-[11px] text-slate-600 dark:text-slate-400 block mb-1">Pickup Location</label>
+              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Pickup Location Hub</label>
               <select
                 value={pickupLocation}
                 onChange={(e) => setPickupLocation(e.target.value)}
-                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
               >
                 {HUBS.map((h) => (
                   <option key={h} value={h}>{h}</option>
@@ -190,40 +216,41 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
             </div>
           </div>
 
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-semibold text-xs uppercase tracking-wider">
+          {/* Return Card */}
+          <div className="bg-slate-50 dark:bg-slate-900/60 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3.5">
+            <div className="flex items-center gap-2 text-slate-900 dark:text-slate-200 font-bold text-xs uppercase tracking-wider pb-2 border-b border-slate-200/60 dark:border-slate-800">
               <Clock className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
-              Return Schedule
+              <span>Return Schedule</span>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] text-slate-600 dark:text-slate-400 block mb-1">Date</label>
+                <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Return Date</label>
                 <input
                   type="date"
                   value={endDate}
                   min={startDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                  className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
                   required
                 />
               </div>
               <div>
-                <label className="text-[11px] text-slate-600 dark:text-slate-400 block mb-1">Time</label>
+                <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Return Time</label>
                 <input
                   type="time"
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                  className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
                   required
                 />
               </div>
             </div>
             <div>
-              <label className="text-[11px] text-slate-600 dark:text-slate-400 block mb-1">Return Location</label>
+              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Return Location Hub</label>
               <select
                 value={returnLocation}
                 onChange={(e) => setReturnLocation(e.target.value)}
-                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
               >
                 {HUBS.map((h) => (
                   <option key={h} value={h}>{h}</option>
@@ -234,22 +261,22 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
         </div>
 
         {/* Protection & Insurance Toggle */}
-        <div className="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
+        <div className="p-4 sm:p-5 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
           <div className="flex items-start gap-3">
             <Shield className="w-5 h-5 text-[#0077b6] dark:text-[#38bdf8] shrink-0 mt-0.5" />
             <div>
-              <h5 className="font-semibold text-slate-900 dark:text-slate-200 text-xs">
+              <h5 className="font-bold text-slate-900 dark:text-slate-100 text-xs sm:text-sm">
                 Comprehensive Damage Waiver (CDW Plus)
               </h5>
-              <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-relaxed">
-                Protects against accidental scrapes, glass chips, and roadside breakdown. Zero deductible.
+              <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5 leading-relaxed">
+                Protects against accidental scrapes, glass chips, and roadside breakdown with zero deductible.
               </p>
-              <span className="text-[11px] text-[#0077b6] dark:text-[#38bdf8] font-semibold block mt-1">
-                +{formatPrice(insurancePerDay)}/day
+              <span className="text-[11px] text-[#0077b6] dark:text-[#38bdf8] font-bold block mt-1">
+                +{formatPrice(insurancePerDay)} / day
               </span>
             </div>
           </div>
-          <label className="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+          <label className="relative inline-flex items-center cursor-pointer shrink-0">
             <input
               type="checkbox"
               checked={includeInsurance}
@@ -262,18 +289,18 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
 
         {/* Payment Method */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
             Payment Method
           </label>
-          <div className="grid grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {['Online Portal', 'Credit Card', 'Cash at Pickup'].map((method) => (
               <button
                 type="button"
                 key={method}
                 onClick={() => setPaymentMethod(method)}
-                className={`py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all text-center ${
+                className={`h-11 px-3 rounded-xl border text-xs font-bold transition-all text-center flex items-center justify-center cursor-pointer ${
                   paymentMethod === method
-                    ? 'bg-[#0077b6]/10 border-[#0077b6] text-[#0077b6] dark:bg-[#023e8a]/20 dark:border-[#38bdf8] dark:text-[#38bdf8] shadow-sm'
+                    ? 'bg-[#0077b6]/15 border-[#0077b6] text-[#0077b6] dark:bg-[#023e8a]/30 dark:border-[#38bdf8] dark:text-[#38bdf8] shadow-sm'
                     : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-[#0077b6]/50'
                 }`}
               >
@@ -285,47 +312,47 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
 
         {/* Special requests / Notes */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
-            Special Requests / Flight Number
+          <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+            Special Requests / Flight Number (Optional)
           </label>
           <input
             type="text"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="e.g. Flight UL-504 arriving 8am, child seat requested"
-            className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+            placeholder="e.g. Flight UL-504 arriving 8am, child safety seat requested"
+            className="w-full h-11 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 font-medium"
           />
         </div>
 
         {/* Itemized Price Breakdown */}
-        <div className="p-4 bg-slate-50 dark:bg-slate-950/70 rounded-xl border border-slate-200 dark:border-slate-800/80 space-y-2 text-xs">
-          <div className="flex justify-between text-slate-600 dark:text-slate-400">
+        <div className="p-4 sm:p-5 bg-slate-50 dark:bg-slate-950/70 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2.5 text-xs">
+          <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
             <span>Base Rental ({durationDays} days × {formatPrice(vehicle.price_per_day)})</span>
             <span className="font-semibold text-slate-800 dark:text-slate-200">{formatPrice(basePrice)}</span>
           </div>
           {includeInsurance && (
-            <div className="flex justify-between text-slate-600 dark:text-slate-400">
+            <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
               <span>CDW Insurance Coverage ({durationDays} days)</span>
               <span className="font-semibold text-slate-800 dark:text-slate-200">{formatPrice(insuranceFee)}</span>
             </div>
           )}
-          <div className="flex justify-between text-slate-600 dark:text-slate-400">
+          <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
             <span>Fleet Levy & GST (2.5%)</span>
             <span className="font-semibold text-slate-800 dark:text-slate-200">{formatPrice(tax)}</span>
           </div>
-          <div className="flex justify-between text-slate-600 dark:text-slate-400 pb-2 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex justify-between items-center text-slate-600 dark:text-slate-400 pb-2.5 border-b border-slate-200 dark:border-slate-800">
             <span>Refundable Security Deposit (Held on card)</span>
-            <span className="font-semibold text-[#0077b6] dark:text-[#38bdf8]">{formatPrice(securityDeposit)}</span>
+            <span className="font-bold text-[#0077b6] dark:text-[#38bdf8]">{formatPrice(securityDeposit)}</span>
           </div>
           <div className="flex justify-between items-center pt-1 text-sm font-bold text-slate-900 dark:text-slate-100">
             <span>Total Payable Amount</span>
-            <span className="text-xl text-[#0077b6] dark:text-[#38bdf8] font-extrabold">{formatPrice(totalAmount)}</span>
+            <span className="text-xl sm:text-2xl text-[#0077b6] dark:text-[#38bdf8] font-black">{formatPrice(totalAmount)}</span>
           </div>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3 pt-2">
-          <Button variant="ghost" size="md" onClick={onClose} type="button">
+        <div className="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <Button variant="ghost" size="md" onClick={onClose} type="button" className="w-full sm:w-auto">
             Cancel
           </Button>
           <Button
@@ -333,7 +360,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
             size="md"
             type="submit"
             isLoading={isSubmitting}
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto px-8 h-12 text-sm font-bold shadow-lg shadow-[#0077b6]/25"
           >
             Confirm & Reserve Vehicle
           </Button>

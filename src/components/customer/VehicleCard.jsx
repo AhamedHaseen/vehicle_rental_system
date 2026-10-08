@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Users, Fuel, Gauge, ArrowRight, Eye, CheckCircle2, Clock, Wrench } from 'lucide-react';
 import { useCurrency } from '../../context/CurrencyContext';
 
 export const VehicleCard = ({ vehicle, onBookClick }) => {
+  const navigate = useNavigate();
   const { formatPrice } = useCurrency();
   const isAvailable = vehicle.status === 'available';
 
@@ -120,7 +121,13 @@ export const VehicleCard = ({ vehicle, onBookClick }) => {
       {/* Full-Width Transparent Booking Button Ending at Card Edge */}
       <button
         disabled={!isAvailable}
-        onClick={() => onBookClick && onBookClick(vehicle)}
+        onClick={() => {
+          if (onBookClick) {
+            onBookClick(vehicle);
+          } else {
+            navigate(`/vehicles/${vehicle.id}`);
+          }
+        }}
         className={`w-full py-3.5 px-4 border-t font-bold text-xs flex items-center justify-center gap-2 transition-all duration-300 group/btn btn-tactile ${isAvailable
             ? 'border-slate-200 dark:border-slate-800 bg-transparent hover:bg-[#0077b6] dark:hover:bg-[#0077b6] text-[#0077b6] dark:text-[#38bdf8] hover:text-white dark:hover:text-white cursor-pointer'
             : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 text-slate-400 dark:text-slate-500 cursor-not-allowed'

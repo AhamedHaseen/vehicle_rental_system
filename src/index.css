@@ -222,3 +222,13 @@ html {
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
+
+/* Hide Navbar completely when any modal or booking form is open */
+body.modal-open header,
+body.modal-open nav.sticky {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transform: translateY(-120%) !important;
+  transition: opacity 0.2s ease, transform 0.25s ease, visibility 0.2s ease !important;
+}
