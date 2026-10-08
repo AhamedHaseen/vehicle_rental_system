@@ -1,41 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
-  Car, Shield, Bell, User, LogOut, ChevronDown, 
-  Database, RefreshCw, LayoutDashboard, CalendarCheck, Settings,
-  Menu, X, Sparkles, Sun, Moon
+  Car, Bell, User, LogOut, ChevronDown, 
+  LayoutDashboard, CalendarCheck,
+  Menu, X, Sun, Moon
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useTheme } from '../../context/ThemeContext';
-import { isSupabaseConfigured } from '../../services/supabase';
 import { getNotifications, markNotificationRead } from '../../services/dataService';
-import { SupabaseSetupModal } from '../common/SupabaseSetupModal';
-import { RoleSwitcherModal } from '../common/RoleSwitcherModal';
-import { Button } from '../common/Button';
+import { Button } from '../../components/common/Button';
 
 export const Navbar = () => {
-  const { user, role, isAdmin, loginAsDemo, logout } = useAuth();
+  const { user, role, isAdmin, logout } = useAuth();
   const { currency, setCurrency } = useCurrency();
-  const { theme, isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isSupabaseModalOpen, setIsSupabaseModalOpen] = useState(false);
-  const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-  const isConnected = isSupabaseConfigured();
-
   useEffect(() => {
-    const fetchNotifs = async () => {
-      const list = await getNotifications(user?.id || 'all');
-      setNotifications(list);
+    let isMounted = true;
+    getNotifications(user?.id || 'all').then((list) => {
+      if (isMounted) {
+        setNotifications(list);
+      }
+    });
+    return () => {
+      isMounted = false;
     };
-    fetchNotifs();
   }, [user]);
 
   const unreadCount = notifications.filter(n => !n.is_read).length;
@@ -46,14 +43,6 @@ export const Navbar = () => {
   };
 
   const isActivePath = (path) => location.pathname === path;
-
-  const handleAdminClick = () => {
-    if (!isAdmin) {
-      // Auto-switch to admin demo so user reaches /admin smoothly without being blocked
-      loginAsDemo('admin');
-    }
-    navigate('/admin');
-  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl transition-colors duration-200">
@@ -124,20 +113,6 @@ export const Navbar = () => {
 
         {/* Right Controls */}
         <div className="flex items-center gap-3">
-          {/* Admin Dashboard Direct Quick Link */}
-          <button
-            onClick={handleAdminClick}
-            className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-              location.pathname.startsWith('/admin')
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/25 ring-2 ring-purple-400/40'
-                : 'bg-purple-500/10 dark:bg-purple-950/40 text-purple-600 dark:text-purple-300 border border-purple-300 dark:border-purple-800/60 hover:bg-purple-500/20 dark:hover:bg-purple-900/40'
-            }`}
-            title="Open Admin Command Center (/admin)"
-          >
-            <Shield className="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" />
-            <span>Admin Command</span>
-          </button>
-
           {/* Theme Toggle Button (Light / Dark) */}
           <button
             onClick={toggleTheme}
@@ -164,20 +139,6 @@ export const Navbar = () => {
               <option value="EUR">EUR (€)</option>
             </select>
           </div>
-
-          {/* Supabase Status Pill */}
-          <button
-            onClick={() => setIsSupabaseModalOpen(true)}
-            className={`hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${
-              isConnected
-                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
-                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
-            }`}
-            title="Click to view or update Supabase settings"
-          >
-            <Database className="w-3.5 h-3.5" />
-            <span>{isConnected ? 'Supabase Live' : 'Sandbox DB'}</span>
-          </button>
 
           {/* Notifications Dropdown */}
           <div className="relative">
@@ -271,16 +232,15 @@ export const Navbar = () => {
                     >
                       <User className="w-4 h-4 text-slate-400" /> Profile & Documents
                     </Link>
-                    <Link
-                      to="/admin"
-                      onClick={() => {
-                        setIsUserMenuOpen(false);
-                        if (!isAdmin) loginAsDemo('admin');
-                      }}
-                      className="flex items-center gap-2 px-3 py-2 text-xs text-purple-600 dark:text-purple-300 hover:bg-purple-500/10 dark:hover:bg-purple-950/40 rounded-lg font-semibold"
-                    >
-                      <LayoutDashboard className="w-4 h-4 text-purple-500 dark:text-purple-400" /> Admin Command (/admin)
-                    </Link>
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 text-xs text-purple-600 dark:text-purple-300 hover:bg-purple-500/10 dark:hover:bg-purple-950/40 rounded-lg font-semibold"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-purple-500 dark:text-purple-400" /> Admin Dashboard
+                      </Link>
+                    )}
                   </div>
 
                   <div className="pt-1 border-t border-slate-100 dark:border-slate-800">
@@ -351,28 +311,8 @@ export const Navbar = () => {
           >
             Contact Us
           </Link>
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              handleAdminClick();
-            }}
-            className="w-full text-left px-3 py-2 rounded-lg text-purple-600 dark:text-purple-300 bg-purple-500/10 dark:bg-purple-950/40 text-sm font-semibold flex items-center gap-2"
-          >
-            <Shield className="w-4 h-4 text-purple-500 dark:text-purple-400" />
-            Admin Command (/admin)
-          </button>
         </div>
       )}
-
-      {/* Modals */}
-      <SupabaseSetupModal
-        isOpen={isSupabaseModalOpen}
-        onClose={() => setIsSupabaseModalOpen(false)}
-      />
-      <RoleSwitcherModal
-        isOpen={isRoleModalOpen}
-        onClose={() => setIsRoleModalOpen(false)}
-      />
     </header>
   );
 };

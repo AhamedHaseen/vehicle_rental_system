@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Car, Phone, Mail, MapPin, ShieldCheck, Clock, Award, ChevronRight } from 'lucide-react';
+import { Car, Phone, Mail, MapPin, ShieldCheck, Clock, Award } from 'lucide-react';
 
 export const Footer = () => {
   return (
@@ -54,9 +53,6 @@ export const Footer = () => {
           <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-xs">
             Premium vehicle rental ecosystem built for travelers, executives, and logistics fleets. Verified condition and seamless digital booking.
           </p>
-          <div className="pt-2 text-[11px] text-slate-500">
-            Powered by React, Tailwind CSS & Supabase
-          </div>
         </div>
 
         <div>
