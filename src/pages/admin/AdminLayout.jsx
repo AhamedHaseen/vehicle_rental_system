@@ -263,7 +263,9 @@ export const AdminLayout = () => {
         </header>
 
         <main className="flex-1 overflow-x-hidden p-4 sm:p-6 lg:p-8">
-          <Outlet />
+          <div key={location.pathname} className="animate-in fade-in duration-150">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
