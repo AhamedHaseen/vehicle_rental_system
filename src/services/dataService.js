@@ -9,7 +9,52 @@ const STORAGE_KEYS = {
   REVIEWS: 'rentflow_reviews',
   NOTIFICATIONS: 'rentflow_notifications',
   SETTINGS: 'rentflow_settings',
+  CONTACTS: 'rentflow_contacts',
+  CATEGORIES: 'rentflow_categories'
 };
+
+export const defaultCategories = [
+  { id: 'cat-1', name: 'Car', description: 'Sedans, compacts, and eco-hybrids', icon: 'Car', seats_default: 5 },
+  { id: 'cat-2', name: 'SUV', description: '4x4 cross-country commanding SUVs', icon: 'Shield', seats_default: 5 },
+  { id: 'cat-3', name: 'Luxury Vehicle', description: 'VIP Flagship sedans & limousines', icon: 'Sparkles', seats_default: 5 },
+  { id: 'cat-4', name: 'Van', description: 'Group passenger touring vans', icon: 'Clock', seats_default: 12 },
+  { id: 'cat-5', name: 'Bus', description: 'Mini & luxury highway tourist coaches', icon: 'Car', seats_default: 32 },
+  { id: 'cat-6', name: 'Motorbike', description: 'Hyper naked bikes & daily cruisers', icon: 'Gauge', seats_default: 2 },
+  { id: 'cat-7', name: 'Three-Wheeler', description: 'Classic Sri Lankan tuk-tuk adventure vehicles', icon: 'MapPin', seats_default: 3 }
+];
+
+export const defaultContacts = [
+  {
+    id: 'ct-101',
+    name: 'Sanjeewa Wickramasinghe',
+    email: 'sanjeewa.w@gmail.com',
+    phone: '+94 77 345 6789',
+    category: 'Bus',
+    message: 'Need a 32-seater luxury air-conditioned bus with chauffeur for a 4-day corporate outing from Colombo to Nuwara Eliya next month. Please share quotation.',
+    status: 'new',
+    created_at: '2026-10-10T14:20:00.000Z'
+  },
+  {
+    id: 'ct-102',
+    name: 'Rachel Green',
+    email: 'rachel.g@outlook.com',
+    phone: '+44 7700 900123',
+    category: 'Car',
+    message: 'Arriving at Bandaranaike Airport CMB next Tuesday. Can you arrange Toyota Prius delivery right outside Terminal 2 at 6:30 AM with baby seat?',
+    status: 'replied',
+    created_at: '2026-10-09T09:45:00.000Z'
+  },
+  {
+    id: 'ct-103',
+    name: 'Mohamed Farook',
+    email: 'farook.traders@yahoo.com',
+    phone: '+94 71 556 7788',
+    category: 'Van',
+    message: 'Looking for a monthly rental rate for Toyota KDH Super GL van for our tourist transport company. Long-term corporate agreement.',
+    status: 'new',
+    created_at: '2026-10-11T08:15:00.000Z'
+  }
+];
 
 // Initialize localStorage if empty
 const initStorage = () => {
@@ -17,7 +62,30 @@ const initStorage = () => {
     localStorage.setItem(STORAGE_KEYS.VEHICLES, JSON.stringify(initialVehicles));
   }
   if (!localStorage.getItem(STORAGE_KEYS.BOOKINGS)) {
-    localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(initialBookings));
+    // Add default cash details to initialBookings
+    const enrichedBookings = initialBookings.map((b, idx) => {
+      let cashStatus = 'done';
+      let advanceAmount = b.total_amount;
+      let remainingAmount = 0;
+      if (idx === 1) {
+        cashStatus = 'advance';
+        advanceAmount = 40000;
+        remainingAmount = b.total_amount - 40000;
+      } else if (idx === 2) {
+        cashStatus = 'pending';
+        advanceAmount = 0;
+        remainingAmount = b.total_amount;
+      }
+      return {
+        ...b,
+        payment_method: b.payment_method || (idx === 0 ? 'Online Portal' : 'Cash at Pickup'),
+        cash_status: b.cash_status || cashStatus,
+        advance_amount: b.advance_amount ?? advanceAmount,
+        remaining_amount: b.remaining_amount ?? remainingAmount,
+        cash_notes: b.cash_notes || ''
+      };
+    });
+    localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(enrichedBookings));
   }
   if (!localStorage.getItem(STORAGE_KEYS.CUSTOMERS)) {
     localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(initialCustomers));
@@ -30,6 +98,12 @@ const initStorage = () => {
   }
   if (!localStorage.getItem(STORAGE_KEYS.SETTINGS)) {
     localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(defaultSettings));
+  }
+  if (!localStorage.getItem(STORAGE_KEYS.CATEGORIES)) {
+    localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(defaultCategories));
+  }
+  if (!localStorage.getItem(STORAGE_KEYS.CONTACTS)) {
+    localStorage.setItem(STORAGE_KEYS.CONTACTS, JSON.stringify(defaultContacts));
   }
 };
 
@@ -310,3 +384,90 @@ export const updateSystemSettings = (newSettings) => {
   setLocal(STORAGE_KEYS.SETTINGS, newSettings);
   return newSettings;
 };
+
+// ==================== CATEGORIES ====================
+export const getCategories = async () => {
+  return getLocal(STORAGE_KEYS.CATEGORIES, defaultCategories);
+};
+
+export const saveCategory = async (catData) => {
+  const categories = getLocal(STORAGE_KEYS.CATEGORIES, defaultCategories);
+  let updated;
+  if (catData.id) {
+    updated = categories.map(c => c.id === catData.id ? { ...c, ...catData } : c);
+  } else {
+    const newCat = {
+      ...catData,
+      id: `cat-${Date.now()}`,
+      created_at: new Date().toISOString()
+    };
+    updated = [...categories, newCat];
+  }
+  setLocal(STORAGE_KEYS.CATEGORIES, updated);
+  return updated;
+};
+
+export const deleteCategory = async (catId) => {
+  const categories = getLocal(STORAGE_KEYS.CATEGORIES, defaultCategories);
+  const updated = categories.filter(c => c.id !== catId && c.name !== catId);
+  setLocal(STORAGE_KEYS.CATEGORIES, updated);
+  return updated;
+};
+
+// ==================== CONTACT INQUIRIES ====================
+export const getContacts = async () => {
+  return getLocal(STORAGE_KEYS.CONTACTS, defaultContacts);
+};
+
+export const saveContactMessage = async (contactData) => {
+  const contacts = getLocal(STORAGE_KEYS.CONTACTS, defaultContacts);
+  const newContact = {
+    ...contactData,
+    id: `ct-${Date.now()}`,
+    status: 'new',
+    created_at: new Date().toISOString()
+  };
+  const updated = [newContact, ...contacts];
+  setLocal(STORAGE_KEYS.CONTACTS, updated);
+
+  addNotification({
+    user_id: 'admin',
+    title: 'New Customer Inquiry',
+    message: `${newContact.name} submitted an inquiry for category: ${newContact.category || 'General'}`,
+    type: 'contact'
+  });
+
+  return newContact;
+};
+
+export const updateContactStatus = async (contactId, status) => {
+  const contacts = getLocal(STORAGE_KEYS.CONTACTS, defaultContacts);
+  const updated = contacts.map(c => c.id === contactId ? { ...c, status, updated_at: new Date().toISOString() } : c);
+  setLocal(STORAGE_KEYS.CONTACTS, updated);
+  return updated;
+};
+
+export const deleteContact = async (contactId) => {
+  const contacts = getLocal(STORAGE_KEYS.CONTACTS, defaultContacts);
+  const updated = contacts.filter(c => c.id !== contactId);
+  setLocal(STORAGE_KEYS.CONTACTS, updated);
+  return updated;
+};
+
+// ==================== CASH DETAILS & ADVANCE SETTLEMENT ====================
+export const updateBookingCash = async (bookingId, cashData) => {
+  const bookings = getLocal(STORAGE_KEYS.BOOKINGS, initialBookings);
+  const updated = bookings.map(b => {
+    if (b.id === bookingId) {
+      return {
+        ...b,
+        ...cashData,
+        updated_at: new Date().toISOString()
+      };
+    }
+    return b;
+  });
+  setLocal(STORAGE_KEYS.BOOKINGS, updated);
+  return updated;
+};
+

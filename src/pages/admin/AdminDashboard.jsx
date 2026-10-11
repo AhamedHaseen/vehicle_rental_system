@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Car, CalendarClock, DollarSign, 
-  ArrowUpRight, AlertCircle, ChevronRight, Plus, RefreshCw, Eye
+  ArrowUpRight, AlertCircle, ChevronRight, Plus, RefreshCw, Eye,
+  Banknote, MessageSquare, FolderKanban, History, Layers
 } from 'lucide-react';
 import { 
-  getVehicles, getBookings, updateBookingStatus 
+  getVehicles, getBookings, updateBookingStatus, getContacts, getCategories 
 } from '../../services/dataService';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
@@ -21,6 +22,8 @@ export const AdminDashboard = () => {
 
   const [vehicles, setVehicles] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   // Modals
   const [pickupBooking, setPickupBooking] = useState(null);
@@ -28,20 +31,26 @@ export const AdminDashboard = () => {
   const [isAddVehicleOpen, setIsAddVehicleOpen] = useState(false);
 
   const loadData = async () => {
-    const [vList, bList] = await Promise.all([
+    const [vList, bList, cList, catList] = await Promise.all([
       getVehicles(),
-      getBookings()
+      getBookings(),
+      getContacts(),
+      getCategories()
     ]);
     setVehicles(vList);
     setBookings(bList);
+    setContacts(cList);
+    setCategories(catList);
   };
 
   useEffect(() => {
     let isMounted = true;
-    Promise.all([getVehicles(), getBookings()]).then(([vList, bList]) => {
+    Promise.all([getVehicles(), getBookings(), getContacts(), getCategories()]).then(([vList, bList, cList, catList]) => {
       if (isMounted) {
         setVehicles(vList);
         setBookings(bList);
+        setContacts(cList);
+        setCategories(catList);
       }
     });
     return () => {
@@ -170,6 +179,159 @@ export const AdminDashboard = () => {
               Requires admin approval or vehicle assignment
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Quick Access Control Center - 6 Dedicated Operational Hubs */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <Layers className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+              Administrative Operations Hub
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Direct shortcuts to dispatch, fleet records, customer inquiries, and cash settlements.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {/* 1. Vehicles Fleet */}
+          <Link
+            to="/admin/fleet"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Car className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+                {vehicles.length} Units
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                Vehicles Fleet
+              </h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                Add, edit, 3 images
+              </p>
+            </div>
+          </Link>
+
+          {/* 2. Booking Details */}
+          <Link
+            to="/admin/bookings"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-sky-400 dark:hover:border-sky-600 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <CalendarClock className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300">
+                {bookings.length} Orders
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                Booking Details
+              </h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                Active & reservations
+              </p>
+            </div>
+          </Link>
+
+          {/* 3. Cash Details */}
+          <Link
+            to="/admin/cash"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Banknote className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+                Ledger
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                Cash Details
+              </h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                Cash, advance & done
+              </p>
+            </div>
+          </Link>
+
+          {/* 4. Contact Inquiries */}
+          <Link
+            to="/admin/contacts"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-amber-400 dark:hover:border-amber-600 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <MessageSquare className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">
+                {contacts.length} Inquiries
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                Contact Messages
+              </h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                Form submissions
+              </p>
+            </div>
+          </Link>
+
+          {/* 5. Categories */}
+          <Link
+            to="/admin/categories"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <FolderKanban className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+                {categories.length} Types
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                Categories
+              </h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                Add car, bus & more
+              </p>
+            </div>
+          </Link>
+
+          {/* 6. Rental History */}
+          <Link
+            to="/admin/history"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-rose-400 dark:hover:border-rose-600 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <History className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">
+                Closed
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+                Rental History
+              </h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                Completed & logs
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CurrencyProvider } from './context/CurrencyContext';
 import { ToastProvider } from './context/ToastContext';
@@ -23,6 +23,20 @@ import { ContactUs } from './pages/customer/ContactUs';
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
 
+// Admin Layout & Pages
+import { AdminLayout } from './pages/admin/AdminLayout';
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { AdminFleet } from './pages/admin/AdminFleet';
+import { AdminBookings } from './pages/admin/AdminBookings';
+import { AdminCash } from './pages/admin/AdminCash';
+import { AdminContacts } from './pages/admin/AdminContacts';
+import { AdminCategories } from './pages/admin/AdminCategories';
+import { AdminHistory } from './pages/admin/AdminHistory';
+import { AdminCustomers } from './pages/admin/AdminCustomers';
+import { AdminPayments } from './pages/admin/AdminPayments';
+import { AdminReports } from './pages/admin/AdminReports';
+import { AdminSettings } from './pages/admin/AdminSettings';
+
 const CustomerRoute = ({ children }) => {
   const { user, loginAsDemo } = useAuth();
   React.useEffect(() => {
@@ -33,6 +47,32 @@ const CustomerRoute = ({ children }) => {
   return children;
 };
 
+const AdminRoute = ({ children }) => {
+  const { user, isAdmin, loginAsDemo } = useAuth();
+  React.useEffect(() => {
+    if (!user || !isAdmin) {
+      loginAsDemo('admin');
+    }
+  }, [user, isAdmin, loginAsDemo]);
+  return children;
+};
+
+const ConditionalNavbar = () => {
+  const location = useLocation();
+  if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
+  return <Navbar />;
+};
+
+const ConditionalFooter = () => {
+  const location = useLocation();
+  if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
+  return <Footer />;
+};
+
 function App() {
   return (
     <ThemeProvider>
@@ -41,7 +81,7 @@ function App() {
           <ToastProvider>
             <AuthProvider>
               <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 overflow-x-clip">
-                <Navbar />
+                <ConditionalNavbar />
 
                 <main className="flex-1">
                   <PageTransition>
@@ -76,6 +116,29 @@ function App() {
                       <Route path="/login" element={<Login />} />
                       <Route path="/register" element={<Register />} />
 
+                      {/* Admin Command Center */}
+                      <Route
+                        path="/admin"
+                        element={
+                          <AdminRoute>
+                            <AdminLayout />
+                          </AdminRoute>
+                        }
+                      >
+                        <Route index element={<AdminDashboard />} />
+                        <Route path="dashboard" element={<AdminDashboard />} />
+                        <Route path="fleet" element={<AdminFleet />} />
+                        <Route path="vehicles" element={<AdminFleet />} />
+                        <Route path="bookings" element={<AdminBookings />} />
+                        <Route path="cash" element={<AdminCash />} />
+                        <Route path="contacts" element={<AdminContacts />} />
+                        <Route path="categories" element={<AdminCategories />} />
+                        <Route path="history" element={<AdminHistory />} />
+                        <Route path="customers" element={<AdminCustomers />} />
+                        <Route path="payments" element={<AdminPayments />} />
+                        <Route path="reports" element={<AdminReports />} />
+                        <Route path="settings" element={<AdminSettings />} />
+                      </Route>
 
                       {/* Fallback */}
                       <Route path="*" element={<Navigate to="/" replace />} />
@@ -83,7 +146,7 @@ function App() {
                   </PageTransition>
                 </main>
 
-                <Footer />
+                <ConditionalFooter />
               </div>
             </AuthProvider>
           </ToastProvider>

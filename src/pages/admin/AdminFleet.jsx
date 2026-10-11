@@ -1,17 +1,14 @@
 import { useState, useEffect, useMemo } from 'react';
 import { 
-  getVehicles, deleteVehicle, updateVehicleStatus 
+  getVehicles, deleteVehicle, updateVehicleStatus, getCategories 
 } from '../../services/dataService';
+import { useCurrency } from '../../context/CurrencyContext';
+import { useToast } from '../../context/ToastContext';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
 import { VehicleFormModal } from '../../components/admin/VehicleFormModal';
-import { useCurrency } from '../../context/CurrencyContext';
-import { useToast } from '../../context/ToastContext';
-import { 
-  Plus, Search, Edit3, Trash2, RefreshCw 
-} from 'lucide-react';
+import { Search, Plus, RefreshCw, Edit3, Trash2 } from 'lucide-react';
 
-const CATEGORIES = ['All', 'Car', 'SUV', 'Luxury Vehicle', 'Van', 'Motorbike', 'Three-Wheeler'];
 const STATUSES = ['All', 'available', 'rented', 'maintenance', 'deactivated'];
 
 export const AdminFleet = () => {
@@ -19,6 +16,7 @@ export const AdminFleet = () => {
   const { success, error } = useToast();
 
   const [vehicles, setVehicles] = useState([]);
+  const [categories, setCategories] = useState(['All', 'Car', 'Bus', 'SUV', 'Van', 'Luxury Vehicle', 'Motorbike', 'Three-Wheeler']);
 
   // Filters
   const [search, setSearch] = useState('');
@@ -37,9 +35,12 @@ export const AdminFleet = () => {
 
   useEffect(() => {
     let isMounted = true;
-    getVehicles().then((list) => {
+    Promise.all([getVehicles(), getCategories()]).then(([vList, cList]) => {
       if (isMounted) {
-        setVehicles(list);
+        setVehicles(vList);
+        if (cList && cList.length > 0) {
+          setCategories(['All', ...cList.map(c => c.name)]);
+        }
       }
     });
     return () => {
@@ -132,7 +133,7 @@ export const AdminFleet = () => {
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
-              {CATEGORIES.map((c) => (
+              {categories.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>

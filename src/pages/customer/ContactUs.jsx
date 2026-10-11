@@ -6,6 +6,8 @@ import { Button } from '../../components/common/Button';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { useToast } from '../../context/ToastContext';
 
+import { saveContactMessage } from '../../services/dataService';
+
 export const ContactUs = () => {
   const { success } = useToast();
   const [formData, setFormData] = useState({
@@ -17,11 +19,11 @@ export const ContactUs = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await saveContactMessage(formData);
       success('Inquiry Dispatched', 'Thank you! A rental dispatch coordinator will contact you shortly.');
       setFormData({
         name: '',
@@ -30,7 +32,9 @@ export const ContactUs = () => {
         category: 'Car',
         message: ''
       });
-    }, 600);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
