@@ -280,7 +280,7 @@ export const VehicleDetail = () => {
               <div className="pt-3">
                 <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Key Equipment & Features</h4>
                 <div className="flex flex-wrap gap-2">
-                  {vehicle.features.map((feat, i) => (
+                  {(Array.isArray(vehicle.features) ? vehicle.features : []).map((feat, i) => (
                     <span
                       key={i}
                       className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200"
