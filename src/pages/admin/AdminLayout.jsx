@@ -129,7 +129,7 @@ export const AdminLayout = () => {
                   key={item.path}
                   to={item.path}
                   title={isCollapsed ? item.name : undefined}
-                  className={`group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 ${
+                  className={`group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 active:scale-[0.98] cursor-pointer ${
                     isCollapsed ? 'justify-center' : ''
                   } ${
                     isActive
@@ -263,7 +263,7 @@ export const AdminLayout = () => {
         </header>
 
         <main className="flex-1 overflow-x-hidden p-4 sm:p-6 lg:p-8">
-          <div key={location.pathname} className="animate-in fade-in duration-150">
+          <div key={location.pathname} className="admin-fast-page-enter">
             <Outlet />
           </div>
         </main>

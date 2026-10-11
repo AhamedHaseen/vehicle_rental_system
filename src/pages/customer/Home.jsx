@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  Car, Shield, Clock, Star, 
+import {
+  Car, Shield, Clock, Star,
   MapPin, Sparkles, ChevronRight, Gauge, ArrowRight,
   ShieldCheck, Award, Zap
 } from 'lucide-react';
@@ -51,8 +51,8 @@ export const Home = () => {
     navigate(`/catalog?${query.toString()}`);
   };
 
-  const filteredVehicles = selectedCategory === 'All' 
-    ? vehicles 
+  const filteredVehicles = selectedCategory === 'All'
+    ? vehicles
     : vehicles.filter(v => v.category === selectedCategory);
 
   return (
@@ -164,11 +164,10 @@ export const Home = () => {
                 >
                   <button
                     onClick={() => setSelectedCategory(cat.name)}
-                    className={`w-full p-3 sm:p-3.5 rounded-xl border text-left transition-all duration-200 btn-tactile cursor-pointer ${
-                      isSelected
-                        ? 'bg-[#0077b6] text-white border-[#0077b6] shadow-lg shadow-[#0077b6]/20 scale-102 dark:bg-[#023e8a] dark:border-[#38bdf8]'
-                        : 'bg-white dark:bg-slate-900/80 border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-[#0077b6]/60 hover:bg-[#e0f2fe]/40 hover:scale-102 shadow-xs'
-                    }`}
+                    className={`w-full p-3 sm:p-3.5 rounded-xl border text-left transition-all duration-200 btn-tactile cursor-pointer ${isSelected
+                      ? 'bg-[#0077b6] text-white border-[#0077b6] shadow-lg shadow-[#0077b6]/20 scale-102 dark:bg-[#023e8a] dark:border-[#38bdf8]'
+                      : 'bg-white dark:bg-slate-900/80 border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-[#0077b6]/60 hover:bg-[#e0f2fe]/40 hover:scale-102 shadow-xs'
+                      }`}
                   >
                     <Icon className={`w-5 h-5 mb-2 transition-colors ${isSelected ? 'text-white' : 'text-[#0077b6] dark:text-slate-400'}`} />
                     <h4 className={`font-bold text-xs truncate transition-colors ${isSelected ? 'text-white' : 'text-slate-900 dark:text-slate-100'}`}>{cat.name}</h4>

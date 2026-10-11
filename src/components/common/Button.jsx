@@ -22,13 +22,13 @@ export const Button = ({
   };
 
   const variantClasses = {
-    primary: "bg-[#0373b9] hover:bg-[#025e97] dark:bg-[#0373b9] dark:hover:bg-[#025e97] text-white font-semibold shadow-lg shadow-[#0373b9]/25 border border-[#0373b9]/30 transition-all duration-300",
-    secondary: "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700/80 shadow-sm transition-all duration-300",
-    dark: "bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 transition-all duration-300",
-    outline: "border border-[#0373b9] hover:bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] font-semibold transition-all duration-300",
-    danger: "bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-lg shadow-rose-600/20 border border-rose-500/30",
-    ghost: "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium",
-    emerald: "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-lg shadow-emerald-600/20 border border-emerald-500/30"
+    primary: "bg-[#0373b9] hover:bg-[#025e97] dark:bg-[#0373b9] dark:hover:bg-[#025e97] text-white font-semibold shadow-lg shadow-[#0373b9]/25 border border-[#0373b9]/30 transition-all duration-150 active:scale-[0.98]",
+    secondary: "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700/80 shadow-sm transition-all duration-150 active:scale-[0.98]",
+    dark: "bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 transition-all duration-150 active:scale-[0.98]",
+    outline: "border border-[#0373b9] hover:bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] font-semibold transition-all duration-150 active:scale-[0.98]",
+    danger: "bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-lg shadow-rose-600/20 border border-rose-500/30 transition-all duration-150 active:scale-[0.98]",
+    ghost: "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium transition-all duration-150 active:scale-[0.98]",
+    emerald: "bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-lg shadow-emerald-600/20 border border-emerald-500/30 transition-all duration-150 active:scale-[0.98]"
   };
 
   return (

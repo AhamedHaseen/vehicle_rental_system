@@ -59,23 +59,23 @@
 
   /* Clean Premium Text Selection - replaces unwanted yellow/peach browser highlight */
   ::selection {
-    background-color: #0077b6;
-    color: #ffffff;
+    background-color: #0373b9 !important;
+    color: #ffffff !important;
   }
 
   ::-moz-selection {
-    background-color: #0077b6;
-    color: #ffffff;
+    background-color: #0373b9 !important;
+    color: #ffffff !important;
   }
 
   html.dark ::selection {
-    background-color: #0284c7;
-    color: #ffffff;
+    background-color: #0373b9 !important;
+    color: #ffffff !important;
   }
 
   html.dark ::-moz-selection {
-    background-color: #0284c7;
-    color: #ffffff;
+    background-color: #0373b9 !important;
+    color: #ffffff !important;
   }
 
   /* Custom sleek scrollbar */
@@ -276,6 +276,66 @@ html.dark .glass-card:hover {
 
 .animate-top-beam {
   animation: topBeam 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Animated Car Driving Loader */
+@keyframes carBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
+
+.animate-car-bounce {
+  animation: carBounce 0.22s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes wheelSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-wheel-spin {
+  animation: wheelSpin 0.32s linear infinite;
+  transform-box: fill-box;
+}
+
+@keyframes roadDrive {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-road-drive {
+  animation: roadDrive 0.4s linear infinite;
+  will-change: transform;
+}
+
+/* Dashboard Fast & Super Smooth Page Switching */
+@keyframes adminFastFade {
+  0% {
+    opacity: 0.7;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-fast-page-enter {
+  animation: adminFastFade 110ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
 }
 
 /* Smooth HTML scroll */

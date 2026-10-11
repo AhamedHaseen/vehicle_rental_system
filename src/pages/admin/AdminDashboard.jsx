@@ -198,7 +198,7 @@ export const AdminDashboard = () => {
           {/* 1. Vehicles Fleet */}
           <Link
             to="/admin/fleet"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="w-8 h-8 rounded-lg bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -221,7 +221,7 @@ export const AdminDashboard = () => {
           {/* 2. Booking Details */}
           <Link
             to="/admin/bookings"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="w-8 h-8 rounded-lg bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -244,7 +244,7 @@ export const AdminDashboard = () => {
           {/* 3. Cash Details */}
           <Link
             to="/admin/cash"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -267,7 +267,7 @@ export const AdminDashboard = () => {
           {/* 4. Contact Inquiries */}
           <Link
             to="/admin/contacts"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-amber-400 dark:hover:border-amber-600 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-amber-400 dark:hover:border-amber-600 hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -290,7 +290,7 @@ export const AdminDashboard = () => {
           {/* 5. Categories */}
           <Link
             to="/admin/categories"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="w-8 h-8 rounded-lg bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -313,7 +313,7 @@ export const AdminDashboard = () => {
           {/* 6. Rental History */}
           <Link
             to="/admin/history"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
