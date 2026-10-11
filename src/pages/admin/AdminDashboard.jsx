@@ -187,7 +187,7 @@ export const AdminDashboard = () => {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+              <Layers className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" />
               Administrative Operations Hub
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">Direct shortcuts to dispatch, fleet records, customer inquiries, and cash settlements.</p>
@@ -198,18 +198,18 @@ export const AdminDashboard = () => {
           {/* 1. Vehicles Fleet */}
           <Link
             to="/admin/fleet"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-8 h-8 rounded-lg bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Car className="w-4 h-4" />
               </div>
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#0373b9]/10 dark:bg-[#0373b9]/25 text-[#0373b9] dark:text-[#38bdf8]">
                 {vehicles.length} Units
               </span>
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#0373b9] dark:group-hover:text-[#38bdf8] transition-colors">
                 Vehicles Fleet
               </h4>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
@@ -221,18 +221,18 @@ export const AdminDashboard = () => {
           {/* 2. Booking Details */}
           <Link
             to="/admin/bookings"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-sky-400 dark:hover:border-sky-600 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-8 h-8 rounded-lg bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center group-hover:scale-110 transition-transform">
                 <CalendarClock className="w-4 h-4" />
               </div>
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300">
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#0373b9]/10 dark:bg-[#0373b9]/25 text-[#0373b9] dark:text-[#38bdf8]">
                 {bookings.length} Orders
               </span>
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#0373b9] dark:group-hover:text-[#38bdf8] transition-colors">
                 Booking Details
               </h4>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
@@ -290,18 +290,18 @@ export const AdminDashboard = () => {
           {/* 5. Categories */}
           <Link
             to="/admin/categories"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-8 h-8 rounded-lg bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center group-hover:scale-110 transition-transform">
                 <FolderKanban className="w-4 h-4" />
               </div>
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#0373b9]/10 dark:bg-[#0373b9]/25 text-[#0373b9] dark:text-[#38bdf8]">
                 {categories.length} Types
               </span>
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#0373b9] dark:group-hover:text-[#38bdf8] transition-colors">
                 Categories
               </h4>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
@@ -313,7 +313,7 @@ export const AdminDashboard = () => {
           {/* 6. Rental History */}
           <Link
             to="/admin/history"
-            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-rose-400 dark:hover:border-rose-600 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -324,7 +324,7 @@ export const AdminDashboard = () => {
               </span>
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#0373b9] dark:group-hover:text-[#38bdf8] transition-colors">
                 Rental History
               </h4>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">

@@ -65,20 +65,20 @@ export const RoleSwitcherModal = ({ isOpen, onClose }) => {
           onClick={() => handleSwitch('admin')}
           className={`p-4 rounded-xl border cursor-pointer transition-all ${
             role === 'admin'
-              ? 'bg-purple-500/10 border-purple-500/50 shadow-md shadow-purple-500/10'
-              : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-purple-400 dark:hover:border-slate-700'
+              ? 'bg-[#0373b9]/10 border-[#0373b9]/50 shadow-md shadow-[#0373b9]/10'
+              : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-[#0373b9]/40 dark:hover:border-slate-700'
           }`}
         >
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-[#0373b9]/15 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
                   Admin Command Center
                   {role === 'admin' && (
-                    <span className="text-xs text-purple-600 dark:text-purple-400 font-medium flex items-center gap-1">
+                    <span className="text-xs text-[#0373b9] dark:text-[#38bdf8] font-medium flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Active
                     </span>
                   )}

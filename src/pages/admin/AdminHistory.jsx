@@ -59,7 +59,7 @@ export const AdminHistory = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-3">
-            <History className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+            <History className="w-7 h-7 text-[#0373b9] dark:text-[#38bdf8]" />
             <span>Rental & Operations History Log</span>
           </h1>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
@@ -86,7 +86,7 @@ export const AdminHistory = () => {
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Completed Returns</span>
             <span className="text-2xl font-black text-slate-900 dark:text-slate-100">{historyList.length}</span>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center font-bold">
             <CheckCircle2 className="w-5 h-5" />
           </div>
         </div>
@@ -125,7 +125,7 @@ export const AdminHistory = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search completed logs by customer, booking code, vehicle..."
-            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
           />
         </div>
       </div>
@@ -158,7 +158,7 @@ export const AdminHistory = () => {
                   <tr key={b.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
                     {/* Booking ID */}
                     <td className="py-3.5 px-4">
-                      <span className="font-mono font-bold text-purple-600 dark:text-purple-400 block">
+                      <span className="font-mono font-bold text-[#0373b9] dark:text-[#38bdf8] block">
                         {b.booking_code}
                       </span>
                       <span className="text-[10px] text-slate-400">
@@ -260,7 +260,7 @@ export const AdminHistory = () => {
             </div>
 
             {/* Financial breakdown */}
-            <div className="p-4 bg-purple-500/5 dark:bg-purple-950/20 rounded-xl border border-purple-200 dark:border-purple-800/40 space-y-2">
+            <div className="p-4 bg-[#0373b9]/5 dark:bg-[#0373b9]/15 rounded-xl border border-[#0373b9]/30 dark:border-[#0373b9]/40 space-y-2">
               <div className="flex justify-between">
                 <span className="text-slate-500">Base Price:</span>
                 <span className="font-mono">{formatPrice(selectedBooking.base_price)}</span>
@@ -277,9 +277,9 @@ export const AdminHistory = () => {
                   <span className="font-mono">{formatPrice(selectedBooking.additional_charges)}</span>
                 </div>
               )}
-              <div className="flex justify-between pt-2 border-t border-purple-200 dark:border-purple-800/60 font-bold text-sm">
+              <div className="flex justify-between pt-2 border-t border-[#0373b9]/30 dark:border-[#0373b9]/50 font-bold text-sm">
                 <span>Total Amount Settled:</span>
-                <span className="text-purple-600 dark:text-purple-400 font-mono text-base">{formatPrice(selectedBooking.total_amount)}</span>
+                <span className="text-[#0373b9] dark:text-[#38bdf8] font-mono text-base">{formatPrice(selectedBooking.total_amount)}</span>
               </div>
             </div>
 

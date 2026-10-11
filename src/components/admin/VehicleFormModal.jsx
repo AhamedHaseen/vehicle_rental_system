@@ -208,7 +208,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               value={formData.brand}
               onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
               placeholder="e.g. Toyota, Mercedes-Benz, Leyland"
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               required
             />
           </div>
@@ -219,7 +219,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               value={formData.model}
               onChange={(e) => setFormData({ ...formData, model: e.target.value })}
               placeholder="e.g. Prius, Coaster Bus, Land Cruiser"
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               required
             />
           </div>
@@ -231,7 +231,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               min="2010"
               max="2027"
               onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             />
           </div>
         </div>
@@ -250,7 +250,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
                   seats: newCat === 'Bus' ? 32 : newCat === 'Van' ? 12 : prev.seats
                 }));
               }}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-purple-500 font-medium"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9] font-medium"
             >
               {categoriesList.map((c) => (
                 <option key={c} value={c}>{c}</option>
@@ -264,7 +264,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               value={formData.registration_no}
               onChange={(e) => setFormData({ ...formData, registration_no: e.target.value })}
               placeholder="e.g. CAB-1234, WP-NA-8899"
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono uppercase focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono uppercase focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               required
             />
           </div>
@@ -273,7 +273,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 capitalize focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 capitalize focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             >
               {STATUSES.map((s) => (
                 <option key={s} value={s}>{s}</option>
@@ -289,7 +289,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
             <select
               value={formData.fuel_type}
               onChange={(e) => setFormData({ ...formData, fuel_type: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             >
               {FUEL_TYPES.map((f) => (
                 <option key={f} value={f}>{f}</option>
@@ -301,7 +301,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
             <select
               value={formData.transmission}
               onChange={(e) => setFormData({ ...formData, transmission: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             >
               {TRANSMISSIONS.map((t) => (
                 <option key={t} value={t}>{t}</option>
@@ -316,7 +316,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               max="65"
               value={formData.seats}
               onChange={(e) => setFormData({ ...formData, seats: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             />
           </div>
         </div>
@@ -324,13 +324,13 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
         {/* Row 4: Pricing Schedule */}
         <div className="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label className="block text-purple-700 dark:text-purple-300 font-bold mb-1">Daily Rate (LKR) *</label>
+            <label className="block text-[#0373b9] dark:text-[#38bdf8] font-bold mb-1">Daily Rate (LKR) *</label>
             <input
               type="number"
               min="500"
               value={formData.price_per_day}
               onChange={(e) => setFormData({ ...formData, price_per_day: e.target.value })}
-              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono font-bold focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               required
             />
           </div>
@@ -341,7 +341,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               min="0"
               value={formData.price_per_hour}
               onChange={(e) => setFormData({ ...formData, price_per_hour: e.target.value })}
-              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             />
           </div>
           <div>
@@ -351,17 +351,17 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               min="0"
               value={formData.security_deposit}
               onChange={(e) => setFormData({ ...formData, security_deposit: e.target.value })}
-              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             />
           </div>
         </div>
 
         {/* 3 IMAGES SECTION (Requirement 2) */}
-        <div className="p-4 bg-purple-500/5 dark:bg-purple-950/20 rounded-2xl border border-purple-200/80 dark:border-purple-800/40 space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-purple-200/60 dark:border-purple-800/40">
+        <div className="p-4 bg-[#0373b9]/5 dark:bg-[#0373b9]/15 rounded-2xl border border-[#0373b9]/25 dark:border-[#0373b9]/40 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#0373b9]/20 dark:border-[#0373b9]/30">
             <div>
               <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                <ImageIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <ImageIcon className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" />
                 <span>Three Vehicle Images (Primary, Interior & Angle Profile)</span>
               </h4>
               <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -377,7 +377,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
                   key={catKey}
                   type="button"
                   onClick={() => applyPresetPhotos(catKey)}
-                  className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-900 hover:bg-purple-100 dark:hover:bg-purple-900/40 text-[10px] font-semibold border border-purple-200 dark:border-purple-800/60 text-purple-700 dark:text-purple-300 transition-colors"
+                  className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-900 hover:bg-[#0373b9]/15 dark:hover:bg-[#0373b9]/25 text-[10px] font-semibold border border-[#0373b9]/30 text-[#0373b9] dark:text-[#38bdf8] transition-colors"
                 >
                   {catKey}
                 </button>
@@ -396,7 +396,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
                 value={formData.image_url_1}
                 onChange={(e) => setFormData({ ...formData, image_url_1: e.target.value })}
                 placeholder="https://... (Front view)"
-                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-[11px] text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-[11px] text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
                 required
               />
               <div className="aspect-[16/10] w-full rounded-lg bg-slate-900 overflow-hidden border border-slate-200 dark:border-slate-800 relative">
@@ -424,7 +424,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
                 value={formData.image_url_2}
                 onChange={(e) => setFormData({ ...formData, image_url_2: e.target.value })}
                 placeholder="https://... (Cabin view)"
-                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-[11px] text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-[11px] text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
               <div className="aspect-[16/10] w-full rounded-lg bg-slate-900 overflow-hidden border border-slate-200 dark:border-slate-800 relative">
                 {formData.image_url_2 ? (
@@ -451,7 +451,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
                 value={formData.image_url_3}
                 onChange={(e) => setFormData({ ...formData, image_url_3: e.target.value })}
                 placeholder="https://... (Side profile)"
-                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-[11px] text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg p-2 text-[11px] text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
               <div className="aspect-[16/10] w-full rounded-lg bg-slate-900 overflow-hidden border border-slate-200 dark:border-slate-800 relative">
                 {formData.image_url_3 ? (
@@ -478,7 +478,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               type="text"
               value={formData.location}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             />
           </div>
           <div>
@@ -488,7 +488,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="e.g. Executive luxury transport with spacious luggage boot"
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             />
           </div>
         </div>
@@ -520,7 +520,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
               onChange={(e) => setFormData({ ...formData, newFeature: e.target.value })}
               onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddFeature(); } }}
               placeholder="Type feature (e.g. WiFi Router, Reclining Seats) & press Enter"
-              className="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             />
             <Button variant="secondary" size="sm" type="button" onClick={handleAddFeature}>
               Add
@@ -533,7 +533,7 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
           <Button variant="ghost" size="sm" onClick={onClose} type="button">
             Cancel
           </Button>
-          <Button variant="primary" size="md" type="submit" isLoading={isSubmitting} className="bg-purple-600 hover:bg-purple-700">
+          <Button variant="primary" size="md" type="submit" isLoading={isSubmitting}>
             {isEditing ? 'Save Changes' : 'Add Vehicle to Fleet'}
           </Button>
         </div>

@@ -418,9 +418,9 @@ export const Navbar = () => {
                           <Link
                             to="/admin"
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100 dark:hover:bg-purple-900/60 rounded-lg mb-1 transition-colors"
+                            className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-[#0373b9] dark:text-[#38bdf8] bg-[#0373b9]/10 hover:bg-[#0373b9]/15 rounded-lg mb-1 transition-colors"
                           >
-                            <Shield className="w-4 h-4 text-purple-600 dark:text-purple-400" /> Admin Console
+                            <Shield className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" /> Admin Console
                           </Link>
                         )}
                         <Link
@@ -516,9 +516,9 @@ export const Navbar = () => {
                       <Link
                         to="/admin"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-purple-600/10 dark:bg-purple-600/20 border border-purple-300 dark:border-purple-800 text-xs font-bold text-purple-700 dark:text-purple-300"
+                        className="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-[#0373b9]/10 dark:bg-[#0373b9]/20 border border-[#0373b9]/30 dark:border-[#0373b9]/50 text-xs font-bold text-[#0373b9] dark:text-[#38bdf8]"
                       >
-                        <Shield className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                        <Shield className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" />
                         <span>Admin Console</span>
                       </Link>
                     )}

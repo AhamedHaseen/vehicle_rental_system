@@ -126,7 +126,7 @@ export const AdminCategories = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-3">
-            <FolderKanban className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+            <FolderKanban className="w-7 h-7 text-[#0373b9] dark:text-[#38bdf8]" />
             <span>Vehicle Categories Management</span>
           </h1>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
@@ -148,7 +148,6 @@ export const AdminCategories = () => {
             size="sm"
             icon={Plus}
             onClick={openAddModal}
-            className="bg-purple-600 hover:bg-purple-700"
           >
             Add New Category
           </Button>
@@ -164,12 +163,12 @@ export const AdminCategories = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search categories (e.g. Bus, Car, Van)..."
-            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
           />
         </div>
 
         <span className="text-xs font-bold text-slate-500">
-          Total Categories: <strong className="text-purple-600 dark:text-purple-400">{categories.length}</strong>
+          Total Categories: <strong className="text-[#0373b9] dark:text-[#38bdf8]">{categories.length}</strong>
         </span>
       </div>
 
@@ -181,11 +180,11 @@ export const AdminCategories = () => {
           return (
             <div
               key={cat.id}
-              className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 shadow-sm hover:shadow-md hover:border-purple-500/40 transition-all flex flex-col justify-between space-y-4"
+              className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 shadow-sm hover:shadow-md hover:border-[#0373b9]/50 transition-all flex flex-col justify-between space-y-4"
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-3">
-                  <div className="w-11 h-11 rounded-xl bg-purple-600/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+                  <div className="w-11 h-11 rounded-xl bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                     <Car className="w-5 h-5" />
                   </div>
                   <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
@@ -250,7 +249,7 @@ export const AdminCategories = () => {
                 value={catName}
                 onChange={(e) => setCatName(e.target.value)}
                 placeholder="e.g. Bus, Compact Lorry, Convertible"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
                 required
               />
             </div>
@@ -265,7 +264,7 @@ export const AdminCategories = () => {
                 max="80"
                 value={catSeats}
                 onChange={(e) => setCatSeats(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
 
@@ -278,7 +277,7 @@ export const AdminCategories = () => {
                 value={catDesc}
                 onChange={(e) => setCatDesc(e.target.value)}
                 placeholder="e.g. Highway tourist coach buses with dual luggage compartments..."
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
 
@@ -286,7 +285,7 @@ export const AdminCategories = () => {
               <Button variant="ghost" size="sm" onClick={() => setIsModalOpen(false)}>
                 Cancel
               </Button>
-              <Button variant="primary" size="md" type="submit" isLoading={isSubmitting} className="bg-purple-600 hover:bg-purple-700">
+              <Button variant="primary" size="md" type="submit" isLoading={isSubmitting}>
                 {editingCategory ? 'Update Category' : 'Save Category'}
               </Button>
             </div>

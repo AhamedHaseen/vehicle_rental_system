@@ -103,7 +103,7 @@ export const AdminBookings = () => {
               onClick={() => setStatusFilter(tab)}
               className={`px-3 py-1.5 rounded-xl font-semibold capitalize whitespace-nowrap transition-colors ${
                 statusFilter === tab
-                  ? 'bg-purple-600/20 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-500/30'
+                  ? 'bg-[#0373b9]/20 text-[#0373b9] dark:text-[#38bdf8] border border-[#0373b9]/30 dark:border-[#0373b9]/50'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
               }`}
             >
@@ -120,7 +120,7 @@ export const AdminBookings = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search code, customer name..."
-            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
           />
         </div>
       </div>
@@ -159,7 +159,7 @@ export const AdminBookings = () => {
                     <span className="font-medium text-slate-800 dark:text-slate-300 block">{b.vehicle_name}</span>
                     <span className={`inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded ${
                       b.driver_option === 'with_driver'
-                        ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'
+                        ? 'bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] border border-[#0373b9]/25'
                         : 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border border-slate-500/20'
                     }`}>
                       {b.driver_option === 'with_driver' ? 'With Driver' : 'Self-Drive (No Driver)'}

@@ -40,7 +40,7 @@ export const AdminSettings = () => {
         {/* Company Identity */}
         <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-4">
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
-            <Building className="w-4 h-4 text-amber-500 dark:text-amber-400" /> Company Profile & Flagship Hub
+            <Building className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" /> Company Profile & Flagship Hub
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -53,7 +53,7 @@ export const AdminSettings = () => {
                   ...settings,
                   company_info: { ...settings.company_info, name: e.target.value }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
                 required
               />
             </div>
@@ -67,7 +67,7 @@ export const AdminSettings = () => {
                   ...settings,
                   company_info: { ...settings.company_info, email: e.target.value }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
                 required
               />
             </div>
@@ -81,7 +81,7 @@ export const AdminSettings = () => {
                   ...settings,
                   company_info: { ...settings.company_info, phone: e.target.value }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
                 required
               />
             </div>
@@ -95,7 +95,7 @@ export const AdminSettings = () => {
                   ...settings,
                   company_info: { ...settings.company_info, address: e.target.value }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
                 required
               />
             </div>
@@ -105,7 +105,7 @@ export const AdminSettings = () => {
         {/* Rental Policies & Surcharge formulas */}
         <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 space-y-4">
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-amber-500 dark:text-amber-400" /> Rental Rules & Fee Parameters
+            <ShieldCheck className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" /> Rental Rules & Fee Parameters
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -119,7 +119,7 @@ export const AdminSettings = () => {
                   ...settings,
                   rental_policies: { ...settings.rental_policies, minRentalDays: Number(e.target.value) }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
 
@@ -133,7 +133,7 @@ export const AdminSettings = () => {
                   ...settings,
                   rental_policies: { ...settings.rental_policies, cancellationGraceHours: Number(e.target.value) }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
 
@@ -147,7 +147,7 @@ export const AdminSettings = () => {
                   ...settings,
                   rental_policies: { ...settings.rental_policies, securityDepositDefault: Number(e.target.value) }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
 
@@ -162,7 +162,7 @@ export const AdminSettings = () => {
                   ...settings,
                   rental_policies: { ...settings.rental_policies, taxPercent: Number(e.target.value) }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
 
@@ -176,7 +176,7 @@ export const AdminSettings = () => {
                   ...settings,
                   rental_policies: { ...settings.rental_policies, lateReturnFeePerHour: Number(e.target.value) }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
 
@@ -190,7 +190,7 @@ export const AdminSettings = () => {
                   ...settings,
                   rental_policies: { ...settings.rental_policies, weekendSurchargePercent: Number(e.target.value) }
                 })}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
               />
             </div>
           </div>

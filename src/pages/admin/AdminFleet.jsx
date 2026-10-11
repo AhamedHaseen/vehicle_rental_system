@@ -120,7 +120,7 @@ export const AdminFleet = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by Brand, Model, Reg No..."
-            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
           />
         </div>
 
@@ -131,7 +131,7 @@ export const AdminFleet = () => {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
             >
               {categories.map((c) => (
                 <option key={c} value={c}>{c}</option>
@@ -144,7 +144,7 @@ export const AdminFleet = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-amber-500 capitalize"
+              className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0373b9] capitalize"
             >
               {STATUSES.map((s) => (
                 <option key={s} value={s}>{s}</option>
@@ -190,7 +190,7 @@ export const AdminFleet = () => {
 
                   {/* Reg No & Category */}
                   <td className="py-3.5 px-4">
-                    <span className="font-mono font-bold text-amber-600 dark:text-amber-400 bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded border border-amber-500/20 block w-fit">
+                    <span className="font-mono font-bold text-[#0373b9] dark:text-[#38bdf8] bg-[#0373b9]/10 px-2 py-0.5 rounded border border-[#0373b9]/25 block w-fit">
                       {v.registration_no}
                     </span>
                     <span className="text-slate-500 dark:text-slate-400 text-[11px] block mt-1 uppercase font-semibold">

@@ -82,17 +82,17 @@ export const AdminLayout = () => {
           <div className="flex items-center justify-between gap-2 pb-3 mb-2 border-b border-slate-200/80 dark:border-slate-800/80">
             {!isCollapsed ? (
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-xl bg-purple-600/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center font-bold shrink-0">
                   <Shield className="w-4.5 h-4.5" />
                 </div>
                 <div className="min-w-0">
                   <h4 className="text-xs font-black text-slate-900 dark:text-slate-100 truncate tracking-tight">Admin Console</h4>
-                  <p className="text-[10px] text-purple-600 dark:text-purple-400 font-semibold truncate">Dispatch & Ops</p>
+                  <p className="text-[10px] text-[#0373b9] dark:text-[#38bdf8] font-semibold truncate">Dispatch & Ops</p>
                 </div>
               </div>
             ) : (
               <div className="w-full flex justify-center">
-                <div className="w-8 h-8 rounded-xl bg-purple-600/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-xl bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center font-bold">
                   <Shield className="w-4.5 h-4.5" />
                 </div>
               </div>
@@ -133,12 +133,12 @@ export const AdminLayout = () => {
                     isCollapsed ? 'justify-center' : ''
                   } ${
                     isActive
-                      ? 'bg-purple-600/15 dark:bg-purple-600/25 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-500/30 shadow-xs'
+                      ? 'bg-[#0373b9]/15 dark:bg-[#0373b9]/25 text-[#0373b9] dark:text-[#38bdf8] border border-[#0373b9]/30 dark:border-[#0373b9]/40 shadow-xs shadow-[#0373b9]/10 font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
                   }`}
                 >
                   <Icon className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                    isActive ? 'text-purple-600 dark:text-purple-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300'
+                    isActive ? 'text-[#0373b9] dark:text-[#38bdf8]' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300'
                   }`} />
                   
                   {!isCollapsed && (
@@ -146,7 +146,7 @@ export const AdminLayout = () => {
                   )}
 
                   {!isCollapsed && item.badge && (
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-purple-100 dark:bg-purple-950/80 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40">
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-[#0373b9]/10 dark:bg-[#0373b9]/25 text-[#0373b9] dark:text-[#38bdf8] border border-[#0373b9]/30">
                       {item.badge}
                     </span>
                   )}
@@ -170,11 +170,11 @@ export const AdminLayout = () => {
                   <img
                     src={user?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=Admin`}
                     alt="Admin"
-                    className="w-7 h-7 rounded-lg object-cover ring-1 ring-purple-500/40 shrink-0"
+                    className="w-7 h-7 rounded-lg object-cover ring-1 ring-[#0373b9]/40 shrink-0"
                   />
                   <div className="min-w-0 flex-1">
                     <p className="font-bold text-slate-800 dark:text-slate-200 truncate text-[11px]">{user?.full_name || 'System Administrator'}</p>
-                    <p className="text-[9px] text-purple-600 dark:text-purple-400 font-bold uppercase tracking-wider">Super Admin</p>
+                    <p className="text-[9px] text-[#0373b9] dark:text-[#38bdf8] font-bold uppercase tracking-wider">Super Admin</p>
                   </div>
                 </div>
                 <Link
@@ -190,7 +190,7 @@ export const AdminLayout = () => {
                 <img
                   src={user?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=Admin`}
                   alt="Admin"
-                  className="w-8 h-8 rounded-lg object-cover ring-1 ring-purple-500/40"
+                  className="w-8 h-8 rounded-lg object-cover ring-1 ring-[#0373b9]/40"
                   title={user?.full_name || 'Super Admin'}
                 />
                 <Link
@@ -221,7 +221,7 @@ export const AdminLayout = () => {
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-slate-400 dark:text-slate-500 hidden sm:inline">RentFlow Operations</span>
               <span className="text-xs text-slate-300 dark:text-slate-700 hidden sm:inline">/</span>
-              <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <span className="text-xs sm:text-sm font-extrabold text-[#0373b9] dark:text-[#38bdf8] flex items-center gap-2">
                 {currentNavItem?.name || 'Dashboard'}
               </span>
             </div>
@@ -232,7 +232,7 @@ export const AdminLayout = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-[#0373b9] dark:hover:text-[#38bdf8] transition-colors cursor-pointer"
               title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
               aria-label="Toggle Theme"
             >
@@ -243,7 +243,7 @@ export const AdminLayout = () => {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="hidden sm:block bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-purple-500 font-semibold cursor-pointer"
+              className="hidden sm:block bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#0373b9] font-semibold cursor-pointer"
             >
               <option value="LKR">LKR (Rs.)</option>
               <option value="USD">USD ($)</option>
@@ -253,7 +253,7 @@ export const AdminLayout = () => {
             {/* Portal Link Back to Customer Site */}
             <Link
               to="/"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-purple-600/10 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60 hover:bg-purple-600/20 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] border border-[#0373b9]/30 dark:border-[#0373b9]/40 hover:bg-[#0373b9]/20 transition-colors"
               title="Return to customer website"
             >
               <ExternalLink className="w-3.5 h-3.5" />

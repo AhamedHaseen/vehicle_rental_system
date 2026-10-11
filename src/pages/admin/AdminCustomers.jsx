@@ -83,7 +83,7 @@ export const AdminCustomers = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search customer by name, email, phone..."
-            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
           />
         </div>
 
@@ -145,7 +145,7 @@ export const AdminCustomers = () => {
                     {/* Stats */}
                     <td className="py-3.5 px-4">
                       <span className="font-bold text-slate-900 dark:text-slate-200 block">{customerBookings.length || c.total_rentals || 1} Rentals</span>
-                      <span className="font-mono text-amber-600 dark:text-amber-400 font-bold text-[11px] block">{formatPrice(totalSpent)}</span>
+                      <span className="font-mono text-[#0373b9] dark:text-[#38bdf8] font-bold text-[11px] block">{formatPrice(totalSpent)}</span>
                     </td>
 
                     {/* Status */}
@@ -198,7 +198,7 @@ export const AdminCustomers = () => {
               </div>
               <div className="text-right">
                 <span className="text-slate-500 dark:text-slate-400 text-[10px] uppercase font-bold block">Lifetime Value</span>
-                <span className="font-mono font-black text-amber-600 dark:text-amber-400 text-base">{formatPrice(selectedCustomer.totalSpent)}</span>
+                <span className="font-mono font-black text-[#0373b9] dark:text-[#38bdf8] text-base">{formatPrice(selectedCustomer.totalSpent)}</span>
               </div>
             </div>
 
@@ -211,7 +211,7 @@ export const AdminCustomers = () => {
                   {selectedCustomer.bookings.map((b) => (
                     <div key={b.id} className="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
                       <div>
-                        <span className="font-mono font-bold text-amber-600 dark:text-amber-400">{b.booking_code}</span>
+                        <span className="font-mono font-bold text-[#0373b9] dark:text-[#38bdf8]">{b.booking_code}</span>
                         <p className="font-semibold text-slate-800 dark:text-slate-200 mt-0.5">{b.vehicle_name}</p>
                         <span className="text-[10px] text-slate-500">{new Date(b.start_date).toLocaleDateString()}</span>
                       </div>

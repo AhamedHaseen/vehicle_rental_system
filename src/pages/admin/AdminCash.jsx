@@ -207,12 +207,12 @@ export const AdminCash = () => {
 
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <span className="text-[11px] font-bold text-purple-500 uppercase tracking-wider block">Fully Settled (Done)</span>
-            <span className="text-xl sm:text-2xl font-black text-purple-600 dark:text-purple-400">
+            <span className="text-[11px] font-bold text-[#0373b9] dark:text-[#38bdf8] uppercase tracking-wider block">Fully Settled (Done)</span>
+            <span className="text-xl sm:text-2xl font-black text-[#0373b9] dark:text-[#38bdf8]">
               {doneCount} Bookings
             </span>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center font-bold">
             <CheckCircle2 className="w-5 h-5" />
           </div>
         </div>
@@ -292,7 +292,7 @@ export const AdminCash = () => {
                         </div>
                         <span className="text-[11px] text-slate-500 font-mono block">{b.customer_phone}</span>
                         {b.cash_notes && (
-                          <span className="text-[10px] text-purple-600 dark:text-purple-400 italic block mt-0.5">
+                          <span className="text-[10px] text-[#0373b9] dark:text-[#38bdf8] italic block mt-0.5">
                             Note: {b.cash_notes}
                           </span>
                         )}
@@ -300,7 +300,7 @@ export const AdminCash = () => {
 
                       {/* Booking Code & Vehicle */}
                       <td className="py-3.5 px-4">
-                        <span className="font-mono font-bold text-purple-600 dark:text-purple-400 block">
+                        <span className="font-mono font-bold text-[#0373b9] dark:text-[#38bdf8] block">
                           {b.booking_code}
                         </span>
                         <span className="text-slate-600 dark:text-slate-300 text-[11px] truncate block max-w-xs">

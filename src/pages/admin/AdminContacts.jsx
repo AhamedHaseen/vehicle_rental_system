@@ -78,7 +78,7 @@ export const AdminContacts = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-3">
-            <MessageSquare className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+            <MessageSquare className="w-7 h-7 text-[#0373b9] dark:text-[#38bdf8]" />
             <span>Customer Contact Inquiries</span>
           </h1>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
@@ -105,7 +105,7 @@ export const AdminContacts = () => {
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Total Inquiries</span>
             <span className="text-2xl font-black text-slate-900 dark:text-slate-100">{contacts.length}</span>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-[#0373b9]/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center font-bold">
             <MessageSquare className="w-5 h-5" />
           </div>
         </div>
@@ -150,7 +150,7 @@ export const AdminContacts = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search inquiry, customer name, phone..."
-            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
           />
         </div>
 
@@ -162,7 +162,7 @@ export const AdminContacts = () => {
               onClick={() => setStatusFilter(st)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all capitalize ${
                 statusFilter === st
-                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/25'
+                  ? 'bg-[#0373b9] text-white shadow-md shadow-[#0373b9]/25'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
@@ -188,7 +188,7 @@ export const AdminContacts = () => {
               key={contact.id}
               className={`p-5 rounded-2xl border transition-all duration-200 flex flex-col justify-between space-y-4 ${
                 contact.status === 'new'
-                  ? 'bg-purple-500/5 dark:bg-purple-950/20 border-purple-300 dark:border-purple-800/80 shadow-md shadow-purple-500/5'
+                  ? 'bg-[#0373b9]/5 dark:bg-[#0373b9]/15 border-[#0373b9]/30 dark:border-[#0373b9]/50 shadow-md shadow-[#0373b9]/5'
                   : 'bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800'
               }`}
             >
@@ -199,7 +199,7 @@ export const AdminContacts = () => {
                     <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-sm">
                       {contact.name}
                     </h3>
-                    <span className="text-[11px] text-purple-600 dark:text-purple-400 font-bold uppercase tracking-wider block">
+                    <span className="text-[11px] text-[#0373b9] dark:text-[#38bdf8] font-bold uppercase tracking-wider block">
                       Target: {contact.category || 'General Fleet'}
                     </span>
                   </div>
@@ -223,8 +223,8 @@ export const AdminContacts = () => {
                 {/* Contact details */}
                 <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
                   <div className="flex items-center gap-2">
-                    <Mail className="w-3.5 h-3.5 text-purple-500 shrink-0" />
-                    <a href={`mailto:${contact.email}`} className="hover:underline hover:text-purple-600 truncate font-mono text-[11px]">
+                    <Mail className="w-3.5 h-3.5 text-[#0373b9] shrink-0" />
+                    <a href={`mailto:${contact.email}`} className="hover:underline hover:text-[#0373b9] truncate font-mono text-[11px]">
                       {contact.email}
                     </a>
                   </div>
