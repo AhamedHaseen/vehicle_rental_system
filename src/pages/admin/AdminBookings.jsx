@@ -51,9 +51,10 @@ export const AdminBookings = () => {
 
   const handleReject = async (id) => {
     try {
+      setBookings(prev => prev.map(b => b.id === id ? { ...b, booking_status: 'cancelled', updated_at: new Date().toISOString() } : b));
       await updateBookingStatus(id, 'cancelled', { cancellation_reason: 'Rejected by administrator' });
       success('Booking Rejected', 'Reservation cancelled.');
-      loadData();
+      await loadData();
     } catch (err) {
       error('Reject failed', err.message);
     }

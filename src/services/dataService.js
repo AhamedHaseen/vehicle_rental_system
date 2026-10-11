@@ -331,13 +331,21 @@ export const getBookings = async (customerId = null) => {
       if (customerId && isValidUUID(customerId)) query = query.eq('customer_id', customerId);
       const { data, error } = await query;
       if (!error && Array.isArray(data)) {
-        // Merge Supabase bookings with local bookings so newly created bookings are NEVER overwritten/lost
+        // Merge Supabase bookings with local bookings so newly created bookings or status updates are NEVER overwritten/lost
         const local = getLocal(STORAGE_KEYS.BOOKINGS, []);
         const map = new Map();
         data.forEach(b => map.set(b.id, b));
         local.forEach(b => {
           if (!map.has(b.id)) {
             map.set(b.id, b);
+          } else {
+            const remote = map.get(b.id);
+            const localTime = new Date(b.updated_at || b.created_at || 0).getTime();
+            const remoteTime = new Date(remote.updated_at || remote.created_at || 0).getTime();
+            // If local booking was modified more recently or was cancelled locally, preserve the local update!
+            if (localTime >= remoteTime || b.booking_status === 'cancelled') {
+              map.set(b.id, { ...remote, ...b });
+            }
           }
         });
         const merged = Array.from(map.values()).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
@@ -431,10 +439,11 @@ export const createBooking = async (bookingData) => {
 };
 
 export const updateBookingStatus = async (bookingId, status, extraFields = {}) => {
+  const now = new Date().toISOString();
   const bookings = getLocal(STORAGE_KEYS.BOOKINGS, []);
   const updated = bookings.map(b => {
     if (b.id === bookingId) {
-      return { ...b, booking_status: status, ...extraFields, updated_at: new Date().toISOString() };
+      return { ...b, booking_status: status, ...extraFields, updated_at: now };
     }
     return b;
   });
@@ -456,9 +465,31 @@ export const updateBookingStatus = async (bookingId, status, extraFields = {}) =
     });
   }
 
-  if (isSupabaseConfigured() && supabase) {
+  if (isSupabaseConfigured() && supabase && isValidUUID(bookingId)) {
     try {
-      await supabase.from('bookings').update({ booking_status: status, ...extraFields, updated_at: new Date().toISOString() }).eq('id', bookingId);
+      // Whitelist valid schema columns to prevent Postgres unknown-column rejection
+      const allowedCols = [
+        'booking_status', 'payment_status', 'pickup_notes', 'return_notes',
+        'fuel_pickup_percent', 'fuel_return_percent', 'advance_amount',
+        'total_amount', 'updated_at'
+      ];
+      const payload = {
+        booking_status: status,
+        updated_at: now
+      };
+      if (extraFields.cancellation_reason) {
+        payload.return_notes = extraFields.cancellation_reason;
+      }
+      for (const [col, val] of Object.entries(extraFields)) {
+        if (allowedCols.includes(col) && col !== 'cancellation_reason') {
+          payload[col] = val;
+        }
+      }
+
+      const { error: sbErr } = await supabase.from('bookings').update(payload).eq('id', bookingId);
+      if (sbErr) {
+        console.warn('Supabase update status error:', sbErr);
+      }
     } catch (e) {
       console.warn('Supabase update status error:', e);
     }

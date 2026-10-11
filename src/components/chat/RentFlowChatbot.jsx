@@ -14,7 +14,8 @@ import {
   Check,
   ArrowRight,
   ExternalLink,
-  MapPin
+  MapPin,
+  FileText
 } from 'lucide-react';
 
 const LANGUAGES = {
@@ -27,8 +28,11 @@ const LANGUAGES = {
     chips: [
       { label: 'Book a Car via AI', query: 'I want to book a car' },
       { label: 'Available Fleet', query: 'Show available cars' },
-      { label: 'Rates & Deposit', query: 'What is the security deposit?' },
-      { label: 'Track Booking', query: 'Check my booking status' }
+      { label: 'Rates & Deposit', query: 'What are the rates and security deposit?' },
+      { label: 'Track Booking', query: 'Track my booking' },
+      { label: 'View Bookings', query: 'View my bookings' },
+      { label: 'Cancel Booking', query: 'How do I cancel my booking?' },
+      { label: 'History', query: 'Show my rental history' }
     ],
     labels: {
       status: "Online • Sri Lanka",
@@ -44,9 +48,10 @@ const LANGUAGES = {
       summaryRental: "Rental Fee:",
       summaryDeposit: "Refundable Deposit:",
       estimatedTotal: "Total Amount:",
-      confirmBtn: "Confirm Booking",
-      confirming: "Processing booking...",
-      passTitle: "Booking Confirmed",
+      confirmBtn: "Submit Booking Request",
+      confirming: "Submitting request...",
+      passTitle: "Reservation Request Submitted",
+      pendingNote: "Your booking request is awaiting admin approval. Our team will review and confirm it shortly.",
       viewInBookings: "View in My Bookings",
       inquiryTitle: "Leave an Inquiry",
       submitInquiryBtn: "Submit Inquiry"
@@ -61,8 +66,11 @@ const LANGUAGES = {
     chips: [
       { label: 'வாகனம் முன்பதிவு', query: 'வாகனம் முன்பதிவு செய்ய வேண்டும்' },
       { label: 'கிடைக்கும் வாகனங்கள்', query: 'கிடைக்கும் கார்களைக் காட்டு' },
-      { label: 'வைப்புத்தொகை விபரம்', query: 'பிணை வைப்புத்தொகை எவ்வளவு?' },
-      { label: 'முன்பதிவு நிலை', query: 'எனது முன்பதிவை சரிபார்க்க' }
+      { label: 'கட்டணம் & வைப்புத்தொகை', query: 'கட்டணம் மற்றும் வைப்புத்தொகை விபரம்' },
+      { label: 'முன்பதிவு கண்காணிப்பு', query: 'எனது முன்பதிவை கண்காணிக்க' },
+      { label: 'முன்பதிவுகளை பார்க்க', query: 'எனது முன்பதிவுகளை பார்க்க' },
+      { label: 'முன்பதிவு ரத்து', query: 'முன்பதிவை ரத்து செய்வது எப்படி?' },
+      { label: 'வாடகை வரலாறு', query: 'எனது முந்தைய பயண வரலாறு' }
     ],
     labels: {
       status: "நேரலை • இலங்கை",
@@ -78,9 +86,10 @@ const LANGUAGES = {
       summaryRental: "வாடகைக் கட்டணம்:",
       summaryDeposit: "மீளளிக்கப்படும் வைப்புத்தொகை:",
       estimatedTotal: "மொத்தக் கட்டணம்:",
-      confirmBtn: "முன்பதிவை உறுதி செய்க",
-      confirming: "முன்பதிவு செய்யப்படுகிறது...",
-      passTitle: "முன்பதிவு உறுதி செய்யப்பட்டது",
+      confirmBtn: "முன்பதிவு கோரிக்கையை அனுப்புக",
+      confirming: "கோரிக்கை அனுப்பப்படுகிறது...",
+      passTitle: "முன்பதிவு கோரிக்கை அனுப்பப்பட்டது",
+      pendingNote: "உங்கள் முன்பதிவு நிர்வாகியின் அனுமதிக்காக காத்திருக்கிறது. விரைவில் உறுதிசெய்யப்படும்.",
       viewInBookings: "எனது முன்பதிவுகளில் பார்க்க",
       inquiryTitle: "விசாரணை படிவம்",
       submitInquiryBtn: "விசாரணையை அனுப்புக"
@@ -95,8 +104,11 @@ const LANGUAGES = {
     chips: [
       { label: 'වාහනයක් වෙන්කරන්න', query: 'මට වාහනයක් වෙන්කරන්න ඕනෙ' },
       { label: 'පවතින වාහන', query: 'පවතින වාහන පෙන්වන්න' },
-      { label: 'ඇප තැන්පතු විස්තර', query: 'ඇප තැන්පතුව කීයද?' },
-      { label: 'වෙන්කිරීම් පරීක්ෂාව', query: 'මගේ වෙන්කිරීම පරීක්ෂා කරන්න' }
+      { label: 'ගාස්තු සහ ඇප තැන්පතු', query: 'ගාස්තු සහ ඇප තැන්පතුව කීයද?' },
+      { label: 'වෙන්කිරීම් පරීක්ෂාව', query: 'මගේ වෙන්කිරීම පරීක්ෂා කරන්න' },
+      { label: 'වෙන්කිරීම් බලන්න', query: 'මගේ වෙන්කිරීම් බලන්න' },
+      { label: 'වෙන්කිරීම අවලංගු කිරීම', query: 'වෙන්කිරීම අවලංගු කරන්නේ කෙසේද?' },
+      { label: 'කුලී ඉතිහාසය', query: 'මගේ කුලී ඉතිහාසය පෙන්වන්න' }
     ],
     labels: {
       status: "සක්‍රීයයි • ශ්‍රී ලංකා",
@@ -112,9 +124,10 @@ const LANGUAGES = {
       summaryRental: "කුලී ගාස්තුව:",
       summaryDeposit: "ආපසු ගෙවන ඇප තැන්පතුව:",
       estimatedTotal: "මුළු මුදල:",
-      confirmBtn: "වෙන්කිරීම තහවුරු කරන්න",
-      confirming: "තහවුරු වෙමින් පවතී...",
-      passTitle: "වෙන්කිරීම සාර්ථකයි",
+      confirmBtn: "වෙන්කිරීමේ ඉල්ලීම යොමු කරන්න",
+      confirming: "ඉල්ලීම යොමු වෙමින් පවතී...",
+      passTitle: "වෙන්කිරීමේ ඉල්ලීම යොමු කරන ලදී",
+      pendingNote: "ඔබගේ වෙන්කිරීම පරිපාලකගේ අනුමැතිය සඳහා පොරොත්තුවෙන් පවතී.",
       viewInBookings: "මගේ වෙන්කිරීම් බලන්න",
       inquiryTitle: "විමසීම් පෝරමය",
       submitInquiryBtn: "විමසීම යොමු කරන්න"
@@ -201,6 +214,9 @@ export const RentFlowChatbot = () => {
         type: response.type,
         vehicle: response.vehicle,
         vehicles: response.vehicles,
+        isAvailable: response.isAvailable,
+        alternatives: response.alternatives,
+        unavailableVehicle: response.unavailableVehicle,
         booking: response.booking,
         prefill: response.prefill,
         suggestedActions: response.suggestedActions
@@ -260,7 +276,7 @@ export const RentFlowChatbot = () => {
         customer_id: user?.id || null
       });
 
-      success('Reservation Confirmed', `Booking ${created.booking_code || created.id} recorded successfully!`);
+      success('Request Submitted', `Booking request ${created.booking_code || created.id} submitted! Awaiting admin approval.`);
 
       setMessages(prev =>
         prev.map(m =>
@@ -268,7 +284,7 @@ export const RentFlowChatbot = () => {
             ? {
                 ...m,
                 type: 'ai_booking_success',
-                text: `**${t.labels.passTitle}**\n\nReference: \`${created.booking_code || created.id}\``,
+                text: `**${t.labels.passTitle}**\n\nReference: \`${created.booking_code || created.id}\`\n\n⏳ *Status:* **Pending Admin Approval**\n\n${t.labels.pendingNote}`,
                 booking: created
               }
             : m
@@ -343,40 +359,40 @@ export const RentFlowChatbot = () => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#0077b6] hover:bg-[#023e8a] text-white rounded-full shadow-lg hover:shadow-xl transition-all active:scale-95 text-xs font-semibold"
+          className="flex items-center gap-2.5 px-4.5 py-3 bg-[#0077b6] hover:bg-[#023e8a] text-white rounded-full shadow-lg hover:shadow-xl transition-all active:scale-95 text-sm font-semibold"
           aria-label="Open Chat"
         >
-          <MessageSquare className="w-4 h-4 text-white" />
+          <MessageSquare className="w-4.5 h-4.5 text-white" />
           <span>RentFlow AI</span>
         </button>
       )}
 
-      {/* Chat Window Modal - Simple, Professional, Fixed Size (No Maximize Gimmick) */}
+      {/* Chat Window Modal - Simple, Professional, Increased Comfortable Size */}
       {isOpen && (
-        <div className="flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl rounded-2xl overflow-hidden transition-all duration-200 w-[92vw] sm:w-[410px] h-[580px] max-h-[82vh]">
+        <div className="flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl rounded-2xl overflow-hidden transition-all duration-200 w-[95vw] sm:w-[460px] md:w-[480px] h-[640px] max-h-[88vh]">
           {/* Professional Clean Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-slate-900 text-white select-none border-b border-slate-800">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#0077b6] flex items-center justify-center text-white">
-                <MessageSquare className="w-4 h-4" />
+          <div className="flex items-center justify-between px-4.5 py-3.5 bg-slate-900 text-white select-none border-b border-slate-800">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-[#0077b6] flex items-center justify-center text-white shadow-sm">
+                <MessageSquare className="w-4.5 h-4.5" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <h3 className="text-xs font-bold text-white">RentFlow AI</h3>
+                  <h3 className="text-sm font-bold text-white tracking-tight">RentFlow AI</h3>
                   <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
                 </div>
-                <p className="text-[10px] text-slate-400 font-medium">{t.labels.status}</p>
+                <p className="text-[11px] text-slate-400 font-medium">{t.labels.status}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               {/* Clean Language Segmented Switcher */}
-              <div className="flex items-center bg-slate-800 p-0.5 rounded-lg border border-slate-700 text-[10px]">
+              <div className="flex items-center bg-slate-800 p-0.5 rounded-lg border border-slate-700 text-[11px]">
                 {Object.values(LANGUAGES).map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
-                    className={`px-2 py-0.5 rounded-md font-medium transition-colors ${
+                    className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
                       currentLang === lang.code
                         ? 'bg-[#0077b6] text-white'
                         : 'text-slate-400 hover:text-white'
@@ -391,24 +407,24 @@ export const RentFlowChatbot = () => {
               <button
                 onClick={handleResetChat}
                 title="Restart chat"
-                className="p-1 text-slate-400 hover:text-white rounded-md transition-colors"
+                className="p-1.5 text-slate-400 hover:text-white rounded-md transition-colors"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
+                <RotateCcw className="w-4 h-4" />
               </button>
 
               {/* Close */}
               <button
                 onClick={() => setIsOpen(false)}
                 title="Close"
-                className="p-1 text-slate-400 hover:text-white rounded-md transition-colors"
+                className="p-1.5 text-slate-400 hover:text-white rounded-md transition-colors"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4.5 h-4.5" />
               </button>
             </div>
           </div>
 
           {/* Messages Stream */}
-          <div className="flex-1 overflow-y-auto p-3.5 space-y-3.5 bg-slate-50/50 dark:bg-slate-950/40 text-slate-800 dark:text-slate-200 text-xs">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-950/40 text-slate-800 dark:text-slate-200 text-xs sm:text-[13px] leading-relaxed">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -416,7 +432,7 @@ export const RentFlowChatbot = () => {
               >
                 {/* Bubble */}
                 <div
-                  className={`max-w-[88%] rounded-xl p-3 shadow-2xs ${
+                  className={`max-w-[88%] rounded-xl p-3.5 sm:p-4 shadow-2xs ${
                     msg.sender === 'user'
                       ? 'bg-[#0077b6] text-white rounded-tr-none'
                       : 'bg-white dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 rounded-tl-none'
@@ -426,7 +442,27 @@ export const RentFlowChatbot = () => {
 
                   {/* Vehicle Recommendations Card List */}
                   {msg.vehicles && msg.vehicles.length > 0 && (
-                    <div className="mt-2.5 space-y-2">
+                    <div className="mt-2 space-y-2">
+                      {/* Interactive Fleet Filter Chips Bar */}
+                      <div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none text-[10px]">
+                        {[
+                          { label: 'All', query: 'Show available cars' },
+                          { label: '🚗 Cars', query: 'Show available sedans' },
+                          { label: '🚙 SUVs', query: 'Show available SUVs' },
+                          { label: '🚐 Vans', query: 'Show available vans' },
+                          { label: '🌿 Hybrid', query: 'Show hybrid vehicles' },
+                          { label: '💰 Budget', query: 'Show budget cars' }
+                        ].map((chip, cIdx) => (
+                          <button
+                            key={cIdx}
+                            onClick={() => handleSendMessage(chip.query)}
+                            className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-750 hover:bg-[#0077b6] hover:text-white text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap transition-colors"
+                          >
+                            {chip.label}
+                          </button>
+                        ))}
+                      </div>
+
                       {msg.vehicles.map((v) => (
                         <div
                           key={v.id}
@@ -463,18 +499,86 @@ export const RentFlowChatbot = () => {
                                 {t.labels.instantBook}
                               </button>
                               <button
+                                onClick={() => handleSendMessage(`Show details of ${v.model || v.brand}`)}
+                                className="py-1 px-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md text-[10px] font-medium transition-colors"
+                              >
+                                {t.labels.viewSpecs}
+                              </button>
+                              <button
                                 onClick={() => {
                                   setIsOpen(false);
                                   navigate(`/vehicles/${v.id}`);
                                 }}
-                                className="py-1 px-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md text-[10px] transition-colors"
+                                className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                                title="Open full page"
                               >
-                                {t.labels.viewSpecs}
+                                <ExternalLink className="w-3 h-3" />
                               </button>
                             </div>
                           </div>
                         </div>
                       ))}
+                    </div>
+                  )}
+
+                  {/* Vehicle Full Technical Specifications & Details Card */}
+                  {msg.type === 'vehicle_details' && msg.vehicle && (
+                    <VehicleDetailsCard
+                      vehicle={msg.vehicle}
+                      isAvailable={msg.isAvailable}
+                      t={t}
+                      formatPrice={formatPrice}
+                      onBook={() => handleInitiateAIBooking(msg.vehicle)}
+                      onWaitlist={() => handleSendMessage(`Inquiry for unavailable ${msg.vehicle.model || msg.vehicle.brand}`)}
+                      onViewFull={() => {
+                        setIsOpen(false);
+                        navigate(`/vehicles/${msg.vehicle.id}`);
+                      }}
+                    />
+                  )}
+
+                  {/* Responsive Unavailable Vehicle Notice with Alternatives */}
+                  {msg.type === 'unavailable_notice' && (
+                    <div className="mt-2.5 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 rounded-xl space-y-2 text-left">
+                      <div className="flex items-center justify-between pb-1 border-b border-amber-200 dark:border-amber-800/60">
+                        <span className="text-xs font-bold text-amber-800 dark:text-amber-300">
+                          ⚠️ Notice: Active Rental
+                        </span>
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-200/60 text-amber-900 dark:bg-amber-900/60 dark:text-amber-200 uppercase">
+                          Currently Rented
+                        </span>
+                      </div>
+
+                      {msg.vehicles && msg.vehicles.length > 0 && (
+                        <div className="space-y-1.5 pt-1">
+                          <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 block">
+                            Closest Ready-to-Drive Alternatives:
+                          </span>
+                          {msg.vehicles.map((v) => (
+                            <div key={v.id} className="flex items-center justify-between p-1.5 bg-white dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800 text-[11px]">
+                              <span className="font-semibold text-slate-900 dark:text-slate-100 truncate pr-2">
+                                {v.brand} {v.model || v.name}
+                              </span>
+                              <div className="flex items-center gap-1.5 shrink-0">
+                                <span className="font-bold text-[#0077b6]">{formatPrice(v.price_per_day)}</span>
+                                <button
+                                  onClick={() => handleInitiateAIBooking(v)}
+                                  className="px-2 py-0.5 bg-[#0077b6] text-white rounded text-[10px] font-semibold"
+                                >
+                                  Book
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => handleSendMessage("Submit inquiry")}
+                        className="w-full mt-1 py-1.5 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white rounded-md font-semibold text-[11px] transition-colors"
+                      >
+                        📝 Join Priority Waitlist / Request Dispatch
+                      </button>
                     </div>
                   )}
 
@@ -490,67 +594,17 @@ export const RentFlowChatbot = () => {
                     />
                   )}
 
-                  {/* Booking Confirmed Card */}
-                  {msg.type === 'ai_booking_success' && msg.booking && (
-                    <div className="mt-2.5 p-3 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg space-y-2 text-left">
-                      <div className="flex items-center justify-between pb-1.5 border-b border-emerald-200 dark:border-emerald-800/60">
-                        <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
-                          {t.labels.passTitle}
-                        </span>
-                        <span className="text-[11px] font-mono font-bold text-[#0077b6] dark:text-[#38bdf8]">
-                          {msg.booking.booking_code || msg.booking.id}
-                        </span>
-                      </div>
-
-                      <div className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
-                        <p className="font-semibold text-slate-900 dark:text-slate-100">
-                          {msg.booking.vehicle_name}
-                        </p>
-                        <p className="text-[11px] text-slate-500">
-                          {new Date(msg.booking.start_date).toLocaleDateString()} → {new Date(msg.booking.end_date).toLocaleDateString()} ({msg.booking.duration_days} Days)
-                        </p>
-                        <p className="text-[11px] text-slate-500">
-                          {msg.booking.pickup_location}
-                        </p>
-                        <div className="flex justify-between font-bold text-slate-900 dark:text-slate-100 pt-1 border-t border-emerald-200/60 dark:border-emerald-800/60">
-                          <span>Total:</span>
-                          <span className="text-[#0077b6] dark:text-[#38bdf8]">{formatPrice(msg.booking.total_amount)}</span>
-                        </div>
-                      </div>
-
-                      <button
-                        onClick={() => {
-                          setIsOpen(false);
-                          navigate('/my-bookings');
-                        }}
-                        className="w-full py-1.5 bg-[#0077b6] text-white hover:bg-[#023e8a] rounded-md font-semibold text-xs transition-colors"
-                      >
-                        {t.labels.viewInBookings}
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Booking Status Card */}
-                  {msg.booking && msg.type !== 'ai_booking_success' && (
-                    <div className="mt-2 p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg space-y-1.5 text-left">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-mono font-bold text-[#0077b6] dark:text-[#38bdf8]">
-                          {msg.booking.booking_code || msg.booking.booking_reference || msg.booking.id}
-                        </span>
-                        <span className="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-400">
-                          {msg.booking.booking_status || msg.booking.status || 'Active'}
-                        </span>
-                      </div>
-                      {msg.booking.vehicle && (
-                        <p className="font-semibold text-slate-800 dark:text-slate-200 text-xs">
-                          {msg.booking.vehicle.brand} {msg.booking.vehicle.model || msg.booking.vehicle.name}
-                        </p>
-                      )}
-                      <div className="flex justify-between font-bold text-slate-900 dark:text-slate-100 pt-1 text-xs">
-                        <span>Total:</span>
-                        <span>{formatPrice(msg.booking.total_amount || msg.booking.total_price)}</span>
-                      </div>
-                    </div>
+                  {/* Booking Status Card (both active lookup and newly submitted AI bookings) */}
+                  {msg.booking && (
+                    <BookingStatusCard
+                      booking={msg.booking}
+                      formatPrice={formatPrice}
+                      t={t}
+                      onViewMyBookings={() => {
+                        setIsOpen(false);
+                        navigate('/my-bookings');
+                      }}
+                    />
                   )}
 
                   {/* Inquiry Form */}
@@ -563,13 +617,13 @@ export const RentFlowChatbot = () => {
                   )}
                 </div>
 
-                <span className="text-[9px] text-slate-400 mt-1 px-1">
+                <span className="text-[10px] text-slate-400 mt-1 px-1">
                   {msg.timestamp}
                 </span>
 
                 {/* Suggested Chips */}
                 {msg.suggestedActions && (
-                  <div className="flex flex-wrap gap-1.5 mt-2 max-w-[90%]">
+                  <div className="flex flex-wrap gap-2 mt-2 max-w-[92%]">
                     {msg.suggestedActions.map((action, aIdx) => (
                       <button
                         key={aIdx}
@@ -581,7 +635,7 @@ export const RentFlowChatbot = () => {
                             handleSendMessage(action.query);
                           }
                         }}
-                        className="px-2.5 py-1 rounded-full bg-white dark:bg-slate-800 hover:border-[#0077b6] hover:text-[#0077b6] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11px] font-medium transition-colors"
+                        className="px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 hover:border-[#0077b6] hover:text-[#0077b6] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-medium transition-colors shadow-2xs"
                       >
                         {action.label}
                       </button>
@@ -592,9 +646,9 @@ export const RentFlowChatbot = () => {
             ))}
 
             {isLoading && (
-              <div className="flex items-center gap-2 text-slate-400 text-xs">
+              <div className="flex items-center gap-2.5 text-slate-400 text-xs sm:text-[13px]">
                 <div className="w-4 h-4 border-2 border-[#0077b6] border-t-transparent rounded-full animate-spin" />
-                <span className="italic text-[11px]">Thinking...</span>
+                <span className="italic text-xs">RentFlow AI is thinking...</span>
               </div>
             )}
 
@@ -602,13 +656,13 @@ export const RentFlowChatbot = () => {
           </div>
 
           {/* Input Footer */}
-          <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+          <div className="p-3.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSendMessage();
               }}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2.5"
             >
               <input
                 ref={inputRef}
@@ -616,17 +670,17 @@ export const RentFlowChatbot = () => {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder={t.inputPlaceholder}
-                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
+                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-[13px] text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0077b6]"
                 disabled={isLoading}
               />
 
               <button
                 type="submit"
                 disabled={!inputText.trim() || isLoading}
-                className="p-2.5 bg-[#0077b6] hover:bg-[#023e8a] disabled:opacity-40 text-white rounded-xl transition-colors"
+                className="w-10 h-10 flex items-center justify-center bg-[#0077b6] hover:bg-[#023e8a] disabled:opacity-40 text-white rounded-xl transition-colors shrink-0 shadow-sm"
                 title="Send"
               >
-                <Send className="w-3.5 h-3.5" />
+                <Send className="w-4 h-4" />
               </button>
             </form>
           </div>
@@ -715,6 +769,139 @@ const InquiryForm = ({ prefill = {}, t, onSubmit }) => {
   );
 };
 
+// Clean High-End Booking Status Card Component
+const BookingStatusCard = ({ booking, formatPrice, t, onViewMyBookings }) => {
+  if (!booking) return null;
+
+  const rawStatus = (booking.booking_status || booking.status || 'confirmed').toLowerCase();
+
+  const statusConfig = {
+    confirmed: {
+      label: 'Confirmed',
+      bg: 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300',
+      dot: 'bg-emerald-500'
+    },
+    active: {
+      label: 'Active Trip',
+      bg: 'bg-blue-50 dark:bg-blue-950/40 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300',
+      dot: 'bg-blue-500'
+    },
+    completed: {
+      label: 'Completed',
+      bg: 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300',
+      dot: 'bg-slate-500'
+    },
+    pending: {
+      label: 'Pending',
+      bg: 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300',
+      dot: 'bg-amber-500'
+    },
+    cancelled: {
+      label: 'Cancelled',
+      bg: 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-700 text-rose-700 dark:text-rose-300',
+      dot: 'bg-rose-500'
+    }
+  };
+
+  const statusInfo = statusConfig[rawStatus] || statusConfig.confirmed;
+
+  const vehicleName = booking.vehicle?.brand 
+    ? `${booking.vehicle.brand} ${booking.vehicle.model || booking.vehicle.name}`
+    : (booking.vehicle_name || 'Reserved Fleet Vehicle');
+
+  const vehicleImage = booking.vehicle?.image_url || 
+    booking.vehicle?.images?.[0] || 
+    'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=400&q=80';
+
+  const startDateStr = booking.start_date 
+    ? new Date(booking.start_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) 
+    : 'Scheduled';
+  const endDateStr = booking.end_date 
+    ? new Date(booking.end_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) 
+    : 'Scheduled';
+
+  const isWithDriver = booking.driver_option === 'with_driver' || booking.with_driver;
+
+  return (
+    <div className="mt-3 p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl space-y-3 text-left shadow-sm">
+      {/* Top Header: Reference & Status Badge */}
+      <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex items-center gap-1.5">
+          <FileText className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
+          <span className="text-xs font-mono font-bold text-[#0077b6] dark:text-[#38bdf8] tracking-wide">
+            {booking.booking_code || booking.booking_reference || booking.id}
+          </span>
+        </div>
+        <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border ${statusInfo.bg}`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${statusInfo.dot} animate-pulse`} />
+          {statusInfo.label}
+        </span>
+      </div>
+
+      {/* Vehicle Media & Name */}
+      <div className="flex items-center gap-3">
+        <img
+          src={vehicleImage}
+          alt={vehicleName}
+          className="w-20 h-14 object-cover rounded-lg bg-slate-200 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-700 shadow-2xs"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=400&q=80';
+          }}
+        />
+        <div className="flex-1 min-w-0">
+          <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm truncate">
+            {vehicleName}
+          </h4>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+            {isWithDriver ? '👔 Chauffeur Driven' : '🚗 Self-Drive Rental'}
+          </p>
+        </div>
+      </div>
+
+      {/* Dates & Pickup Location */}
+      <div className="bg-white dark:bg-slate-800/80 rounded-lg p-2.5 border border-slate-200/80 dark:border-slate-700/80 space-y-2 text-xs sm:text-[13px]">
+        <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
+          <div className="flex items-center gap-1.5 text-slate-500">
+            <Calendar className="w-3.5 h-3.5 text-slate-400" />
+            <span>Dates:</span>
+          </div>
+          <span className="font-semibold text-slate-900 dark:text-slate-100">
+            {startDateStr} → {endDateStr}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
+          <div className="flex items-center gap-1.5 text-slate-500">
+            <MapPin className="w-3.5 h-3.5 text-slate-400" />
+            <span>Hub:</span>
+          </div>
+          <span className="font-semibold text-slate-900 dark:text-slate-100 truncate max-w-[190px]" title={booking.pickup_location}>
+            {booking.pickup_location || 'Colombo Flagship Hub'}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between pt-1.5 border-t border-slate-100 dark:border-slate-700/60 font-bold text-xs sm:text-[13px]">
+          <span className="text-slate-600 dark:text-slate-400">Total Price:</span>
+          <span className="text-sm font-bold text-[#0077b6] dark:text-[#38bdf8]">
+            {formatPrice(booking.total_amount || booking.total_price || 0)}
+          </span>
+        </div>
+      </div>
+
+      {/* Direct My Bookings Action Button */}
+      <button
+        type="button"
+        onClick={onViewMyBookings}
+        className="w-full py-2.5 px-3.5 bg-[#0077b6] hover:bg-[#023e8a] active:scale-[0.98] text-white rounded-lg font-semibold text-xs sm:text-[13px] transition-all flex items-center justify-center gap-2 shadow-sm"
+      >
+        <span>{t.labels.viewInBookings || 'View in My Bookings'}</span>
+        <ArrowRight className="w-4 h-4" />
+      </button>
+    </div>
+  );
+};
+
 // Clean Professional AI Booking Reservation Form (LKR / Rs.)
 const AIBookingForm = ({ vehicle, prefill = {}, user, t, formatPrice, onConfirm }) => {
   const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
@@ -759,7 +946,7 @@ const AIBookingForm = ({ vehicle, prefill = {}, user, t, formatPrice, onConfirm 
         base_price: basePrice,
         security_deposit: securityDeposit,
         total_amount: totalAmount,
-        booking_status: 'confirmed',
+        booking_status: 'pending',
         payment_status: 'pending',
         pickup_location: pickupLocation,
         return_location: pickupLocation,
@@ -892,5 +1079,127 @@ const AIBookingForm = ({ vehicle, prefill = {}, user, t, formatPrice, onConfirm 
         {isSubmitting ? t.labels.confirming : t.labels.confirmBtn}
       </button>
     </form>
+  );
+};
+
+// Full Vehicle Technical Specifications & Details Card Component
+const VehicleDetailsCard = ({ vehicle, isAvailable, t, formatPrice, onBook, onWaitlist, onViewFull }) => {
+  const specs = vehicle.specs || {};
+  const features = Array.isArray(vehicle.features) && vehicle.features.length > 0
+    ? vehicle.features
+    : ['Air Conditioning', 'Bluetooth Audio', 'ABS Brakes', 'Reverse Camera'];
+
+  return (
+    <div className="mt-2.5 p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl space-y-2.5 text-left">
+      <div className="flex items-center gap-2.5 pb-2 border-b border-slate-200 dark:border-slate-800">
+        <img
+          src={vehicle.image_url || 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=400&q=80'}
+          alt={vehicle.name}
+          className="w-18 h-13 object-cover rounded-md bg-slate-200 dark:bg-slate-800 shrink-0"
+        />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between">
+            <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs truncate">
+              {vehicle.brand} {vehicle.model || vehicle.name} {vehicle.year ? `(${vehicle.year})` : ''}
+            </h4>
+            <span
+              className={`text-[9px] font-bold uppercase px-1.5 py-0.2 rounded ${
+                isAvailable
+                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300'
+                  : 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300'
+              }`}
+            >
+              {isAvailable ? 'Available' : 'Rented Out'}
+            </span>
+          </div>
+
+          <div className="mt-0.5 flex items-baseline gap-1.5">
+            <span className="text-xs font-bold text-[#0077b6] dark:text-[#38bdf8]">
+              {formatPrice(vehicle.price_per_day)}{t.labels.perDay}
+            </span>
+            <span className="text-[10px] text-slate-500">
+              • {formatPrice(vehicle.price_per_hour || Math.round(vehicle.price_per_day / 8))}{t.labels.perHour}
+            </span>
+          </div>
+          <span className="text-[10px] text-slate-500 block">
+            Deposit: {formatPrice(25000)} (Refundable)
+          </span>
+        </div>
+      </div>
+
+      {/* Technical Specifications Grid */}
+      <div>
+        <h5 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+          Technical Specifications:
+        </h5>
+        <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+          <div className="p-1.5 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-400 block text-[9px]">Engine / Powertrain</span>
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{specs.engine || `${vehicle.fuel_type || 'Petrol'} Engine`}</span>
+          </div>
+          <div className="p-1.5 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-400 block text-[9px]">Transmission</span>
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{vehicle.transmission || 'Automatic'}</span>
+          </div>
+          <div className="p-1.5 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-400 block text-[9px]">Fuel Efficiency</span>
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{specs.fuelEfficiency || '18-22 km/L (Eco)'}</span>
+          </div>
+          <div className="p-1.5 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-400 block text-[9px]">Seating Capacity</span>
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{vehicle.seats || 5} Passengers</span>
+          </div>
+          <div className="p-1.5 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-400 block text-[9px]">Max Power Output</span>
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{specs.power || 'Factory Calibrated'}</span>
+          </div>
+          <div className="p-1.5 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-400 block text-[9px]">Odometer Reading</span>
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{vehicle.odometer_km ? `${Number(vehicle.odometer_km).toLocaleString()} KM` : '15,000 KM'}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Key Features */}
+      {features.length > 0 && (
+        <div>
+          <h5 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+            Features & Equipment:
+          </h5>
+          <div className="flex flex-wrap gap-1">
+            {features.map((feat, fIdx) => (
+              <span key={fIdx} className="px-1.5 py-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[9px] text-slate-700 dark:text-slate-300 font-medium">
+                ✓ {feat}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Action Buttons */}
+      <div className="flex items-center gap-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+        {isAvailable ? (
+          <button
+            onClick={onBook}
+            className="flex-1 py-1.5 bg-[#0077b6] hover:bg-[#023e8a] text-white rounded-md font-bold text-xs transition-colors"
+          >
+            ⚡ {t.labels.instantBook}
+          </button>
+        ) : (
+          <button
+            onClick={onWaitlist}
+            className="flex-1 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-md font-bold text-xs transition-colors"
+          >
+            📝 Join Priority Waitlist
+          </button>
+        )}
+        <button
+          onClick={onViewFull}
+          className="py-1.5 px-2.5 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md text-xs font-medium transition-colors"
+        >
+          Catalog Page
+        </button>
+      </div>
+    </div>
   );
 };

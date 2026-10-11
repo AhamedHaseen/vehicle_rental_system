@@ -49,12 +49,18 @@ export const MyBookings = () => {
   const handleCancelBooking = async () => {
     if (!cancelModalBooking) return;
     try {
-      await updateBookingStatus(cancelModalBooking.id, 'cancelled', {
+      const targetId = cancelModalBooking.id;
+      const code = cancelModalBooking.booking_code;
+
+      // Optimistically update local UI state immediately
+      setBookings(prev => prev.map(b => b.id === targetId ? { ...b, booking_status: 'cancelled', updated_at: new Date().toISOString() } : b));
+
+      await updateBookingStatus(targetId, 'cancelled', {
         cancellation_reason: 'Cancelled by customer online portal'
       });
-      success('Booking Cancelled', `Reservation ${cancelModalBooking.booking_code} has been cancelled.`);
+      success('Booking Cancelled', `Reservation ${code} has been cancelled.`);
       setCancelModalBooking(null);
-      loadData();
+      await loadData();
     } catch (err) {
       error('Failed to cancel booking', err.message);
     }
