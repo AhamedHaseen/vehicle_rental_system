@@ -4,6 +4,7 @@ import {
 } from '../../services/dataService';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
+import { CategoryFormModal } from '../../components/admin/CategoryFormModal';
 import { useToast } from '../../context/ToastContext';
 import { 
   FolderKanban, Plus, Edit3, Trash2, Car, 
@@ -232,65 +233,15 @@ export const AdminCategories = () => {
 
       {/* Add / Edit Category Modal */}
       {isModalOpen && (
-        <Modal
+        <CategoryFormModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title={editingCategory ? `Edit Category: ${editingCategory.name}` : "Add New Vehicle Category"}
-          subtitle="Configure category name (e.g. Bus, Car), passenger capacity, and description."
-          maxWidth="max-w-md"
-        >
-          <form onSubmit={handleSaveCategory} className="space-y-4 text-xs">
-            <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
-                Category Name * (e.g. Car, Bus, Van, SUV)
-              </label>
-              <input
-                type="text"
-                value={catName}
-                onChange={(e) => setCatName(e.target.value)}
-                placeholder="e.g. Bus, Compact Lorry, Convertible"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
-                Typical Seat Capacity
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="80"
-                value={catSeats}
-                onChange={(e) => setCatSeats(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
-                Overview Description
-              </label>
-              <textarea
-                rows="2"
-                value={catDesc}
-                onChange={(e) => setCatDesc(e.target.value)}
-                placeholder="e.g. Highway tourist coach buses with dual luggage compartments..."
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
-              />
-            </div>
-
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
-              <Button variant="ghost" size="sm" onClick={() => setIsModalOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="primary" size="md" type="submit" isLoading={isSubmitting}>
-                {editingCategory ? 'Update Category' : 'Save Category'}
-              </Button>
-            </div>
-          </form>
-        </Modal>
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingCategory(null);
+          }}
+          category={editingCategory}
+          onSaveSuccess={loadData}
+        />
       )}
 
       {/* Delete Confirmation Modal */}

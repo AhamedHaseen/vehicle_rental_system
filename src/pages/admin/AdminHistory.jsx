@@ -3,9 +3,9 @@ import { getBookings } from '../../services/dataService';
 import { useCurrency } from '../../context/CurrencyContext';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
-import { 
-  History, Search, Calendar, FileText, 
-  CheckCircle2, Printer, MapPin, Gauge, 
+import {
+  History, Search, Calendar, FileText,
+  CheckCircle2, Printer, MapPin, Gauge,
   RefreshCw, Car, User, ArrowRight
 } from 'lucide-react';
 
@@ -107,7 +107,7 @@ export const AdminHistory = () => {
           <div>
             <span className="text-[11px] font-bold text-sky-500 uppercase tracking-wider block">Average Trip Duration</span>
             <span className="text-xl sm:text-2xl font-black text-sky-600 dark:text-sky-400">
-              3.4 Days
+
             </span>
           </div>
           <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold">
@@ -201,11 +201,10 @@ export const AdminHistory = () => {
 
                     {/* Status */}
                     <td className="py-3.5 px-4">
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                        b.booking_status === 'completed'
-                          ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                          : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
-                      }`}>
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${b.booking_status === 'completed'
+                        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                        : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+                        }`}>
                         {b.booking_status === 'completed' ? 'Returned & Closed' : 'Cancelled'}
                       </span>
                     </td>

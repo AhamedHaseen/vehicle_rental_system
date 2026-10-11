@@ -5,7 +5,7 @@ import {
   MapPin, Sparkles, ChevronRight, Gauge, ArrowRight,
   ShieldCheck, Award, Zap
 } from 'lucide-react';
-import { getVehicles, getReviews } from '../../services/dataService';
+import { getVehicles, getReviews, getLocations } from '../../services/dataService';
 import { VehicleCard } from '../../components/customer/VehicleCard';
 import { Button } from '../../components/common/Button';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
@@ -25,18 +25,23 @@ export const Home = () => {
   const navigate = useNavigate();
   const [vehicles, setVehicles] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   // Search Bar Form State
   const [searchCategory, setSearchCategory] = useState('');
-  const [searchLocation, setSearchLocation] = useState('Colombo Flagship Hub');
+  const [searchLocation, setSearchLocation] = useState('Colombo Flagship Hub (Galle Face)');
 
   useEffect(() => {
     let isMounted = true;
-    Promise.all([getVehicles(), getReviews()]).then(([vList, rList]) => {
+    Promise.all([getVehicles(), getReviews(), getLocations()]).then(([vList, rList, lList]) => {
       if (isMounted) {
         setVehicles(vList);
         setReviews(rList);
+        if (lList && lList.length > 0) {
+          setLocations(lList.filter(l => l.is_active !== false));
+          setSearchLocation(lList[0].name);
+        }
       }
     });
     return () => {
@@ -111,10 +116,20 @@ export const Home = () => {
                 onChange={(e) => setSearchLocation(e.target.value)}
                 className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0077b6] transition-colors"
               >
-                <option value="Colombo Flagship Hub">Colombo Flagship Hub (Galle Face)</option>
-                <option value="Bandaranaike International Airport">Bandaranaike Int. Airport (CMB)</option>
-                <option value="Kandy Hill Station Hub">Kandy Hill Station Hub</option>
-                <option value="Galle Coastal Express Hub">Galle Coastal Express Hub</option>
+                {locations.length > 0 ? (
+                  locations.map((loc) => (
+                    <option key={loc.id} value={loc.name}>
+                      {loc.name} {loc.city ? `(${loc.city})` : ''}
+                    </option>
+                  ))
+                ) : (
+                  <>
+                    <option value="Colombo Flagship Hub (Galle Face)">Colombo Flagship Hub (Galle Face)</option>
+                    <option value="Bandaranaike Int Airport (BIA / CMB)">Bandaranaike Int Airport (BIA / CMB)</option>
+                    <option value="Kandy Hill Station Terminal">Kandy Hill Station Terminal</option>
+                    <option value="Galle Coastal Hub (Fort)">Galle Coastal Hub (Fort)</option>
+                  </>
+                )}
               </select>
             </div>
 

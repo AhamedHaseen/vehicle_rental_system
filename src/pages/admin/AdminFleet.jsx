@@ -7,7 +7,7 @@ import { useToast } from '../../context/ToastContext';
 import { Button } from '../../components/common/Button';
 import { Modal } from '../../components/common/Modal';
 import { VehicleFormModal } from '../../components/admin/VehicleFormModal';
-import { Search, Plus, RefreshCw, Edit3, Trash2 } from 'lucide-react';
+import { Search, Plus, RefreshCw, Edit3, Trash2, Car } from 'lucide-react';
 
 const STATUSES = ['All', 'available', 'rented', 'maintenance', 'deactivated'];
 
@@ -169,7 +169,29 @@ export const AdminFleet = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
-              {filteredVehicles.map((v) => (
+              {filteredVehicles.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="py-16 text-center text-slate-500">
+                    <Car className="w-12 h-12 mx-auto text-slate-400 dark:text-slate-600 mb-3" />
+                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">No vehicles in fleet database</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1 mb-4">
+                      {search || categoryFilter !== 'All' || statusFilter !== 'All'
+                        ? 'No vehicles match your active filters. Try resetting the search or category filter.'
+                        : 'Your fleet database is currently empty. Click below to add your first real vehicle.'}
+                    </p>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      icon={Plus}
+                      onClick={() => setIsAddOpen(true)}
+                      className="bg-[#0373b9] hover:bg-[#025a92] text-white"
+                    >
+                      Add New Fleet Vehicle
+                    </Button>
+                  </td>
+                </tr>
+              ) : (
+                filteredVehicles.map((v) => (
                 <tr key={v.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
                   {/* Vehicle Media & Title */}
                   <td className="py-3.5 px-4">
@@ -259,7 +281,8 @@ export const AdminFleet = () => {
                     </div>
                   </td>
                 </tr>
-              ))}
+              ))
+            )}
             </tbody>
           </table>
         </div>

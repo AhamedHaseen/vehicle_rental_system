@@ -9,7 +9,7 @@ import { PickupModal } from '../../components/admin/PickupModal';
 import { ReturnModal } from '../../components/admin/ReturnModal';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
-import { Search, Eye, RefreshCw } from 'lucide-react';
+import { Search, Eye, RefreshCw, CalendarClock } from 'lucide-react';
 
 export const AdminBookings = () => {
   const { formatPrice } = useCurrency();
@@ -141,7 +141,20 @@ export const AdminBookings = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
-              {filteredBookings.map((b) => (
+              {filteredBookings.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="py-16 text-center text-slate-500">
+                    <CalendarClock className="w-12 h-12 mx-auto text-slate-400 dark:text-slate-600 mb-3" />
+                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">No reservations found</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">
+                      {search || statusFilter !== 'all'
+                        ? 'No bookings match your search or status filter.'
+                        : 'There are currently no active bookings in the live database.'}
+                    </p>
+                  </td>
+                </tr>
+              ) : (
+                filteredBookings.map((b) => (
                 <tr key={b.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
                   {/* Code */}
                   <td className="py-3.5 px-4 font-mono font-bold text-amber-600 dark:text-amber-400">
@@ -244,7 +257,8 @@ export const AdminBookings = () => {
                     </div>
                   </td>
                 </tr>
-              ))}
+              ))
+            )}
             </tbody>
           </table>
         </div>

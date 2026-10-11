@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom';
 import { 
   Car, CalendarClock, DollarSign, 
   ArrowUpRight, AlertCircle, ChevronRight, Plus, RefreshCw, Eye,
-  Banknote, MessageSquare, FolderKanban, History, Layers
+  Banknote, MessageSquare, FolderKanban, History, Layers, MapPin
 } from 'lucide-react';
 import { 
-  getVehicles, getBookings, updateBookingStatus, getContacts, getCategories 
+  getVehicles, getBookings, updateBookingStatus, getContacts, getCategories, getLocations 
 } from '../../services/dataService';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { PickupModal } from '../../components/admin/PickupModal';
 import { ReturnModal } from '../../components/admin/ReturnModal';
 import { VehicleFormModal } from '../../components/admin/VehicleFormModal';
+import { CategoryFormModal } from '../../components/admin/CategoryFormModal';
+import { LocationFormModal } from '../../components/admin/LocationFormModal';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
 
@@ -24,33 +26,39 @@ export const AdminDashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [locations, setLocations] = useState([]);
 
   // Modals
   const [pickupBooking, setPickupBooking] = useState(null);
   const [returnBooking, setReturnBooking] = useState(null);
   const [isAddVehicleOpen, setIsAddVehicleOpen] = useState(false);
+  const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
+  const [isAddLocationOpen, setIsAddLocationOpen] = useState(false);
 
   const loadData = async () => {
-    const [vList, bList, cList, catList] = await Promise.all([
+    const [vList, bList, cList, catList, locList] = await Promise.all([
       getVehicles(),
       getBookings(),
       getContacts(),
-      getCategories()
+      getCategories(),
+      getLocations()
     ]);
     setVehicles(vList);
     setBookings(bList);
     setContacts(cList);
     setCategories(catList);
+    setLocations(locList);
   };
 
   useEffect(() => {
     let isMounted = true;
-    Promise.all([getVehicles(), getBookings(), getContacts(), getCategories()]).then(([vList, bList, cList, catList]) => {
+    Promise.all([getVehicles(), getBookings(), getContacts(), getCategories(), getLocations()]).then(([vList, bList, cList, catList, locList]) => {
       if (isMounted) {
         setVehicles(vList);
         setBookings(bList);
         setContacts(cList);
         setCategories(catList);
+        setLocations(locList);
       }
     });
     return () => {
@@ -95,22 +103,41 @@ export const AdminDashboard = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <Button
             variant="secondary"
             size="sm"
             icon={RefreshCw}
             onClick={loadData}
           >
-            Refresh Data
+            Refresh
           </Button>
           <Button
             variant="primary"
             size="sm"
             icon={Plus}
             onClick={() => setIsAddVehicleOpen(true)}
+            className="bg-[#0373b9] hover:bg-[#025a92] text-white"
           >
-            Add New Vehicle
+            Add Vehicle
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
+            icon={Plus}
+            onClick={() => setIsAddLocationOpen(true)}
+            className="bg-[#0373b9] hover:bg-[#025a92] text-white"
+          >
+            Add Hub
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
+            icon={Plus}
+            onClick={() => setIsAddCategoryOpen(true)}
+            className="bg-[#0373b9] hover:bg-[#025a92] text-white"
+          >
+            Add Category
           </Button>
         </div>
       </div>
@@ -194,7 +221,7 @@ export const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
           {/* 1. Vehicles Fleet */}
           <Link
             to="/admin/fleet"
@@ -218,7 +245,30 @@ export const AdminDashboard = () => {
             </div>
           </Link>
 
-          {/* 2. Booking Details */}
+          {/* 2. Pickup & Drop Locations */}
+          <Link
+            to="/admin/locations"
+            className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-[#0373b9] dark:text-[#38bdf8] flex items-center justify-center group-hover:scale-110 transition-transform">
+                <MapPin className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300">
+                {locations.length} Hubs
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-[#0373b9] dark:group-hover:text-[#38bdf8] transition-colors">
+                Pickup & Drop
+              </h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                Dispatch terminals
+              </p>
+            </div>
+          </Link>
+
+          {/* 3. Booking Details */}
           <Link
             to="/admin/bookings"
             className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
@@ -241,7 +291,7 @@ export const AdminDashboard = () => {
             </div>
           </Link>
 
-          {/* 3. Cash Details */}
+          {/* 4. Cash Details */}
           <Link
             to="/admin/cash"
             className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
@@ -264,7 +314,7 @@ export const AdminDashboard = () => {
             </div>
           </Link>
 
-          {/* 4. Contact Inquiries */}
+          {/* 5. Contact Inquiries */}
           <Link
             to="/admin/contacts"
             className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-amber-400 dark:hover:border-amber-600 hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
@@ -287,7 +337,7 @@ export const AdminDashboard = () => {
             </div>
           </Link>
 
-          {/* 5. Categories */}
+          {/* 6. Categories */}
           <Link
             to="/admin/categories"
             className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
@@ -310,7 +360,7 @@ export const AdminDashboard = () => {
             </div>
           </Link>
 
-          {/* 6. Rental History */}
+          {/* 7. Rental History */}
           <Link
             to="/admin/history"
             className="group p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-[#0373b9] dark:hover:border-[#38bdf8] hover:shadow-md transition-all duration-150 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
@@ -499,6 +549,22 @@ export const AdminDashboard = () => {
         <VehicleFormModal
           isOpen={isAddVehicleOpen}
           onClose={() => setIsAddVehicleOpen(false)}
+          onSaveSuccess={loadData}
+        />
+      )}
+
+      {isAddLocationOpen && (
+        <LocationFormModal
+          isOpen={isAddLocationOpen}
+          onClose={() => setIsAddLocationOpen(false)}
+          onSaveSuccess={loadData}
+        />
+      )}
+
+      {isAddCategoryOpen && (
+        <CategoryFormModal
+          isOpen={isAddCategoryOpen}
+          onClose={() => setIsAddCategoryOpen(false)}
           onSaveSuccess={loadData}
         />
       )}

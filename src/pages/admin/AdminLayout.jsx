@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, Car, CalendarClock, MessageSquare, 
-  Banknote, History, FolderKanban, Users, 
+  Banknote, History, FolderKanban, Users, MapPin,
   BarChart3, Settings, Shield, ChevronLeft, ChevronRight,
   Menu, X, ExternalLink, Sun, Moon
 } from 'lucide-react';
@@ -13,6 +13,7 @@ import { useCurrency } from '../../context/CurrencyContext';
 const NAV_ITEMS = [
   { path: '/admin', name: 'Dashboard', icon: LayoutDashboard, badge: null },
   { path: '/admin/fleet', name: 'Vehicles Fleet', icon: Car, badge: 'Fleet' },
+  { path: '/admin/locations', name: 'Pickup & Drop', icon: MapPin, badge: 'Hubs' },
   { path: '/admin/bookings', name: 'Booking Details', icon: CalendarClock, badge: null },
   { path: '/admin/cash', name: 'Cash Details', icon: Banknote, badge: 'Finance' },
   { path: '/admin/contacts', name: 'Contact Inquiries', icon: MessageSquare, badge: 'New' },

@@ -31,6 +31,7 @@ import { AdminBookings } from './pages/admin/AdminBookings';
 import { AdminCash } from './pages/admin/AdminCash';
 import { AdminContacts } from './pages/admin/AdminContacts';
 import { AdminCategories } from './pages/admin/AdminCategories';
+import { AdminLocations } from './pages/admin/AdminLocations';
 import { AdminHistory } from './pages/admin/AdminHistory';
 import { AdminCustomers } from './pages/admin/AdminCustomers';
 import { AdminPayments } from './pages/admin/AdminPayments';
@@ -133,6 +134,7 @@ function App() {
                         <Route path="cash" element={<AdminCash />} />
                         <Route path="contacts" element={<AdminContacts />} />
                         <Route path="categories" element={<AdminCategories />} />
+                        <Route path="locations" element={<AdminLocations />} />
                         <Route path="history" element={<AdminHistory />} />
                         <Route path="customers" element={<AdminCustomers />} />
                         <Route path="payments" element={<AdminPayments />} />

@@ -1,24 +1,26 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { useAuth } from '../../context/AuthContext';
 import { useCurrency } from '../../context/CurrencyContext';
 import { useToast } from '../../context/ToastContext';
-import { createBooking } from '../../services/dataService';
+import { createBooking, getLocations } from '../../services/dataService';
 import confetti from 'canvas-confetti';
 import { Calendar, Shield, Clock, User, Phone, UserCheck, Car } from 'lucide-react';
 
-const HUBS = [
+const DEFAULT_HUBS = [
   "Colombo Flagship Hub (45 Galle Face Terrace)",
   "Bandaranaike International Airport (CMB Terminal)",
-  "Kandy Hill Station Hub",
-  "Galle Coastal Express Hub"
+  "Kandy Hill Station Terminal",
+  "Galle Coastal Hub (Fort)"
 ];
 
 export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => {
   const { user } = useAuth();
   const { formatPrice } = useCurrency();
   const { success, error } = useToast();
+
+  const [hubsList, setHubsList] = useState(DEFAULT_HUBS);
 
   // Set default dates (tomorrow to +3 days)
   const tomorrow = useMemo(() => {
@@ -40,12 +42,29 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
   const [startTime, setStartTime] = useState('09:00');
   const [endDate, setEndDate] = useState(threeDaysLater);
   const [endTime, setEndTime] = useState('18:00');
-  const [pickupLocation, setPickupLocation] = useState(HUBS[0]);
-  const [returnLocation, setReturnLocation] = useState(HUBS[0]);
+  const [pickupLocation, setPickupLocation] = useState(DEFAULT_HUBS[0]);
+  const [returnLocation, setReturnLocation] = useState(DEFAULT_HUBS[0]);
   const [includeInsurance, setIncludeInsurance] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState('Online Portal');
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    getLocations().then((locs) => {
+      if (isMounted && locs && locs.length > 0) {
+        const active = locs
+          .filter(l => l.is_active !== false)
+          .map(l => `${l.name} (${l.address})`);
+        if (active.length > 0) {
+          setHubsList(active);
+          setPickupLocation(active[0]);
+          setReturnLocation(active[0]);
+        }
+      }
+    });
+    return () => { isMounted = false; };
+  }, []);
 
   if (!vehicle) return null;
 
@@ -317,7 +336,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
                 onChange={(e) => setPickupLocation(e.target.value)}
                 className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
               >
-                {HUBS.map((h) => (
+                {hubsList.map((h) => (
                   <option key={h} value={h}>{h}</option>
                 ))}
               </select>
@@ -360,7 +379,7 @@ export const BookingModal = ({ isOpen, onClose, vehicle, onBookingSuccess }) => 
                 onChange={(e) => setReturnLocation(e.target.value)}
                 className="w-full h-11 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0077b6]/40 cursor-pointer font-medium"
               >
-                {HUBS.map((h) => (
+                {hubsList.map((h) => (
                   <option key={h} value={h}>{h}</option>
                 ))}
               </select>

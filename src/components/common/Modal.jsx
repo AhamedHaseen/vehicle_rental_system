@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 export const Modal = ({
@@ -10,6 +11,12 @@ export const Modal = ({
   maxWidth = 'max-w-2xl',
   showClose = true
 }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -21,20 +28,23 @@ export const Modal = ({
       document.body.classList.add('modal-open');
       window.addEventListener('keydown', handleKeyDown);
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
       document.body.classList.remove('modal-open');
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
       document.body.classList.remove('modal-open');
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-[9999] flex items-start justify-center p-3 sm:p-4 pt-3 sm:pt-4 pb-3 sm:pb-4 overflow-hidden">
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+      style={{ zIndex: 99999 }}
+    >
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
@@ -42,10 +52,9 @@ export const Modal = ({
         aria-hidden="true"
       />
 
-      {/* Modal Dialog Box: Aligned to top (eliminates wasted red gap), utilizes full screen height */}
+      {/* Modal Dialog Box */}
       <div
-        className={`relative w-full ${maxWidth} bg-white dark:bg-slate-900 rounded-3xl text-left shadow-2xl border border-slate-200 dark:border-slate-800 z-10 flex flex-col min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-200`}
-        style={{ maxHeight: 'calc(100vh - 2rem)' }}
+        className={`relative w-full ${maxWidth} my-auto bg-white dark:bg-slate-900 rounded-3xl text-left shadow-2xl border border-slate-200 dark:border-slate-800 z-10 flex flex-col max-h-[92vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200`}
         role="dialog"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
@@ -69,13 +78,11 @@ export const Modal = ({
         </div>
 
         {/* Scrollable Form Content Body */}
-        <div
-          className="px-6 sm:px-8 py-5 overflow-y-auto flex-1 min-h-0 overscroll-contain"
-          style={{ overflowY: 'auto', flex: '1 1 auto', minHeight: 0 }}
-        >
+        <div className="px-6 sm:px-8 py-5 overflow-y-auto flex-1 min-h-0 overscroll-contain">
           {children}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

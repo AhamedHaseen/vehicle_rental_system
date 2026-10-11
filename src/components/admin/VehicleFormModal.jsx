@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
-import { saveVehicle, getCategories } from '../../services/dataService';
+import { saveVehicle, getCategories, getLocations } from '../../services/dataService';
 import { useToast } from '../../context/ToastContext';
 import { Image as ImageIcon, X, Sparkles, Check } from 'lucide-react';
 
@@ -58,7 +58,7 @@ const getInitialFormData = (vehicle) => {
       image_url_1: vehicle.image_url || gallery[0] || '',
       image_url_2: gallery[1] || 'https://images.unsplash.com/photo-1590362891988-f77804703130?auto=format&fit=crop&w=1200&q=80',
       image_url_3: gallery[2] || 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
-      location: vehicle.location || 'Colombo Flagship Hub',
+      location: vehicle.location || 'Colombo Flagship Hub (Galle Face)',
       description: vehicle.description || '',
       features: vehicle.features || ['Apple CarPlay', 'Dual-Zone A/C', 'Reverse Camera'],
       newFeature: ''
@@ -77,11 +77,10 @@ const getInitialFormData = (vehicle) => {
     price_per_hour: 1100,
     security_deposit: 20000,
     status: 'available',
-    // Three default images
     image_url_1: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
     image_url_2: 'https://images.unsplash.com/photo-1590362891988-f77804703130?auto=format&fit=crop&w=1200&q=80',
     image_url_3: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
-    location: 'Colombo Flagship Hub',
+    location: 'Colombo Flagship Hub (Galle Face)',
     description: '',
     features: ['Apple CarPlay', 'Cruise Control', 'Climate Control'],
     newFeature: ''
@@ -93,25 +92,25 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
   const isEditing = Boolean(vehicle);
 
   const [categoriesList, setCategoriesList] = useState(['Car', 'Bus', 'SUV', 'Van', 'Luxury Vehicle', 'Motorbike', 'Three-Wheeler']);
+  const [locationsList, setLocationsList] = useState([]);
   const [formData, setFormData] = useState(() => getInitialFormData(vehicle));
-  const [prevTrigger, setPrevTrigger] = useState({ isOpen, vehicleId: vehicle?.id });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    getCategories().then((cats) => {
-      if (cats && cats.length > 0) {
-        setCategoriesList(cats.map(c => c.name));
-      }
-    });
-  }, [isOpen]);
-
-  if (isOpen !== prevTrigger.isOpen || vehicle?.id !== prevTrigger.vehicleId) {
-    setPrevTrigger({ isOpen, vehicleId: vehicle?.id });
     if (isOpen) {
       setFormData(getInitialFormData(vehicle));
+      getCategories().then((cats) => {
+        if (cats && cats.length > 0) {
+          setCategoriesList(cats.map(c => c.name));
+        }
+      });
+      getLocations().then((locs) => {
+        if (locs && locs.length > 0) {
+          setLocationsList(locs.map(l => l.name));
+        }
+      });
     }
-  }
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  }, [isOpen, vehicle]);
 
   const applyPresetPhotos = (categoryKey) => {
     const preset = PHOTO_PRESETS[categoryKey] || PHOTO_PRESETS.Car;
@@ -474,12 +473,24 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Station Hub Location</label>
-            <input
-              type="text"
-              value={formData.location}
-              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
-            />
+            {locationsList.length > 0 ? (
+              <select
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
+              >
+                {locationsList.map((loc) => (
+                  <option key={loc} value={loc}>{loc}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#0373b9]"
+              />
+            )}
           </div>
           <div>
             <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Overview Description</label>
