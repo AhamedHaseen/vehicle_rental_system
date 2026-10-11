@@ -18,6 +18,7 @@ import { MyBookings } from './pages/customer/MyBookings';
 import { CustomerProfile } from './pages/customer/CustomerProfile';
 import { AboutUs } from './pages/customer/AboutUs';
 import { ContactUs } from './pages/customer/ContactUs';
+import { RentFlowChatbot } from './components/chat/RentFlowChatbot';
 
 // Auth Pages
 import { Login } from './pages/auth/Login';
@@ -64,6 +65,14 @@ const ConditionalFooter = () => {
     return null;
   }
   return <Footer />;
+};
+
+const ConditionalChatbot = () => {
+  const location = useLocation();
+  if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
+  return <RentFlowChatbot />;
 };
 
 function App() {
@@ -141,6 +150,7 @@ function App() {
                 </main>
 
                 <ConditionalFooter />
+                <ConditionalChatbot />
               </div>
             </AuthProvider>
           </ToastProvider>
