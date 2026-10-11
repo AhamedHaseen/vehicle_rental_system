@@ -39,22 +39,14 @@ import { AdminReports } from './pages/admin/AdminReports';
 import { AdminSettings } from './pages/admin/AdminSettings';
 
 const CustomerRoute = ({ children }) => {
-  const { user, loginAsDemo } = useAuth();
-  React.useEffect(() => {
-    if (!user) {
-      loginAsDemo('customer');
-    }
-  }, [user, loginAsDemo]);
+  const { user } = useAuth();
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   return children;
 };
 
 const AdminRoute = ({ children }) => {
-  const { user, isAdmin, loginAsDemo } = useAuth();
-  React.useEffect(() => {
-    if (!user || !isAdmin) {
-      loginAsDemo('admin');
-    }
-  }, [user, isAdmin, loginAsDemo]);
   return children;
 };
 

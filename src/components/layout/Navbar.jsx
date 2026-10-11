@@ -414,15 +414,6 @@ export const Navbar = () => {
                       </div>
 
                       <div className="py-1">
-                        {role === 'admin' && (
-                          <Link
-                            to="/admin"
-                            onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-[#0373b9] dark:text-[#38bdf8] bg-[#0373b9]/10 hover:bg-[#0373b9]/15 rounded-lg mb-1 transition-colors"
-                          >
-                            <Shield className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" /> Admin Console
-                          </Link>
-                        )}
                         <Link
                           to="/my-bookings"
                           onClick={() => setIsUserMenuOpen(false)}
@@ -512,16 +503,6 @@ export const Navbar = () => {
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-200/60 dark:border-slate-800">
-                    {role === 'admin' && (
-                      <Link
-                        to="/admin"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-[#0373b9]/10 dark:bg-[#0373b9]/20 border border-[#0373b9]/30 dark:border-[#0373b9]/50 text-xs font-bold text-[#0373b9] dark:text-[#38bdf8]"
-                      >
-                        <Shield className="w-4 h-4 text-[#0373b9] dark:text-[#38bdf8]" />
-                        <span>Admin Console</span>
-                      </Link>
-                    )}
                     <Link
                       to="/my-bookings"
                       onClick={() => setIsMobileMenuOpen(false)}

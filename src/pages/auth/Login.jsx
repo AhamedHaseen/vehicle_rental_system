@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { Button } from '../../components/common/Button';
-import { Car, Lock, Mail, UserCheck, Sparkles, ArrowRight } from 'lucide-react';
+import { Car, Lock, Mail, ArrowRight } from 'lucide-react';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { login, loginAsDemo } = useAuth();
+  const { login } = useAuth();
   const { success, error } = useToast();
 
   const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ export const Login = () => {
     try {
       const res = await login(email, password);
       if (res.success) {
-        success('Signed In', `Welcome back, ${res.user.full_name || 'Renter'}!`);
+        success('Signed In', `Welcome back, ${res.user?.full_name || 'Renter'}!`);
         navigate('/catalog');
       }
     } catch (err) {
@@ -28,12 +28,6 @@ export const Login = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleDemoLogin = () => {
-    const u = loginAsDemo('customer');
-    success('Demo Access Granted', `Logged in as ${u.full_name}`);
-    navigate('/catalog');
   };
 
   return (
@@ -46,27 +40,6 @@ export const Login = () => {
           </div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Sign In to RentFlow</h1>
           <p className="text-xs text-slate-600 dark:text-slate-400">Access customer reservations and fleet rentals</p>
-        </div>
-
-        {/* 1-Click Fast Evaluation Button */}
-        <div className="p-3.5 bg-slate-50 dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#0077b6] dark:text-[#38bdf8] flex items-center gap-1.5 justify-center">
-            <Sparkles className="w-3.5 h-3.5" /> Instant 1-Click Demo Evaluation
-          </span>
-          <button
-            type="button"
-            onClick={handleDemoLogin}
-            className="w-full py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition-colors btn-tactile cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0077b6]"
-          >
-            <UserCheck className="w-4 h-4 text-[#0077b6] dark:text-[#38bdf8]" />
-            <span>Instant Customer Demo Access</span>
-          </button>
-        </div>
-
-        <div className="relative flex py-1 items-center">
-          <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
-          <span className="flex-shrink mx-3 text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Or with email</span>
-          <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
         </div>
 
         {/* Standard Email/Password Form */}

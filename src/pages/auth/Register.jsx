@@ -32,7 +32,7 @@ export const Register = () => {
         password,
         role: 'customer'
       });
-      if (res.success) {
+      if (res?.success) {
         success('Account Created', `Welcome to RentFlow, ${fullName}!`);
         navigate('/catalog');
       }
