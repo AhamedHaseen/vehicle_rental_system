@@ -6,7 +6,7 @@ import { useToast } from '../../context/ToastContext';
 import { 
   X, UploadCloud, Camera, Trash2, Link2, 
   CheckCircle2, Car, Wrench, Sparkles, ChevronRight,
-  Gauge, Zap, Check, ArrowRight, ArrowLeft
+  Gauge, Zap, Check
 } from 'lucide-react';
 
 const FUEL_TYPES = ['Petrol', 'Diesel', 'Hybrid', 'Electric'];
@@ -1006,56 +1006,14 @@ export const VehicleFormModal = ({ isOpen, onClose, vehicle, onSaveSuccess }) =>
         )}
 
         {/* Modal Navigation and Actions Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={onClose} type="button">
-              Cancel
-            </Button>
-            {activeTab === 'features' && (
-              <Button variant="secondary" size="sm" type="button" onClick={() => setActiveTab('details')}>
-                <ArrowLeft className="w-3.5 h-3.5 mr-1" /> Back: Car Details
-              </Button>
-            )}
-            {activeTab === 'specs' && (
-              <Button variant="secondary" size="sm" type="button" onClick={() => setActiveTab('features')}>
-                <ArrowLeft className="w-3.5 h-3.5 mr-1" /> Back: Features
-              </Button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2">
-            {activeTab === 'details' && (
-              <Button
-                variant="secondary"
-                size="sm"
-                type="button"
-                onClick={() => {
-                  if (!formData.brand || !formData.model || !formData.registration_no) {
-                    error('Required Details', 'Please fill brand, model and registration plate first.');
-                    return;
-                  }
-                  setActiveTab('features');
-                }}
-              >
-                Next: Features <ArrowRight className="w-3.5 h-3.5 ml-1" />
-              </Button>
-            )}
-
-            {activeTab === 'features' && (
-              <Button
-                variant="secondary"
-                size="sm"
-                type="button"
-                onClick={() => setActiveTab('specs')}
-              >
-                Next: Technical Specs <ArrowRight className="w-3.5 h-3.5 ml-1" />
-              </Button>
-            )}
-
-            <Button variant="primary" size="md" type="submit" isLoading={isSubmitting}>
-              {isEditing ? 'Save Changes' : 'Save Vehicle to Fleet'}
-            </Button>
-          </div>
+        {/* Modal Action Buttons Footer */}
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+          <Button variant="ghost" size="sm" onClick={onClose} type="button">
+            Cancel
+          </Button>
+          <Button variant="primary" size="md" type="submit" isLoading={isSubmitting}>
+            {isEditing ? 'Save Changes' : 'Save Vehicle to Fleet'}
+          </Button>
         </div>
       </form>
     </Modal>

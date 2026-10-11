@@ -138,6 +138,10 @@ const generateUUID = () => {
   });
 };
 
+const isValidUUID = (str) => {
+  return typeof str === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+};
+
 // ==================== PICKUP & DROP LOCATIONS ====================
 export const getLocations = async () => {
   if (isSupabaseConfigured() && supabase) {
@@ -323,12 +327,28 @@ export const updateVehicleStatus = async (vehicleId, status) => {
 export const getBookings = async (customerId = null) => {
   if (isSupabaseConfigured() && supabase) {
     try {
-      let query = supabase.from('bookings').select('*, vehicles(*)').order('created_at', { ascending: false });
-      if (customerId) query = query.eq('customer_id', customerId);
+      let query = supabase.from('bookings').select('*').order('created_at', { ascending: false });
+      if (customerId && isValidUUID(customerId)) query = query.eq('customer_id', customerId);
       const { data, error } = await query;
       if (!error && Array.isArray(data)) {
-        setLocal(STORAGE_KEYS.BOOKINGS, data);
-        return data;
+        // Merge Supabase bookings with local bookings so newly created bookings are NEVER overwritten/lost
+        const local = getLocal(STORAGE_KEYS.BOOKINGS, []);
+        const map = new Map();
+        data.forEach(b => map.set(b.id, b));
+        local.forEach(b => {
+          if (!map.has(b.id)) {
+            map.set(b.id, b);
+          }
+        });
+        const merged = Array.from(map.values()).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+        setLocal(STORAGE_KEYS.BOOKINGS, merged);
+        if (customerId) {
+          return merged.filter(b => b.customer_id === customerId);
+        }
+        return merged;
+      }
+      if (error) {
+        console.warn('Supabase bookings query error:', error);
       }
     } catch (e) {
       console.warn('Supabase bookings fetch failed:', e);
@@ -348,26 +368,26 @@ export const createBooking = async (bookingData) => {
   const cleanBooking = {
     id,
     booking_code: bookingCode,
-    customer_id: bookingData.customer_id || null,
-    customer_name: bookingData.customer_name || 'Customer',
-    customer_email: bookingData.customer_email || '',
-    customer_phone: bookingData.customer_phone || '',
-    vehicle_id: bookingData.vehicle_id,
-    vehicle_name: bookingData.vehicle_name || '',
-    vehicle_registration: bookingData.vehicle_registration || '',
-    start_date: bookingData.start_date,
-    end_date: bookingData.end_date,
+    customer_id: isValidUUID(bookingData.customer_id) ? bookingData.customer_id : null,
+    customer_name: (bookingData.customer_name || 'Customer').trim(),
+    customer_email: (bookingData.customer_email || '').trim(),
+    customer_phone: (bookingData.customer_phone || '').trim(),
+    vehicle_id: isValidUUID(bookingData.vehicle_id) ? bookingData.vehicle_id : null,
+    vehicle_name: (bookingData.vehicle_name || '').trim(),
+    vehicle_registration: (bookingData.vehicle_registration || (bookingData.vehicle_name && bookingData.vehicle_name.includes('(') ? bookingData.vehicle_name.split('(')[1]?.replace(')', '').trim() : '')).trim(),
+    start_date: new Date(bookingData.start_date || Date.now()).toISOString(),
+    end_date: new Date(bookingData.end_date || Date.now() + 86400000).toISOString(),
     duration_days: Number(bookingData.duration_days) || 1,
     base_price: Number(bookingData.base_price) || 0,
     insurance_fee: Number(bookingData.insurance_fee || 0),
     security_deposit: Number(bookingData.security_deposit || 0),
     advance_amount: Number(bookingData.advance_amount || 0),
     total_amount: Number(bookingData.total_amount) || 0,
-    booking_status: bookingData.booking_status || 'pending',
-    payment_status: bookingData.payment_status || 'paid',
-    pickup_location: bookingData.pickup_location,
-    return_location: bookingData.return_location,
-    with_driver: Boolean(bookingData.with_driver),
+    booking_status: ['pending', 'confirmed', 'active', 'completed', 'cancelled'].includes(bookingData.booking_status) ? bookingData.booking_status : 'pending',
+    payment_status: ['pending', 'paid', 'refunded', 'partially_paid'].includes(bookingData.payment_status) ? bookingData.payment_status : 'pending',
+    pickup_location: bookingData.pickup_location || 'Colombo Flagship Hub (Galle Face)',
+    return_location: bookingData.return_location || 'Colombo Flagship Hub (Galle Face)',
+    with_driver: Boolean(bookingData.with_driver || bookingData.driver_option === 'with_driver'),
     pickup_notes: bookingData.pickup_notes || '',
     return_notes: bookingData.return_notes || '',
     created_at: new Date().toISOString(),
@@ -375,7 +395,7 @@ export const createBooking = async (bookingData) => {
   };
 
   const bookings = getLocal(STORAGE_KEYS.BOOKINGS, []);
-  const updated = [cleanBooking, ...bookings];
+  const updated = [cleanBooking, ...bookings.filter(b => b.id !== id && b.booking_code !== bookingCode)];
   setLocal(STORAGE_KEYS.BOOKINGS, updated);
 
   addNotification({
@@ -387,8 +407,21 @@ export const createBooking = async (bookingData) => {
 
   if (isSupabaseConfigured() && supabase) {
     try {
-      const { data, error } = await supabase.from('bookings').insert(cleanBooking).select().single();
-      if (!error && data) return data;
+      let { data, error } = await supabase.from('bookings').insert(cleanBooking).select().single();
+      // If foreign key constraint on customer_id or vehicle_id failed, retry gracefully
+      if (error && error.code === '23503') {
+        console.warn('Foreign key reference rejected by Supabase, retrying with nullable FKs:', error);
+        const retryBooking = { ...cleanBooking, customer_id: null };
+        const retry = await supabase.from('bookings').insert(retryBooking).select().single();
+        if (!retry.error && retry.data) data = retry.data;
+      }
+      if (data) {
+        // sync back to local storage
+        const currentLocal = getLocal(STORAGE_KEYS.BOOKINGS, []);
+        const merged = [data, ...currentLocal.filter(b => b.id !== data.id && b.booking_code !== data.booking_code)];
+        setLocal(STORAGE_KEYS.BOOKINGS, merged);
+        return data;
+      }
       if (error) console.error('Supabase createBooking error:', error);
     } catch (e) {
       console.warn('Supabase create booking error:', e);
