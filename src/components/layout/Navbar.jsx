@@ -24,16 +24,23 @@ export const Navbar = () => {
   const [notifications, setNotifications] = useState([]);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [navDimensions, setNavDimensions] = useState({ width: 0, height: 0 });
 
   const notifRef = useRef(null);
   const userMenuRef = useRef(null);
+  const navContainerRef = useRef(null);
+  const rectRef = useRef(null);
+  const perimeterRef = useRef(0);
+  const scrollProgressRef = useRef(0);
 
-  // Close menus on route change
-  useEffect(() => {
+  // Close menus on route change without cascading effect renders
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname);
     setIsMobileMenuOpen(false);
     setIsUserMenuOpen(false);
     setIsNotifOpen(false);
-  }, [location.pathname]);
+  }
 
   // Click outside to close desktop dropdowns
   useEffect(() => {
@@ -75,20 +82,87 @@ export const Navbar = () => {
     };
   }, [user]);
 
+  // Track dimensions of navbar rectangle dynamically
   useEffect(() => {
-    const handleScroll = () => {
+    if (!navContainerRef.current) return;
+    const updateDimensions = () => {
+      if (navContainerRef.current) {
+        setNavDimensions({
+          width: navContainerRef.current.offsetWidth,
+          height: navContainerRef.current.offsetHeight
+        });
+      }
+    };
+
+    updateDimensions();
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateDimensions();
+    });
+
+    resizeObserver.observe(navContainerRef.current);
+    window.addEventListener('resize', updateDimensions);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateDimensions);
+    };
+  }, []);
+
+  // Compute exact SVG perimeter for the rounded rectangle
+  useEffect(() => {
+    if (rectRef.current && navDimensions.width > 0 && navDimensions.height > 0) {
+      try {
+        const length = rectRef.current.getTotalLength();
+        if (length > 0) {
+          perimeterRef.current = length;
+          rectRef.current.style.strokeDasharray = `${length}`;
+          const currentProgress = scrollProgressRef.current || 0;
+          rectRef.current.style.strokeDashoffset = `${length * (1 - currentProgress / 100)}`;
+        }
+      } catch {
+        const w = navDimensions.width - 2;
+        const h = navDimensions.height - 2;
+        const approx = 2 * (w + h) - 16 * (8 - 2 * Math.PI);
+        perimeterRef.current = approx;
+        rectRef.current.style.strokeDasharray = `${approx}`;
+        rectRef.current.style.strokeDashoffset = `${approx * (1 - (scrollProgressRef.current || 0) / 100)}`;
+      }
+    }
+  }, [navDimensions]);
+
+  // High-performance scroll tracking using requestAnimationFrame for instant zero-lag response
+  useEffect(() => {
+    let rafId = null;
+
+    const updateScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       const currentScroll = window.scrollY || window.pageYOffset;
-      if (totalHeight > 0) {
-        const progress = Math.min(100, Math.max(0, (currentScroll / totalHeight) * 100));
-        setScrollProgress(progress);
-      }
+      const progress = totalHeight > 0 ? Math.min(100, Math.max(0, (currentScroll / totalHeight) * 100)) : 0;
+
+      scrollProgressRef.current = progress;
+      setScrollProgress(progress);
       setIsScrolled(currentScroll > 15);
+
+      if (rectRef.current && perimeterRef.current > 0) {
+        const offset = perimeterRef.current * (1 - progress / 100);
+        rectRef.current.style.strokeDashoffset = `${offset}`;
+        rectRef.current.style.opacity = progress > 0.5 ? '1' : '0';
+      }
+    };
+
+    const handleScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateScroll);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    updateScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const unreadCount = notifications.filter(n => !n.is_read).length;
@@ -114,12 +188,54 @@ export const Navbar = () => {
       <header className="sticky top-0 z-40 w-full px-3 sm:px-6 lg:px-8 pt-2 sm:pt-2.5 pb-1 pointer-events-none transition-all duration-300">
         {/* Complete Floating Box Navbar */}
         <div
+          ref={navContainerRef}
           className={`max-w-7xl mx-auto pointer-events-auto rounded-2xl glass-panel border bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl transition-all duration-300 relative shadow-md ${
             isScrolled
               ? 'border-[#0077b6]/35 dark:border-[#38bdf8]/35 shadow-xl shadow-[#0077b6]/10 dark:shadow-slate-950/70'
               : 'border-slate-200/90 dark:border-slate-800/90'
           }`}
         >
+          {/* Glowing Animated Scroll Progress Border tracing the Navbar Rectangle */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl overflow-visible z-20"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="navbarScrollGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#0077b6" />
+                <stop offset="50%" stopColor="#00b4d8" />
+                <stop offset="100%" stopColor="#38bdf8" />
+              </linearGradient>
+              <filter id="navbarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            {navDimensions.width > 0 && (
+              <rect
+                ref={rectRef}
+                x="0.75"
+                y="0.75"
+                width={Math.max(0, navDimensions.width - 1.5)}
+                height={Math.max(0, navDimensions.height - 1.5)}
+                rx="16"
+                ry="16"
+                fill="none"
+                stroke="url(#navbarScrollGradient)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                filter="url(#navbarGlow)"
+                style={{
+                  opacity: scrollProgress > 0.5 ? 1 : 0,
+                  transition: 'opacity 0.2s ease',
+                  willChange: 'stroke-dashoffset'
+                }}
+              />
+            )}
+          </svg>
           <div className="px-3.5 sm:px-6 h-15 sm:h-17 flex items-center justify-between gap-2">
             {/* Brand Logo */}
             <div className="flex items-center gap-4 lg:gap-8 min-w-0">
@@ -361,13 +477,7 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {/* Dynamic Scroll Progress Line Directly Attached to the Header Row */}
-          <div className="h-[2px] w-full bg-slate-200/50 dark:bg-slate-800/50 overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-[#0077b6] via-[#0096c7] to-[#023e8a] dark:from-[#38bdf8] dark:via-[#60a5fa] dark:to-[#0077b6] transition-all duration-150 ease-out"
-              style={{ width: `${scrollProgress}%` }}
-            />
-          </div>
+
 
           {/* Comprehensive Mobile Navigation Drawer */}
           {isMobileMenuOpen && (

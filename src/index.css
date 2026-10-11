@@ -57,6 +57,27 @@
     transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Clean Premium Text Selection - replaces unwanted yellow/peach browser highlight */
+  ::selection {
+    background-color: #0077b6;
+    color: #ffffff;
+  }
+
+  ::-moz-selection {
+    background-color: #0077b6;
+    color: #ffffff;
+  }
+
+  html.dark ::selection {
+    background-color: #0284c7;
+    color: #ffffff;
+  }
+
+  html.dark ::-moz-selection {
+    background-color: #0284c7;
+    color: #ffffff;
+  }
+
   /* Custom sleek scrollbar */
   ::-webkit-scrollbar {
     width: 7px;
